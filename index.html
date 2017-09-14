@@ -8,10 +8,16 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <img src="normalbot.gif" id ="image" width="100" height="100">
 
+  <style type="text/css">
+
+
+  </style>
+
 <script type="text/javascript">
 	var poshao =0;
 	var neghao=0;
 	var neuhao=0;
+	  var rainy;
 var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢"];
 var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠"];
 
@@ -19,17 +25,27 @@ var indiffers =["查","好"];
 
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
+var doublenegative=0;
 var checklength = posadj[0];
+var visualalgo = document.body.appendChild(document.createElement('div'));
+var visualalgo2 = document.body.appendChild(document.createElement('div2'));
+       visualalgo2.style.position="absolute";
+visualalgo2.style.left = 280+'px';
+  visualalgo2.style.top = 40+'px';
+  visualalgo2.innerHTML = '你好，请写一个句子';
 
-console.log(checklength.length, checklength[0])
 
   $('#humanresponse').keydown(function (event) {
+window.clearTimeout(rainy)
     var keypressed = event.keyCode || event.which;
     if (keypressed == 13) {
       //showbox();
+      visualalgo2.innerHTML='';
        poshao =0;
 	   neghao=0;
 	   neuhao=0;
+	   doublenegative=0;
+	    visualalgo.innerHTML = '';
         //$(this).closest('form').submit();
         console.log('enter is pressed')
    emoMagic();
@@ -66,7 +82,6 @@ var compare = negadj[z];
 //console.log(compare)
 
 if (inputs.indexOf(compare)>-1) {
-	
 	neghao++
 }
 
@@ -76,13 +91,15 @@ if (inputs.indexOf(compare)>-1) {
 
 
 //negcounter
-for(var z=0; z< negcounter.length;z++) {
-var compare = negcounter[z];
+for(var z=0; z< inputs.length;z++) {
+var compare = inputs[z];
+
 //console.log(compare)
 
-if (inputs.indexOf(compare)>-1) {
+if (negcounter.indexOf(compare)>-1) {
 	console.log("WTF")
-	neghao++
+		doublenegative++;
+	//neghao++
 }
 }
 
@@ -103,20 +120,61 @@ if (inputs.indexOf(compare)>-1) {
 
 
 
-console.log('yup',poshao,neghao)
-if (poshao>neghao) {
+var negate=0;
+if (doublenegative==1||doublenegative==3) {
+	neghao++;
+}
+if (poshao>neghao ||doublenegative==2) {
+	negate=1;
+	console.log('yup',poshao)
+	 
+	 $(".visualalgo").addClass("rainbow-text");
+       visualalgo.style.position="absolute";
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 50+'px';
+
+   //visualalgo.style.color = 'turquoise';
+    rainy = setInterval(rainbow, 1000);
+
+   function rainbow (){
+  var array = ['turquoise','pink','orange','chartreuse','cyan'];
+ var color =  array[Math.floor(Math.random()*array.length)];
+visualalgo.style.color = color;
+  visualalgo.innerHTML = '感情 = 正面';
+      
+   }
+
 	document.getElementById("image").src="happybot.gif";
 }
 
-if (neghao>=poshao) {
+if (neghao>=poshao && neghao>=1 && negate==0) {
+	negate=1;
+	window.clearTimeout(rainy)
+	 
+       visualalgo.style.position="absolute";
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 50+'px';
+   visualalgo.style.color = 'red';
+      visualalgo.innerHTML = '感情 = 负面';
 	document.getElementById("image").src="sadcloud.gif";
 }
 
 
 
-if (neuhao>poshao&&neuhao>neghao) {
+if (neuhao>poshao&&neuhao>neghao&&negate==0) {
+	window.clearTimeout(rainy)
+		 
+       visualalgo.style.position="absolute";
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 50+'px';
+   visualalgo.style.color = 'lime';
+      visualalgo.innerHTML = '感情 = 中性';
 	document.getElementById("image").src="normalbot.gif";
 }
+
+
+
+console.log(neuhao,neghao,poshao)
 
 
 }
