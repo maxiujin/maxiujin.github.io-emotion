@@ -1,820 +1,127 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Page Title</title>
-</head>
-<style type="text/css">
-	canvas { border: 1px solid #ccc }
-  .ribbon {
-  position:absolute;
-  top:0;
-  right:0;
-}
-</style>
-<canvas id="c" width="1000" height="500"></canvas>
 
-<div>
-<img src="MobSid_Company_Logo.png" width="100" height="100" class="ribbon">
-</div>
-<!-- <input x-webkit-speech> -->
-<button onclick="thick()">Thick Line</button>
-<button onclick="thin()">Thin Line</button>
-<button onclick="erase()">Erase</button>
-<button onclick="aidraw()">AI draw</button>
-<button onclick="checkdata()">Clear Canvas</button>
+ <meta charset="utf-8">
 
-<button onclick="saveme()">Save Drawing</button>
-<button onclick="loadme()">Load Drawing</button>
+ <input id="humanresponse"  size="30" type="text"/>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <img src="normalbot.gif" id ="image" width="50" height="50">
 
-<button onclick="cleanme()">Clean Drawing</button>
-<!-- <button onclick="list()">List of my Drawings</button>
- -->
+<script type="text/javascript">
+	var poshao =0;
+	var neghao=0;
+	var neuhao=0;
+var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢"];
+var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠"];
 
-<!-- <textarea id="results" cols="80" rows="5"></textarea>
-<button onclick="startDictation()">Start</button> -->
-<!-- <input type="text" id="speech" style="font-size: 40px;"  name="speech" size="50" /> -->
-<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+var indiffers =["查","好"];
 
+var negcounter = ["不"];
+var neutralcounter =["太","非常","很"];
+var checklength = posadj[0];
 
-<script>
+console.log(checklength.length, checklength[0])
 
-//    var el = document.getElementById('c');
-// var ctx = el.getContext('2d');
-   // ctx.lineWidth = 5;
-// ctx.lineJoin = ctx.lineCap = 'round';
+  $('#humanresponse').keydown(function (event) {
+    var keypressed = event.keyCode || event.which;
+    if (keypressed == 13) {
+      //showbox();
+       poshao =0;
+	   neghao=0;
+	   neuhao=0;
+        //$(this).closest('form').submit();
+        console.log('enter is pressed')
+   emoMagic();
+    }
+});
 
 
-//firebase
-  var config = {
-    apiKey: "AIzaSyBA1zN9fWE8BY1nisk65Te77KGwfwZeDR0",
-    authDomain: "mobsidian-262f9.firebaseapp.com",
-    databaseURL: "https://mobsidian-262f9.firebaseio.com",
-    projectId: "mobsidian-262f9",
-    storageBucket: "mobsidian-262f9.appspot.com",
-    messagingSenderId: "812445897675"
-  };
-  firebase.initializeApp(config);
 
-  var database = firebase.database();
+function emoMagic () {
 
+var inputs = document.getElementById('humanresponse').value;
+console.log(inputs)
 
-var iamerasing=0;
-var tellonce=0;
-var cancellightbrush=0; 
-var cleandrawingplease=0; 
-var newYxinarray=[];
-var xinarray =[];//x
-var newxinarray= new Array();
-var newxinYarray= new Array();
 
 
-//save
+//positive
+for(var p=0; p< posadj.length;p++) {
+var compare = posadj[p];
+//console.log(compare)
 
-//ref.push(data)
-
-///
-
-
-///retrieve
-// ref.on('value',gotData, errData);
-
-// function gotData(data) {
-// console.log(data.val())
-// var coordinates =data.val();
-
-// var keys = Object.keys(coordinates)
-// console.log(coordinates)
-// for(var i=0; i<keys.length;i++) {
-// console.log('inside')
-//   var p=keys[i];
-
-// var shuju=coordinates[p].coords;
-// var shujunames=coordinates[p].name;
-//   console.log(p)
-//     console.log(shuju,shujunames)
-// }
-
-
-// }
-
-
-// function errData(err) {
-//    console.log(err)
-// }
-
-///////
-
-function list () {
-  var ref = database.ref('mobsidian-262f9')
- var check = ref.orderByKey();
-console.log(check);
-var keys = Object.keys(check)
-var valus=coordinates =check.val();
-console.log(valus)
-ref.on('value',gotData, errData);
-
-// var ref = firebase.database().ref("mobsidian-262f9");
-// var usersQuery = ref.val();
-// console.log(usersQuery)
-
-}
-///
-var thickthin=0;
-array = ['1', '2', '3', 'xx1', '4', '5', 'xx2', '6', '7', '8', 'xx3'];
-
-array = array.slice(2, array.length);
-console.log('one',array)
-for(var i =0; i<array.length; i++) {
-  var st= array[i];
-  var num= 'xx'+i;
-if (st=='xx1') {
-   var it= array.indexOf(st);
-  it++
- array = array.slice(it, array.length);
-}
-
-}
-
-
-// var it= array.indexOf('xx');
-//it++
-  //array.splice(it, 1);
-//it=it-1;
-
-//array = array.slice(it, array.length); //Need to assign it to the same or another variable
-
-console.log(array);
-
-var startgo=0; 
-
-
-
-
-var secretArrayX=[];
-var secretArrayY=[];
-var orginacoordinateX=[];
-var orginacoordinateY=[];
-var agentX=[];  //clone of originacoordX
-var counter=0;
- var negate=0; 
- var erasecounter=0;
-   var el = document.getElementById('c');
-var ctx = el.getContext('2d');
-
-ctx.save();
-function thick () {
-iamerasing=0;
-thickthin=1;
-
-}
-
-function thin () {
-iamerasing=0;
-thickthin=0;
-ctx.restore();
-ctx.save();
-console.log('lob',thickthin)
-}
-var isDrawing, points = [ ];
-
-el.onmousedown = function(e) {
-  isDrawing = true;
-     if (iamerasing==0) {
-        points.push({ x: e.clientX, y: e.clientY });
-     }
-
-    if (iamerasing==1) {
-    //ctx.clearRect (e.clientX, e.clientY, e.clientX, e.clientY);
-  }
-  //console.log('baby',points)
-};
-
-el.onmousemove = function(e) {
-  if (!isDrawing) return;
-cancellightbrush=1;
-    if (thickthin==0) {
-    console.log('zob',thickthin)
-  
-
-//       ctx.lineWidth = 0;
-// ctx.lineJoin = ctx.lineCap = 'round';
-  }
-
-    if (thickthin==1) {
-    console.log('mob',thickthin)
-    ctx.lineWidth = 5;
-ctx.lineJoin = ctx.lineCap = 'round';
-  }
-
-   if (iamerasing==1) {
-    ctx.globalCompositeOperation="copy";
-ctx.strokeStyle = "rgba(0,0,0,1)";
- 
- ctx.stroke();
- //    ctx.strokeStyle = ("rgba(255,255,255,255)");
- //    /* or */
- //    ctx.fillStyle = "rgba(255,0,0,0)";
-  // ctx.clearRect(0, 0,e.clientX, e.clientY);
-
-
-}
-if (iamerasing==0) {
-  //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  points.push({ x: e.clientX, y: e.clientY });
-// console.log('baby',e.clientX, e.clientY)
-secretArrayX.push(e.clientX);
-     secretArrayY.push(e.clientY);
-  ctx.beginPath();
-  ctx.moveTo(points[0].x, points[0].y);
-
-
-  //console.log(points[0].x, e.clientX)
-  for (var i = 1; i < points.length; i++) {
-    ctx.lineTo(points[i].x, points[i].y);
-  }
-  ctx.globalAlpha=1;
-ctx.strokeStyle = "rgba(0, 0, 0, 1)";
-  ctx.stroke();
-
-}
-};
-
-el.onmouseup = function() {
-  isDrawing = false;
-  
-   var first=secretArrayY[0];
-
- var last = secretArrayY[secretArrayY.length - 1];
- var check = Math.abs(first-last);
- console.log('wtf', check)
- if (check<=20) {
-  console.log('touching points')
- }
-if (iamerasing==0) {
-  console.log('switz', points)
-  orginacoordinateX.push(points[0].x)
-  agentX=orginacoordinateX;
-  orginacoordinateY.push(points[0].y)
-  //orginacoordinateX.push('XX');
-  //orginacoordinateY.push('YY')
-counter+=1;
-var xsample = 'XX'+counter
-var ysample = 'YY'+counter
-console.log('exlusive', xsample, ysample)
-  secretArrayX.push(xsample);
-  secretArrayY.push(ysample)
-  console.log('wo de', orginacoordinateX,orginacoordinateY)
-  console.log('baby',secretArrayX,secretArrayY)
-var pointarray=[];
-var pointarrayY=[];
-var truearray=[];
-var truearrayY=[];
-var point; 
-var pointY; 
-  for(var i=0; i<secretArrayX.length; i++) {
-
-       point=secretArrayX[i];
-      
-      pointY=secretArrayY[i];
-      
-
-      if (i<7) {
-         pointarray.push(point)
-
-
-         if (pointarray.length==2) {
-              var p1=pointarray[0];
-              var p2 = pointarray[1];
-       console.log(p1, p2)
-              var pdiff= Math.abs(p1-p2);
-              if (pdiff<=7) {
-
-                  truearray.push(pdiff);
-              }
-              pointarray=[];
-         }
-
-
-
-         ///y 
-
-
-            pointarrayY.push(pointY)
-
-         
-         if (pointarrayY.length==2) {
-              var p1=pointarrayY[0];
-              var p2 = pointarrayY[1];
-       console.log('y',p1, p2)
-              var pdiff= Math.abs(p1-p2);
-              if (pdiff<=10) {
-
-                  truearrayY.push(pdiff);
-              }
-              pointarrayY=[];
-         }
-
-
-
-       }
-
-
-
-
-  }
-  if (truearray.length==3) {
-    console.log('it is an arc')
-  }
-  console.log('my sunshine',truearray)
-  console.log('my sunshine y',truearrayY)
-
-  points.length = 0;
-}
-  //iamerasing=0;
-};
-
-
-var dataURL;
-function aidraw() {
-// if (startgo==1) {
-var image=new Image();
-image.onload=function(){
-    ctx.drawImage(image,0,0);
-}
-image.src=dataURL;
-
-
-    //setTimeout(saveme,2000)
-//    console.log(secretArrayX.length);
-// console.log(secretArrayY.length);
-//var idleInterval = setInterval(timetoDraw, 2000); 
-//timetoDraw();
- 
-}
-
-
-
-function cleanme () {///
-cleandrawingplease=1;
-///I need to create a new cartesian plane. Because when people draw, the lines, curves, circles, and all other shapes are not perfect. They appear perfect or "nice" to the naked eye, but it term of mathmatics, it is not.
-
-
-//if it completes a full shape, erase extra lines
-  console.log(secretArrayY,secretArrayX)
-  //change x array
-
-
-   var xx =orginacoordinateX[0];
-       var yy=orginacoordinateY[0];
-var sumx=0;
-var didi=0;
-//adddidi();
-var collectsumsx=[];
-var matrixX=secretArrayX;
-var matrixY=secretArrayY;
-// function adddidi () {
-//   didi+=1;
-// }
-console.log(secretArrayX.length)
-var newarr=[];
-var rememberlastone=[];
- var lastnumber;
-for(var n=0; n<secretArrayX.length; n++){
-   
-if (rememberlastone.length>1) {
-    lastnumber = rememberlastone.slice(-1)[0];
- }
-  var geta=secretArrayX[n];
-  var checkdifference =  Math.abs(geta-lastnumber);
-
-  if (checkdifference>10) {
-    console.log('change');
-    console.log('change drawing',rememberlastone)
-     editcurve();
-break;
-  }
-  rememberlastone.push(geta);
-
-
-} 
-
-// var xinarray =[];
-// var newYxinarray=[];
-  //var newxinarray=[];
-  var pheta;
-  var theta;
-function editcurve () {//
-   xinarray = secretArrayX.slice(rememberlastone.length, secretArrayX.length);
-  newYxinarray=secretArrayY.slice(rememberlastone.length, secretArrayY.length);
-  
-
-
-  console.log('new secretx', xinarray)
-  for(var e=0; e<xinarray.length; e++){//
-    pheta = xinarray[e];
-    theta=newYxinarray[e];
-console.log('DNA the number',pheta)
-    if (isNaN(pheta)==false) {//
-      var diff=Math.floor(Math.random() * 20) + 1  
-    pheta=pheta-20;
-    theta=theta-20;
-}
-
-
-if (isNaN(pheta)==true) {
-console.log('DNA',pheta)
-}
-
-// console.log('DNA the number',pheta)
-
-    newxinarray.push(pheta);
-newxinYarray.push(theta);
-  }//
-
-
-
-
-
-  timetoDraw();
-
-}//
-
-
-
-//   for(var i=0; i<secretArrayX.length; i++){
-//   var xpos = secretArrayX[i];
-//    var ypos = secretArrayY[i];
-//    console.log('didi', didi)
-//   var cloney='';
-// var clonex='';
-// var xsample='XX'+didi;
-// var ysample='YY'+didi;
-// // console.log('nothin',xsample);
-// // console.log('nothin',ysample);
-  
-
-
-//   if (xpos==xsample) {//
-// console.log('data',xpos,xsample)
-// console.log('array', secretArrayX)
-//             clonex=xpos;
-//   var it= secretArrayX.indexOf(xpos);
-//   //matrixX=[];
-//   matrixX=secretArrayX;
-//   console.log('coming in', matrixX)
-//   //var pro=it;
-//  // it++
-//  console.log('vegeta', it)
-//  if (didi==1) {
-//   console.log('i am annoying')
-//    matrixX = secretArrayX.slice(0, it); 
-//  }
-//  if (didi>1) {
-//  var tini=didi-1
-//   var sample = 'XX'+tini
-//    var pt= secretArrayX.indexOf(sample);
-//    pt++
-
-//     var zt= secretArrayX.indexOf(xsample);
-//    console.log('rox',pt)
-//    matrixX=secretArrayX;
-//     matrixX = secretArrayX.slice(pt, zt);
-
-// console.log('lol', matrixX)
-//  //var it= matrixX.indexOf(xsample);
-//   //it++
-//    //matrixX = secretArrayX.slice(0, it); 
-//  }
-//    //0, it = good //it, matrixX.length
-//    console.log('my array',didi,matrixX)
-//         sumx =  matrixX.reduce(function(a, b) { return a + b; }, 0);
-        
-//         collectsumsx.push(sumx)
-// console.log('tai yang',collectsumsx,i); 
-// didi+=1;
-
-// // console.log('after',secretArrayX)
-//  xpos=secretArrayX[it];
-
-  
-// }//
-// if (ypos==ysample) {//
-//         cloney=ypos;
-//   var it= secretArrayY.indexOf(ypos);
-//   it++
-//   secretArrayY = secretArrayY.slice(it, secretArrayY.length); 
-//  ypos=secretArrayY[it];
-//  // console.log(secretArrayY)
-
-//   }
-
-
-
-//   }
-
-
-
-// function add(a, b) {
-//     return a + b;
-// }
-
-
-
-
-
-
-}///
-
-function erase () {
-  iamerasing=1;
-  thickthin=0;
-
-if (tellonce==0) {
-  alert('Hold down mouse and hover over where you want to erase. Click thin line or thick line when you are done');
-  tellonce=1;
-  }
-}
-
-function checkdata() {
-  console.log('i will draw this')
-   console.log(secretArrayX);
-console.log(secretArrayY);
-  var el2 = document.getElementById('c');
- dataURL=el2.toDataURL();
-  ctx.clearRect(0, 0, el.width, el.height);
-
-// timetoDraw();
-}
-
-
-var didi=0; 
-var it2=0;
-function timetoDraw () {//
-     var el2 = document.getElementById('c');
-var ctx2 = el2.getContext('2d');
-var times = 0;
-
-  //ctx.lineWidth = 10;
-  //ctx.lineJoin = ctx.lineCap = 'round';
-  console.log(secretArrayX.length);
-  console.log(secretArrayY.length);
-  //for(var m=0; m<orginacoordinateY.length; m++) {/////
-
-// var f1=orginacoordinateY[m];
-if (cleandrawingplease==1) {
-  ctx.clearRect(0, 0, el.width, el.height);
-  secretArrayX=newxinarray;
-  secretArrayY=newxinYarray;
-}
-
-    function remove(array, element) {
-    return array.filter(e => e !== element);
-}
-
-var xx;
-var yy;
-var xpos;
- var ypos;
-pupos();
-
-function pupos () {
-console.log('cake')
-console.log('wtf???', secretArrayY.length)
-   // for(var q=0; q<agentX.length; q++) {
-
-        xx =orginacoordinateX[0];
-        yy=orginacoordinateY[0];
-didi++;
-console.log('creator',didi)
-
-
-console.log('pupos',times,xx, yy)
-
-// var it= orginacoordinateX.indexOf(xx);
-//   orginacoordinateX.splice(it, 1);
-
-//   var it2= orginacoordinateY.indexOf(yy);
-//     orginacoordinateY.splice(it, 1);
-
-
-
-    var randominput;
-     var randominput2;
-     randominput = orginacoordinateX[0];
-var vowels = remove(orginacoordinateX, randominput);
-orginacoordinateX=vowels;
-
-
-randominput2 = orginacoordinateY[0];
-var vowels2 = remove(orginacoordinateY, randominput2);
-orginacoordinateY=vowels2;
-     
-
-
-
-console.log('ordinary',orginacoordinateX, orginacoordinateY)
-       ctx2.beginPath();
-         ctx2.moveTo(xx, yy);
-          racken();
-   // }
-
-
-// if (didi==0) {
-
-  
-//   times++
-//   console.log('racken', times)
-// }
-}
-
-
-function racken () {//
-
-    console.log('harmony', times)
-  for(var i=0; i<secretArrayX.length; i++) {//
-
-    xpos = secretArrayX[i];
-   ypos = secretArrayY[i];
-var cloney='';
-var clonex='';
-var xsample='XX'+didi;
-var ysample='YY'+didi;
-// console.log('nothin',xsample);
-// console.log('nothin',ysample);
-           
-
-  if (xpos==xsample) {//
-            clonex=xpos;
-  var it= secretArrayX.indexOf(xpos);
-  //var pro=it;
-  it++
-   secretArrayX = secretArrayX.slice(it, secretArrayX.length);  //0, it = good
-// console.log('after',secretArrayX)
- xpos=secretArrayX[it];
-   // var string=secretArrayX[it];
-   //  it2= secretArrayX.indexOf(string);
-  //console.log('before',pro,it,it2,string,'lazy',secretArrayX)
-
- // startgo=0;
- //  console.log('finished', startgo)
-
-  
-}//
-if (ypos==ysample) {//
-        cloney=ypos;
-  var it= secretArrayY.indexOf(ypos);
-  it++
-  secretArrayY = secretArrayY.slice(it, secretArrayY.length); 
- ypos=secretArrayY[it];
- // console.log(secretArrayY)
-}//
-
-
-      if (cloney==ysample && clonex==xsample && secretArrayY.length>1 && times==0) {//
-  pupos();
-  //console.log('shun yi',secretArrayX)
-
-}//
-   
-     //console.log('yeah',xpos,ypos)
-
-
-    // ctx.moveTo(23, 35);
-
-//if (xpos>=1 && ypos>=1) {//
-
-   // ctx.restore()
-//console.log('i drew')
-
-       if (secretArrayY.length==0) {
-  times=1;
-  //console.log('break here')
-  break;
-  
-}
-
-
-
-//}//
-
-//firebase save xcoord and y coord
-     // ctx2.lineWidth = 1;
-//ctx2.lineJoin = ctx2.lineCap = 'round';
-if (cancellightbrush==0) {
-ctx2.globalAlpha=0.1;
-ctx2.strokeStyle = "rgba(0, 0, 0, 0.1)";
-}
-    ctx2.lineTo(xpos, ypos);
- 
-
-    ctx2.stroke();
-
-
-  }
-
-
-
- 
-}//
-
-
-
-}//
-
- var msg;
-function saveme () {
-
-    msg = window.prompt("Please give your drawing a name", "Name");
-  //alert(msg);
-
-  console.log(msg)
-setTimeout(supersave,2000)
-
-}
-
-
-
-function supersave () {
-    var ref=database.ref(msg);
-
-var data = {
-
-   name:"data",
-  coordsx:secretArrayX,
-  coordsy:secretArrayY
-}
-ref.push(data)
-}
-
-
-function loadme () {
-  if (cancellightbrush==1) {
-    cancellightbrush=0;
-  }
-
-     msg = window.prompt("Please write the name of the past drawing", "Name");
- 
-
-  console.log(msg)
-setTimeout(load,2000)
-
-
-
-
-function load() {///
-
-  var ref = database.ref(msg)
-ref.on('value',gotData, errData);
-
-function gotData(data) {
-console.log(data.val())
-var coordinates =data.val();
-
-var keys = Object.keys(coordinates)
-console.log(coordinates)
-for(var i=0; i<keys.length;i++) {
-console.log('inside')
-  var p=keys[i];
-
-var shuju=coordinates[p].coordsx;
-var shujunames=coordinates[p].coordsy;
-secretArrayX=shuju;
-secretArrayY=shujunames;
-  console.log(p)
-    console.log(shuju,shujunames)
-    timetoDraw();
+if (inputs.indexOf(compare)>-1) {
+	
+	poshao++
 }
 
 
 }
 
 
-function errData(err) {
-   console.log(err)
+//negative
+
+for(var z=0; z< negadj.length;z++) {
+var compare = negadj[z];
+//console.log(compare)
+
+if (inputs.indexOf(compare)>-1) {
+	
+	neghao++
 }
 
 
-}///
+}
+
+
+
+//negcounter
+for(var z=0; z< negcounter.length;z++) {
+var compare = negcounter[z];
+//console.log(compare)
+
+if (inputs.indexOf(compare)>-1) {
+	console.log("WTF")
+	neghao++
+}
+}
+
+//neutral
+
+for(var z=0; z< neutralcounter.length;z++) {
+var compare = neutralcounter[z];
+//console.log(compare)
+
+if (inputs.indexOf(compare)>-1) {
+	neuhao++;
+	neghao-2;
+	poshao-2;
+}
+
+}
 
 
 
 
+console.log('yup',poshao,neghao)
+if (poshao>neghao) {
+	document.getElementById("image").src="happybot.gif";
+}
+
+if (neghao>=poshao) {
+	document.getElementById("image").src="sadcloud.gif";
+}
 
 
+
+if (neuhao>poshao&&neuhao>neghao) {
+	document.getElementById("image").src="normalbot.gif";
+}
 
 
 }
 
 
 </script>
-<body>
 
-<!-- <h1>Welcome to Mobsid's Animation Platform</h1> -->
-<p></p>
-
-
-
-
-</body>
 </html>
