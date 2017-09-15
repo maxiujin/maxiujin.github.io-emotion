@@ -30,9 +30,9 @@ var checklength = posadj[0];
 var visualalgo = document.body.appendChild(document.createElement('div'));
 var visualalgo2 = document.body.appendChild(document.createElement('div2'));
        visualalgo2.style.position="absolute";
-visualalgo2.style.left = 280+'px';
+visualalgo2.style.left = 480+'px';
   visualalgo2.style.top = 40+'px';
-  visualalgo2.innerHTML = '你好，请写一个句子';
+  visualalgo2.innerHTML = '你好，请写一个句子, 然后这个A.I. 能识别你的情绪';
 
 
   $('#humanresponse').keydown(function (event) {
@@ -130,7 +130,7 @@ if (poshao>neghao ||doublenegative==2) {
 	 
 	 $(".visualalgo").addClass("rainbow-text");
        visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
+visualalgo.style.left = 510+'px';
   visualalgo.style.top = 50+'px';
 
    //visualalgo.style.color = 'turquoise';
@@ -152,7 +152,7 @@ if (neghao>=poshao && neghao>=1 && negate==0) {
 	window.clearTimeout(rainy)
 	 
        visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
+visualalgo.style.left = 510+'px';
   visualalgo.style.top = 50+'px';
    visualalgo.style.color = 'red';
       visualalgo.innerHTML = '感情 = 负面';
@@ -165,7 +165,7 @@ if (neuhao>poshao&&neuhao>neghao&&negate==0) {
 	window.clearTimeout(rainy)
 		 
        visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
+visualalgo.style.left = 510+'px';
   visualalgo.style.top = 50+'px';
    visualalgo.style.color = 'lime';
       visualalgo.innerHTML = '感情 = 中性';
