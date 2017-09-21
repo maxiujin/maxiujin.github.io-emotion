@@ -241,6 +241,8 @@ var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高
 var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
+var makepositive=0;
+
 var doublenegative=0;
     var animationTime = 500;
 console.log('hghg')
@@ -390,6 +392,20 @@ if (inputs.indexOf(compare)>-1) {
 
 }
 
+
+
+for(var i=0; i<neutralcounter.length; i++) {
+  var lop = neutralcounter[i];
+  var pop = inputs.indexOf(lop);
+
+  var index = pop + 1;
+var final = inputs[index];
+console.log('final', final)
+     if (negadj.indexOf(final) > -1) {
+makepositive=1;
+     }
+
+}
 var itsneutral;
 
 if (poshao==0 && neghao==0) {
@@ -404,9 +420,9 @@ if (doublenegative==1||doublenegative==3) {
 }
 
 
-console.log('output', poshao,neghao,neuhao)
+console.log('output', poshao,neghao,neuhao,makepositive)
 
-if (poshao>neghao ||doublenegative==2) {
+if (poshao>neghao ||doublenegative==2 || makepositive==0) {
   negate=1;
  visualalgo.style.position="absolute";
 visualalgo.style.left = 310+'px';
@@ -433,10 +449,10 @@ visualalgo.style.left = 310+'px';
 
 
 
+if (negate==0) {
 
-if (((neuhao>poshao&&neuhao>neghao&&negate==0)) || itsneutral==1) {
+if (((neuhao>poshao&&neuhao>neghao)) || itsneutral==1) {
  
-     
        visualalgo.style.position="absolute";
 visualalgo.style.left = 310+'px';
   visualalgo.style.top = 350+'px';
@@ -445,7 +461,7 @@ visualalgo.style.left = 310+'px';
       visualalgo.innerHTML = '感情 = 中性';
   // document.getElementById("image").src="normalbot.gif";
 }
-
+}
 
 
 
