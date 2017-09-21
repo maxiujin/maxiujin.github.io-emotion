@@ -1,74 +1,347 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Full Page Search</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
 
- <meta charset="utf-8">
+<style type="text/css">
+  html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  background-color: #fea154;
+}
+::-webkit-input-placeholder {
+  color: #212129;
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    -webkit-transform: scale(1) rotate(360deg);
+    transform: scale(1) rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -webkit-transform: scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    -webkit-transform: scale(1) rotate(360deg);
+    transform: scale(1) rotate(360deg);
+  }
+}
+.content {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 75px);
+  top: 75px;
+  overflow: hidden;
+  margin: auto;
+  text-align: center;
+}
+.content .results {
+  bottom: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 60%;
+  border: 2px solid #212129;
+  list-style: none;
+  background: #fafafa;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  right: 20%;
+  box-shadow: 0px -1px 3px 0px rgba(254, 119, 8, 0.5);
+  -webkit-transition: all 0.5s ease-in-out 0;
+  transition: all 0.5s ease-in-out 0;
+}
+.content .results li {
+  border-bottom: 2px solid #e6e6e6;
+  padding: 10px;
+  margin: 0 auto;
+  width: 98%;
+}
+.content .results.show {
+  overflow: auto;
+  display: block;
+  visibility: visible;
+  height: 100%;
+  -webkit-transition: all 0.5s ease-in-out 1s;
+  transition: all 0.5s ease-in-out 1s;
+}
+.content .results.show.no-wait {
+  -webkit-transition: all 0.5s ease-in-out 0 !important;
+  transition: all 0.5s ease-in-out 0 !important;
+}
+.panel-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+.panel-container .top-panel {
+  z-index: 50;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid #fea154;
+  position: relative;
+  top: 10;
+  background: #212129;
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s;
+}
+.panel-container .bottom-panel {
+  z-index: 50;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  background: #212129;
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s;
+}
+.panel-container .search-container {
+  position: absolute;
+  left: calc(50% - 45px);
+  top: calc(50% - 45px);
+  z-index: 100;
+}
+.panel-container .search-container .search-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+  border: none;
+  background: #fea154;
+  color: #212129;
+  font-size: 25px;
+  outline: none;
+  box-shadow: inset 0px 0px 3px 0px rgba(254, 133, 33, 0.9);
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s;
+}
+.panel-container .search-container .search-button i.spinning {
+  -webkit-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
+}
+.panel-container .search-container input {
+  border: none;
+  border-bottom: 2px solid #212129;
+  background: transparent;
+  width: 0px;
+  font-size: 25px;
+  visibility: hidden;
+  -webkit-appearance: none;
+  color: #212129;
+  -webkit-transform: translate(-175px, -9px);
+          transform: translate(-175px, -9px);
+  font-weight: 100;
+}
+.panel-container .search-container input:focus {
+  outline: none;
+}
+.panel-container.show-search {
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s;
+}
+.panel-container.show-search .top-panel {
+  -webkit-transform: translate(0, -50px);
+          transform: translate(0, -50px);
+  box-shadow: 0px 1px 2px 0px rgba(254, 133, 33, 0.9);
+}
+.panel-container.show-search .bottom-panel {
+  -webkit-transform: translate(0, 50px);
+          transform: translate(0, 50px);
+  box-shadow: 0px -1px 2px 0px rgba(254, 133, 33, 0.9);
+}
+.panel-container.show-search .search-container .search-button {
+  -webkit-transform: translate(-150px, 0);
+          transform: translate(-150px, 0);
+  box-shadow: none;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out 0.5s;
+  transition: -webkit-transform 0.5s ease-in-out 0.5s;
+  transition: transform 0.5s ease-in-out 0.5s;
+  transition: transform 0.5s ease-in-out 0.5s, -webkit-transform 0.5s ease-in-out 0.5s;
+  cursor: default;
+}
+.panel-container.show-search .search-container input {
+  visibility: visible;
+  width: 300px;
+  position: relative;
+  -webkit-transition: all 0.5s ease-in-out 1s;
+  transition: all 0.5s ease-in-out 1s;
+}
+.panel-container.show-results .top-panel {
+  box-shadow: none;
+  -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%);
+  -webkit-transition: -webkit-transform 0.5s ease-in-out 0s;
+  transition: -webkit-transform 0.5s ease-in-out 0s;
+  transition: transform 0.5s ease-in-out 0s;
+  transition: transform 0.5s ease-in-out 0s, -webkit-transform 0.5s ease-in-out 0s;
+}
+.panel-container.show-results .bottom-panel {
+  box-shadow: none;
+  -webkit-transform: translate(0, 100%);
+          transform: translate(0, 100%);
+  -webkit-transition: -webkit-transform 0.5s ease-in-out 0s;
+  transition: -webkit-transform 0.5s ease-in-out 0s;
+  transition: transform 0.5s ease-in-out 0s;
+  transition: transform 0.5s ease-in-out 0s, -webkit-transform 0.5s ease-in-out 0s;
+}
+.panel-container.show-results .search-container {
+  -webkit-transition: all 0.5s ease-in-out 1s;
+  transition: all 0.5s ease-in-out 1s;
+  top: 0;
+}
+.panel-container.show-results .search-container .search-button {
+  background: transparent;
+  box-shadow: none;
+}
+</style>
+</head>
 
- <input id="humanresponse"  size="30" type="text"/>
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<body>
+<div class="panel-container">
+  <div class="top-panel"></div>
+  <div class="search-container">
+    <form>
+      <button type="button" class="search-button"><i class="glyphicon glyphicon-search"></i></button>
+      <input type="text" class="search-input" placeholder="Search...">
+    </form>
+  </div>
+  <div class="bottom-panel"></div>
+</div>
+
+<div class="content">
+  <ul class="results">
+    <br>
+    <br>
+  <!--   <img src="https://chinaccelerator.com/wp-content/uploads/2017/05/ocheng-en-logo-backgrounded.png" alt="ocheng logo"> -->
+  </ul>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <img src="normalbot.gif" id ="image" width="100" height="100">
-
-  <style type="text/css">
-
-
-  </style>
-
-<script type="text/javascript">
-	var poshao =0;
-	var neghao=0;
-	var neuhao=0;
-	  var rainy;
-var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","好"];
-var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑"];
-
-// var indiffers =["查"];
-
+<script>
+var visualalgo = document.body.appendChild(document.createElement('div'));
+  var poshao =0;
+  var neghao=0;
+  var neuhao=0;
+    var rainy;
+var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害"];
+var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
 var doublenegative=0;
-var checklength = posadj[0];
-var visualalgo = document.body.appendChild(document.createElement('div'));
-var visualalgo2 = document.body.appendChild(document.createElement('div2'));
-       visualalgo2.style.position="absolute";
-visualalgo2.style.left = 480+'px';
-  visualalgo2.style.top = 40+'px';
-  visualalgo2.innerHTML = '你好，请写一个句子, 然后这个A.I. 能识别你的情绪';
+    var animationTime = 500;
+console.log('hghg')
+$(function() {
+  init();
 
+  var that = this;
+  $(".search-input").on("keydown", function(e) {
+    var val = $(this).val();
+    if (e.keyCode == 13) {
+      //reset counters
+      poshao =0;
+     neghao=0;
+     neuhao=0;
+     doublenegative=0;
+     //
+    setTimeout(ai, 4000)
+      e.preventDefault();
+      if (!val) {
+        return;
+      }
+      hideResults();
 
-  $('#humanresponse').keydown(function (event) {
-window.clearTimeout(rainy)
-    var keypressed = event.keyCode || event.which;
-    if (keypressed == 13) {
-      //showbox();
-      visualalgo2.innerHTML='';
-       poshao =0;
-	   neghao=0;
-	   neuhao=0;
-	   doublenegative=0;
-	    visualalgo.innerHTML = '';
-        //$(this).closest('form').submit();
-        console.log('enter is pressed')
-   emoMagic();
+      // Do some AJAX call here to get results
+      getSearchResults(val).then(function(results) {
+        // Do something with results here before calling showResults
+        //
+        //
+        showResults();
+      });
     }
+  });
+
+  function init() {
+    var searchButton = $(".search-button");
+    searchButton.on("click", function(e) {
+      var panelContainer = $(".panel-container");
+      if (!panelContainer.hasClass("show-search")) {
+        panelContainer.addClass("show-search");
+        setTimeout(function() {
+          $(".search-input").focus();
+        }, animationTime * 3);
+      }
+    });
+  }
+
+  function getSearchResults(val) {
+    return new Promise(function(resolve, reject) {
+      var results = [];
+
+      setTimeout(function() {
+        resolve(results);
+      }, 2000);
+    });
+  }
+
+  function showResults() {
+    var panelContainer = $(".panel-container");
+    var results = $(".results");
+    var searchIcon = $(".search-button i");
+
+    panelContainer.addClass("show-search show-results");
+    searchIcon.toggleClass("glyphicon-search glyphicon-refresh spinning");
+    results.addClass("show");
+
+    // After first run, change result.show class to have no transition animation delay
+    if (!results.hasClass("no-wait")) {
+      setTimeout(function() {
+        results.addClass("no-wait");
+      }, animationTime * 2);
+    }
+  }
+
+  function hideResults() {
+    var panelContainer = $(".panel-container");
+    var results = $(".results");
+    var searchIcon = $(".search-button i");
+
+    if (!panelContainer.hasClass("show-results")) {
+      panelContainer.removeClass("show-search");
+    }
+
+    results.removeClass("show");
+    searchIcon.toggleClass("glyphicon-search glyphicon-refresh spinning");
+  }
 });
 
 
 
-function emoMagic () {
-
-var inputs = document.getElementById('humanresponse').value;
-console.log(inputs)
-
+function ai () {
+var inputs =  $(".search-input").val();
+console.log('trigger 触发',inputs)
 
 
-//positive
 for(var p=0; p< posadj.length;p++) {
 var compare = posadj[p];
 //console.log(compare)
 
 if (inputs.indexOf(compare)>-1) {
-	
-	poshao++
+  
+  poshao++
 }
 
 
@@ -82,7 +355,7 @@ var compare = negadj[z];
 //console.log(compare)
 
 if (inputs.indexOf(compare)>-1) {
-	neghao++
+  neghao++
 }
 
 
@@ -97,9 +370,9 @@ var compare = inputs[z];
 //console.log(compare)
 
 if (negcounter.indexOf(compare)>-1) {
-	console.log("WTF")
-		doublenegative++;
-	//neghao++
+  console.log("WTF")
+    doublenegative++;
+  //neghao++
 }
 }
 
@@ -110,82 +383,73 @@ var compare = neutralcounter[z];
 //console.log(compare)
 
 if (inputs.indexOf(compare)>-1) {
-	neuhao++;
-	neghao-2;
-	poshao-2;
+  neuhao++;
+  neghao-2;
+  poshao-2;
 }
 
 }
 
+var itsneutral;
 
+if (poshao==0 && neghao==0) {
+  itsneutral=1;
+}
 
 
 var negate=0;
+
 if (doublenegative==1||doublenegative==3) {
-	neghao++;
+  neghao++;
 }
+
+
+console.log('output', poshao,neghao,neuhao)
+
 if (poshao>neghao ||doublenegative==2) {
-	negate=1;
-	console.log('yup',poshao)
-	 
-	 $(".visualalgo").addClass("rainbow-text");
-       visualalgo.style.position="absolute";
-visualalgo.style.left = 510+'px';
-  visualalgo.style.top = 50+'px';
-
-   //visualalgo.style.color = 'turquoise';
-    rainy = setInterval(rainbow, 1000);
-
-   function rainbow (){
-  var array = ['turquoise','pink','orange','chartreuse','cyan'];
+  negate=1;
+ visualalgo.style.position="absolute";
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 350+'px';
+   var array = ['turquoise','pink','orange','chartreuse','cyan'];
  var color =  array[Math.floor(Math.random()*array.length)];
 visualalgo.style.color = color;
   visualalgo.innerHTML = '感情 = 正面';
-      
-   }
 
-	document.getElementById("image").src="happybot.gif";
-}
+  }
 
 if (neghao>=poshao && neghao>=1 && negate==0) {
-	negate=1;
-	window.clearTimeout(rainy)
-	 
+  negate=1;
+  
+   
        visualalgo.style.position="absolute";
-visualalgo.style.left = 510+'px';
-  visualalgo.style.top = 50+'px';
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 350+'px';
+  visualalgo.style.font = "italic bold 20px";
    visualalgo.style.color = 'red';
       visualalgo.innerHTML = '感情 = 负面';
-	document.getElementById("image").src="sadcloud.gif";
+  // document.getElementById("image").src="sadcloud.gif";
 }
 
 
 
-if (neuhao>poshao&&neuhao>neghao&&negate==0) {
-	window.clearTimeout(rainy)
-		 
+
+if (((neuhao>poshao&&neuhao>neghao&&negate==0)) || itsneutral==1) {
+ 
+     
        visualalgo.style.position="absolute";
-visualalgo.style.left = 510+'px';
-  visualalgo.style.top = 50+'px';
+visualalgo.style.left = 310+'px';
+  visualalgo.style.top = 350+'px';
+
    visualalgo.style.color = 'lime';
       visualalgo.innerHTML = '感情 = 中性';
-	document.getElementById("image").src="normalbot.gif";
+  // document.getElementById("image").src="normalbot.gif";
 }
 
 
 
-console.log(neuhao,neghao,poshao)
-
-
-
-
-//learning algorithm 
-
-//search new input sentence, person said it should be negative. scan sentence and then see if there are some words that already exist in your category. IF THERE are entirely new words put them in negative, if all words exist, but there is a different combination, then 
 
 }
-
-
 </script>
-
+</body>
 </html>
