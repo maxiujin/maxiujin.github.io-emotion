@@ -237,7 +237,7 @@ var visualalgo = document.body.appendChild(document.createElement('div'));
   var neghao=0;
   var neuhao=0;
     var rainy;
-var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱"];
+var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
 var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
@@ -386,8 +386,8 @@ var compare = neutralcounter[z];
 
 if (inputs.indexOf(compare)>-1) {
   neuhao++;
-  neghao-2;
-  poshao-2;
+  // neghao-2;
+  // poshao-2;
 }
 
 }
@@ -413,13 +413,17 @@ if (poshao==0 && neghao==0) {
 }
 
 
+
+
 var negate=0;
 
 if (doublenegative==1||doublenegative==3) {
   neghao++;
 }
 
-
+if (poshao>=neuhao ||neghao>=neuhao) {
+  negate==1; 
+}
 console.log('output', poshao,neghao,neuhao,makepositive)
 
 if (poshao>neghao ||doublenegative==2 || makepositive==2) {
@@ -427,12 +431,15 @@ if (poshao>neghao ||doublenegative==2 || makepositive==2) {
   negate=1;
 }
  visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
-  visualalgo.style.top = 350+'px';
+ visualalgo.style.fontSize='60px';
+visualalgo.style.left = 410+'px';
+  visualalgo.style.top = 250+'px';
    var array = ['turquoise','pink','orange','chartreuse','cyan'];
  var color =  array[Math.floor(Math.random()*array.length)];
-visualalgo.style.color = color;
+visualalgo.style.color = 'turquoise';
+
   visualalgo.innerHTML = '感情 = 正面';
+
 
   }
 
@@ -441,9 +448,9 @@ if (neghao>=poshao && neghao>=1 && negate==0) {
   
    
        visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
-  visualalgo.style.top = 350+'px';
-  visualalgo.style.font = "italic bold 20px";
+visualalgo.style.fontSize='60px';
+visualalgo.style.left = 410+'px';
+  visualalgo.style.top = 250+'px';
    visualalgo.style.color = 'red';
       visualalgo.innerHTML = '感情 = 负面';
   // document.getElementById("image").src="sadcloud.gif";
@@ -456,8 +463,9 @@ if (negate==0) {
 if (((neuhao>poshao&&neuhao>neghao)) || itsneutral==1) {
  
        visualalgo.style.position="absolute";
-visualalgo.style.left = 310+'px';
-  visualalgo.style.top = 350+'px';
+visualalgo.style.fontSize='60px';
+visualalgo.style.left = 410+'px';
+  visualalgo.style.top = 250+'px';
 
    visualalgo.style.color = 'lime';
       visualalgo.innerHTML = '感情 = 中性';
