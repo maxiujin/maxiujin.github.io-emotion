@@ -236,7 +236,22 @@ body {
         <button id= "b5"  onclick="zhengmian()" >正面</button>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
 <script>
+ var config = {
+    apiKey: "AIzaSyDBJi4p8SjZLFDf-iFKc8ZstkXyy2FLkV4",
+    authDomain: "gongyinao.firebaseapp.com",
+    databaseURL: "https://gongyinao.firebaseio.com",
+    projectId: "gongyinao",
+    storageBucket: "gongyinao.appspot.com",
+    messagingSenderId: "792226516451"
+  };
+  firebase.initializeApp(config);
+
+//activate database
+  var database = firebase.database();
+
 var visualalgo = document.body.appendChild(document.createElement('div'));
 document.getElementById('b1').style.visibility ='hidden';
 document.getElementById('b2').style.visibility ='hidden';
@@ -248,17 +263,116 @@ document.getElementById('b5').style.visibility ='hidden';
   var neuhao=0;
   var inputs;
     var rainy;
-var posadj =["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
-var negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
-var negcounter = ["不"];
-var neutralcounter =["太","非常","很"];
-
-var selfknowledge = posadj.concat(negadj).concat(negcounter).concat(neutralcounter);
-console.log('my knowledge', selfknowledge)
+    
 var zhishiku =new Array;
 var zhishikunegative =new Array;
 var zhishikupositive =new Array;
 var makepositive=0;
+    
+
+
+var posadj = new Array();//forcalculations
+ // posadj = ["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
+var negadj = new Array();//for calculations
+// negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
+var negcounter = ["不"];
+var neutralcounter =["太","非常","很"];
+
+var sendpos = new Array();
+var sendneg = new Array();
+
+// var msg ='positive'
+//       var ref=database.ref(msg);
+//       var data = {
+
+//    name:"positive",
+//   poswords:posadj
+
+// }
+// ref.push(posadj);
+
+// var msg2 ='negative'
+//       var ref2=database.ref(msg2);
+// ref2.push(negadj);
+getpositive();
+function getpositive () {
+
+var ref = database.ref('positive')
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+console.log(data.val())
+var coordinates =data.val();
+console.log(coordinates)
+var keys = Object.keys(coordinates)
+console.log(coordinates)
+for(var i=0; i<keys.length;i++) {
+
+  var p=keys[i];
+
+var shuju=coordinates[p]
+
+posadj=shuju;
+
+ 
+}
+if(posadj.length<=1) {
+  posadj=data.val();
+}
+
+console.log('inside positive', posadj)
+}
+function errData(err) {
+   console.log(err)
+}
+
+
+}
+
+
+
+getnegative();
+function getnegative () {
+
+var ref = database.ref('negative')
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+console.log(data.val())
+var coordinates =data.val();
+console.log(coordinates)
+var keys = Object.keys(coordinates)
+console.log(coordinates)
+for(var i=0; i<keys.length;i++) {
+
+  var p=keys[i];
+
+var shuju=coordinates[p]
+
+negadj=shuju;
+
+ 
+}
+if(poadj.length<=1) {
+  posadj=data.val();
+}
+
+console.log('inside', negadj)
+}
+function errData(err) {
+   console.log(err)
+}
+
+
+}
+
+
+
+// 
+
+var selfknowledge = posadj.concat(negadj).concat(negcounter).concat(neutralcounter);
+console.log('my knowledge', selfknowledge)
+
 
 var doublenegative=0;
     var animationTime = 500;
@@ -279,6 +393,7 @@ document.getElementById('b2').style.visibility ='hidden';
      neuhao=0;
      doublenegative=0;
      //
+     console.log('posadj = zhishikupositive', posadj)
     setTimeout(ai, 4000)
       e.preventDefault();
       if (!val) {
@@ -354,14 +469,16 @@ document.getElementById('b2').style.visibility ='hidden';
 
 function ai () {
  inputs =  $(".search-input").val();
-console.log('trigger 触发',inputs)
+console.log('trigger 触发',zhishikupositive)
 
 if (zhishikupositive.length>=1) {
-posadj=posadj.concat(zhishikupositive);
+posadj=zhishikupositive;
+console.log('posadj = zhishikupositive')
 }
 
 if (zhishikunegative.length>=1) {
-  negadj=negadj.concat(zhishikunegative);
+  negadj=zhishikunegative;
+  console.log('negadj = zhishikunegative')
 }
 
 
@@ -541,6 +658,7 @@ visualalgo.style.left = 410+'px';
 }
 
 function budui () {
+  console.log('zhao kunchong', posadj)
 visualalgo.style.visibility ='hidden';
 document.getElementById('b1').style.visibility ='hidden';
 document.getElementById('b2').style.visibility ='hidden';
@@ -580,7 +698,7 @@ for(var i=0; i<inputs.length;i++) {
 newinformation=1;
       }
       if (newinformation==0) {
-        zhishikunegative.push(checkneuron);
+        sendneg.push(checkneuron);
       }
 
 }
@@ -588,6 +706,12 @@ document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
 console.log(zhishikunegative)
+   var ref=database.ref('negative');
+negadj=negadj.concat(sendneg);
+zhishikunegative=negadj;
+sendneg=[];
+var data = negadj;
+ref.set(data)
 
 }
 
@@ -619,6 +743,7 @@ document.getElementById('b5').style.visibility ='hidden';
 //positive
 
 function zhengmian () {
+  console.log('bug area',inputs)
 for(var i=0; i<inputs.length;i++) {
 
   var checkneuron = inputs[i];
@@ -628,7 +753,9 @@ for(var i=0; i<inputs.length;i++) {
 newinformation=1;
       }
       if (newinformation==0) {
-        zhishikupositive.push(checkneuron);
+        console.log('buggg2', posadj)
+        console.log('buggg3', checkneuron)
+        sendpos.push(checkneuron);
       }
 
 }
@@ -637,6 +764,12 @@ document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
 
 console.log(zhishikupositive)
+    var ref=database.ref('positive');
+posadj=posadj.concat(sendpos);
+zhishikupositive=posadj;
+sendpos=[];
+var data = posadj;
+ref.set(data)
   
 }
 
