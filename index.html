@@ -270,11 +270,11 @@ var zhishikupositive =new Array;
 var makepositive=0;
     
 
-
+var uselesswords =["这","那", "然", "先","我","你","呢","到","也","您","多","就","着","此","次","说","回","前","国","让","动","出","去","吃","是","些","据","跟","根","西","东","北","南","位","与","于","只", "之","后","儿","而","一","二","貳","叁","三","肆","四","伍","五","六","陆","七","柒","气","捌","八","九","玖","十","拾","为","什","么","吗","关","百","亿","不","对","仅","刘","等","得","的","家","们","门","个","了","谁", "她", "他", "它","字","子"]
 var posadj = new Array();//forcalculations
-// posadj = ["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
+posadj = ["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
 var negadj = new Array();//for calculations
- //negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
+ negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
 
@@ -353,8 +353,8 @@ negadj=shuju;
 
  
 }
-if(posadj.length<=1) {
-  posadj=data.val();
+if(negadj.length<=1) {
+  negadj=data.val();
 }
 
 console.log('inside', negadj)
@@ -366,7 +366,7 @@ function errData(err) {
 
 }
 
-
+var enterwaspressed=0;
 
 // 
 
@@ -384,6 +384,7 @@ $(function() {
   $(".search-input").on("keydown", function(e) {
     var val = $(this).val();
     if (e.keyCode == 13) {
+      enterwaspressed=1;
       //reset counters
       //visualalgo.style.visibility ='visible';
       document.getElementById('b1').style.visibility ='hidden';
@@ -568,7 +569,9 @@ console.log('my new brain',zhishiku)
 
 
 var negate=0;
-
+if(neghao>=1 && (doublenegative==1||doublenegative==3)) {
+poshao+=3;
+}
 if (doublenegative==1||doublenegative==3) {
   neghao++;
 }
@@ -688,12 +691,35 @@ positionbutton5.style.left = 780+'px';
 
 }
 
+
+
+
+/////hand pick words in input
+
+
+var text;
+$(".search-input").click(function(e) {
+  if (enterwaspressed==1) {
+  //enterwaspressed=0;
+     text = $(".search-input").val();
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+    console.log(text);
+
+  }
+});
+//specify these hand picked words
+
 function fumian () {
+  
 for(var i=0; i<inputs.length;i++) {
 
   var checkneuron = inputs[i];
       var newinformation=0; 
-      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，') {
+      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，'||uselesswords.indexOf(checkneuron)>-1) {
             
 newinformation=1;
       }
@@ -701,6 +727,9 @@ newinformation=1;
         sendneg.push(checkneuron);
       }
 
+}
+if (enterwaspressed==1&&text.length>=1) {
+sendneg=text;
 }
 document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
@@ -712,18 +741,19 @@ zhishikunegative=negadj;
 sendneg=[];
 var data = negadj;
 ref.set(data)
-
+enterwaspressed=0;
 }
 
 
 
 ///neutral
 function zhongxing () {
+  
 for(var i=0; i<inputs.length;i++) {
 
   var checkneuron = inputs[i];
       var newinformation=0; 
-      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，') {
+      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，'||uselesswords.indexOf(checkneuron)>-1) {
             
 newinformation=1;
       }
@@ -737,18 +767,20 @@ console.log(zhishiku)
 document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
+enterwaspressed=0;
   
 }
 
 //positive
 
 function zhengmian () {
+  
   console.log('bug area',inputs)
 for(var i=0; i<inputs.length;i++) {
 
   var checkneuron = inputs[i];
       var newinformation=0; 
-      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，') {
+      if (selfknowledge.indexOf(checkneuron)> -1 || checkneuron==',' || checkneuron=='.'|| checkneuron=='。'||checkneuron=='?'||checkneuron=='，'||uselesswords.indexOf(checkneuron)>-1) {
             
 newinformation=1;
       }
@@ -762,7 +794,9 @@ newinformation=1;
 document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
-
+if (enterwaspressed==1&&text.length>=1) {
+sendpos=text;
+}
 console.log(zhishikupositive)
     var ref=database.ref('positive');
 posadj=posadj.concat(sendpos);
@@ -770,7 +804,7 @@ zhishikupositive=posadj;
 sendpos=[];
 var data = posadj;
 ref.set(data)
-  
+  enterwaspressed=0;
 }
 
 </script>
