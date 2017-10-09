@@ -471,8 +471,13 @@ getpositive();
 
 
 function ai () {
+var budebu=0;
 
  inputs =  $(".search-input").val();
+ if (inputs.indexOf("不得不")>-1 ||inputs.indexOf("而不")>-1 ) {
+  budebu=1;
+  console.log('i am budebu')
+ }
  console.log('posadj = zhishikupositive', posadj)
      console.log('negadj = zhishikunegative', negadj)
 
@@ -573,8 +578,11 @@ console.log('my new brain',zhishiku)
 
 
 var negate=0;
-if(neghao>=1 && (doublenegative==1||doublenegative==3)) {
-poshao+=3;
+// if(neghao>=1 && (doublenegative==2||doublenegative==3)) {
+// poshao+=3;
+// }
+if (budebu==1) {
+  doublenegative=doublenegative-1;
 }
 if (doublenegative==1||doublenegative==3) {
   neghao++;
@@ -586,6 +594,7 @@ if (poshao>=neuhao ||neghao>=neuhao) {
 console.log('output', poshao,neghao,neuhao,makepositive)
 
 if (poshao>neghao ||doublenegative==2 || makepositive==2) {
+
   if (poshao>=1 || doublenegative>=1) {
   negate=1;
 }
