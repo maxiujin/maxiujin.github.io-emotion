@@ -237,20 +237,20 @@ body {
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!--  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>  -->
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
 <script>
-//  var config = {
-//     apiKey: "AIzaSyDBJi4p8SjZLFDf-iFKc8ZstkXyy2FLkV4",
-//     authDomain: "gongyinao.firebaseapp.com",
-//     databaseURL: "https://gongyinao.firebaseio.com",
-//     projectId: "gongyinao",
-//     storageBucket: "gongyinao.appspot.com",
-//     messagingSenderId: "792226516451"
-//   };
-//   firebase.initializeApp(config);
+ var config = {
+    apiKey: "AIzaSyDBJi4p8SjZLFDf-iFKc8ZstkXyy2FLkV4",
+    authDomain: "gongyinao.firebaseapp.com",
+    databaseURL: "https://gongyinao.firebaseio.com",
+    projectId: "gongyinao",
+    storageBucket: "gongyinao.appspot.com",
+    messagingSenderId: "792226516451"
+  };
+  firebase.initializeApp(config);
 
-// //activate database
-//   var database = firebase.database();
+//activate database
+  var database = firebase.database();
 
 var visualalgo = document.body.appendChild(document.createElement('div'));
 document.getElementById('b1').style.visibility ='hidden';
@@ -260,7 +260,7 @@ document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
   var poshao =0;
   var neghao=0;
-  var neuhao=0;
+var neuhao=0;
   var inputs;
     var rainy;
     
@@ -271,24 +271,25 @@ var makepositive=0;
     
 
 var uselesswords =["这","那", "然", "先","我","你","呢","到","也","您","多","就","着","此","次","说","回","前","国","让","动","出","去","吃","是","些","据","跟","根","西","东","北","南","位","与","于","只", "之","后","儿","而","一","二","貳","叁","三","肆","四","伍","五","六","陆","七","柒","气","捌","八","九","玖","十","拾","为","什","么","吗","关","百","亿","不","对","仅","刘","等","得","的","家","们","门","个","了","谁", "她", "他", "它","字","子"]
+var neutraladj= new Array();
 var posadj = new Array();//forcalculations
-  posadj=["雄伟", "漂亮", "美丽", "方便", "了不起", "美女", "帅", "高兴", "心情", "激动", "笑", "爱情", "善良", "聪明", "帅哥", "香醇", "透明", "晶莹", "纯净", "典雅", "开朗", "舒适", "清澈", "颓废", "温柔", "惊艳", "淡漠", "淡定", "冷静", "端庄", "时尚", "快乐", "丰盈", "圆滑", "喜欢", "满意", "特别", "厉害", "爱", "好", "良好", "机会", "可能性多大", "礼物", "得好", "尊敬", "激动人心", "感谢", "机会", "信心", "正轨", "鼓励", "支持", "不错", "不错", "运气", "酷炫", "松一口气", "公平", "恻隐", "谢谢", "帮助", "非常理解", "奉献", "无私的", "奖赏", "光辉", "友谊", "壮阔", "放松"];
+//posadj = ["雄伟","漂亮","美丽","方便","了不起","美女","帅","高兴","心情","激动","笑","爱情","善良","聪明","帅哥","香醇","透明","晶莹","纯净","典雅","开朗","舒适","清澈","颓废","温柔","惊艳","淡漠","淡定","冷静","端庄","时尚","快乐","丰盈", "圆滑", "喜欢","满意","特别","厉害","爱","好"];
 var negadj = new Array();//for calculations
- negadj=["紧张", "忧虑", "愤怒", "害怕", "野蛮", "隐晦", "阴霾", "恐龙", "伤心", "生气", "伪装", "杀", "我靠", "我操", "傻逼", "哭泣", "哭粗", "笨", "很差", "丑", "沮丧", "郁闷", "悲伤", "悲", "伤害", "吵架", "打架", "讨厌", "艰难", "不好", "帮派成员", "不好", "不好", "迟到", "伤者", "伤", "死", "急", "枪了", "打你", "严重", "事故", "惊吓", "枪击受害者", "受害者", "受害", "死亡", "擦伤", "危险", "射杀", "凶犯", "嫌犯", "破事", "我还没找到", "身亡", "还要", "订单还没", "生你气", "暴怒", "惹人厌", "烦", "颠覆", "诋毁", "吵架", "吵哭", "疾病", "勒瘫", "太坏", "紧张", "搞砸", "损害", "惩罚", "抱怨", "抢走", "牢骚", "可怜", "闭嘴", "争执", "吵闹", "侵蚀", "差劲", "囚牢房", "疼", "累"];
+ //negadj =["紧张","忧虑","愤怒","害怕","野蛮","隐晦","阴霾","恐龙","伤心","生气","伪装","杀", "我靠", "我操", "傻逼", "哭泣","哭粗","笨","很差","丑","沮丧","郁闷", "悲伤", "悲", "伤害", "吵架", "打架","讨厌"];
 var negcounter = ["不"];
 var neutralcounter =["太","非常","很"];
 
 var sendpos = new Array();
 var sendneg = new Array();
 
-// var msg ='positive'
-//       var ref=database.ref(msg);
-//       var data = {
+var msg ='positive'
+      var ref=database.ref(msg);
+      var data = {
 
-//    name:"positive",
-//   poswords:posadj
+   name:"positive",
+  poswords:posadj
 
-// }
+}
 // ref.push(posadj);
 
 // var msg2 ='negative'
@@ -297,12 +298,34 @@ var sendneg = new Array();
 getpositive();
 function getpositive () {
 
+var ref = database.ref('positive')
+ref.on('value',gotData, errData);
 
-  posadj=["雄伟", "漂亮", "美丽", "方便", "了不起", "美女", "帅", "高兴", "心情", "激动", "笑", "爱情", "善良", "聪明", "帅哥", "香醇", "透明", "晶莹", "纯净", "典雅", "开朗", "舒适", "清澈", "颓废", "温柔", "惊艳", "淡漠", "淡定", "冷静", "端庄", "时尚", "快乐", "丰盈", "圆滑", "喜欢", "满意", "特别", "厉害", "爱", "好", "良好", "机会", "可能性多大", "礼物", "得好", "尊敬", "激动人心", "感谢", "机会", "信心", "正轨", "鼓励", "支持", "不错", "不错", "运气", "酷炫", "松一口气", "公平", "恻隐", "谢谢", "帮助", "非常理解", "奉献", "无私的", "奖赏", "光辉", "友谊", "壮阔", "放松", "对此略为敏感", "紧张", "紧张", "愉", "保护", "尊敬", "♥", "😄", "😎", "😺", "😸", "😃", "😀", "😆", "☺️", "😊", "😇", "😍", "😘", "😚", "😋", "❤️", "热心", "好人", "出色", "受益", "感到自豪", "聪明", "赢", "乐", "美好", "好吃", "公平", "舒服", "平静", "英雄", "有趣", "对待", "持续", "正确", "治疗"];
+function gotData(data) {
+console.log(data.val())
+var coordinates =data.val();
+console.log(coordinates)
+var keys = Object.keys(coordinates)
+console.log(coordinates)
+for(var i=0; i<keys.length;i++) {
+
+  var p=keys[i];
+
+var shuju=coordinates[p]
+
+posadj=shuju;
+
+ 
+}
+
+  posadj=data.val();
 
 
 console.log('inside positive', posadj)
-
+}
+function errData(err) {
+   console.log(err)
+}
 
 
 }
@@ -312,14 +335,34 @@ console.log('inside positive', posadj)
 getnegative();
 function getnegative () {
 
+var ref = database.ref('negative')
+ref.on('value',gotData, errData);
 
+function gotData(data) {
+console.log(data.val())
+var coordinates =data.val();
+console.log(coordinates)
+var keys = Object.keys(coordinates)
+console.log(coordinates)
+for(var i=0; i<keys.length;i++) {
 
-  negadj=[ "紧张", "忧虑", "愤怒", "害怕", "野蛮", "隐晦", "阴霾", "恐龙", "伤心", "生气", "伪装", "杀", "我靠", "我操", "傻逼", "哭泣", "哭粗", "笨", "很差", "丑", "沮丧", "郁闷", "悲伤", "悲", "伤害", "吵架", "打架", "讨厌", "艰难", "不好", "帮派成员", "不好", "不好", "迟到", "伤者", "伤", "死", "急", "枪了", "打你", "严重", "事故", "惊吓", "枪击受害者", "受害者", "受害", "死亡", "擦伤", "危险", "射杀", "凶犯", "嫌犯", "破事", "我还没找到", "身亡", "还要", "订单还没", "生你气", "暴怒", "惹人厌", "烦", "颠覆", "诋毁", "吵架", "吵哭", "疾病", "勒瘫", "太坏", "紧张", "搞砸", "损害", "惩罚", "抱怨", "抢走", "牢骚", "可怜", "闭嘴", "争执", "吵闹", "侵蚀", "差劲", "囚牢房", "疼", "累", "紧张", "难", "hate", "😞", "😔", "😟", "😣", "😖", "😫", "😩", "😤", "😠", "😡", "😱", "😨", "😰", "😢", "😥", "😭", "😓", "💔", "仙人板板", "奶奶的腿的", "你冷酷你无情你无理取闹", "遗憾", "挣扎", "恶心", "恶心", "争议", "失去了", "可怕", "粗鲁", "疑问", "打破", "懒", "害怕", "批评", "很差", "悲惨", "愚蠢", "重复了一个错误", "失败", "无法处理", "压力", "被撕破", "撕破", "降级", "孤独", "哭泣", "太久", "病", "生病", "骗", "崩溃", "复杂", "沮丧", "看不见", "恐慌", "饿死", "糟", "讨厌", "太多", "偷了", "罪", "犯", "指控", "犯罪", "恨"];
+  var p=keys[i];
+
+var shuju=coordinates[p]
+
+negadj=shuju;
+
+ 
+}
+
+  negadj=data.val();
 
 
 console.log('inside', negadj)
-
-
+}
+function errData(err) {
+   console.log(err)
+}
 
 
 }
@@ -342,6 +385,7 @@ $(function() {
   $(".search-input").on("keydown", function(e) {
     var val = $(this).val();
     if (e.keyCode == 13) {
+      doublenegative=0;
       enterwaspressed=1;
       //reset counters
       //visualalgo.style.visibility ='visible';
@@ -432,7 +476,7 @@ function ai () {
 var budebu=0;
 
  inputs =  $(".search-input").val();
- if (inputs.indexOf("不得不")>-1 ||inputs.indexOf("而不")>-1 ) {
+ if (inputs.indexOf("不得不")>-1 ||inputs.indexOf("而不")>-1 ||inputs.indexOf("不了")>-1 ) {
   budebu=1;
   console.log('i am budebu')
  }
@@ -482,14 +526,24 @@ if (inputs.indexOf(compare)>-1) {
 for(var z=0; z< inputs.length;z++) {
 var compare = inputs[z];
 
-//console.log(compare)
+console.log(compare)
 
 if (negcounter.indexOf(compare)>-1) {
   console.log("WTF")
-    doublenegative++;
+  
+doublenegative++;
+    
   //neghao++
 }
 }
+
+//double negative section
+
+if (inputs.indexOf("不不")>-1&&doublenegative<3) {
+  doublenegative=2;
+}
+
+
 
 //neutral
 
@@ -498,12 +552,17 @@ var compare = neutralcounter[z];
 //console.log(compare)
 
 if (inputs.indexOf(compare)>-1) {
-  neuhao++;
+  //neuhao++;
   // neghao-2;
   // poshao-2;
 }
 
+
+
+
 }
+
+
 
 
 
@@ -526,6 +585,22 @@ if (poshao==0 && neghao==0) {
 }
 
 
+for(var i=0; i<inputs.length; i++) {
+var compare = inputs[z];
+
+var dontincrease=0; 
+if (posadj.indexOf(compare)>-1||negadj.indexOf(compare)>-1 ) {
+  console.log("WTF")
+dontincrease=1;
+}
+if (dontincrease==0) {
+  neuhao+=0.2;
+}
+
+}
+
+//end neutral
+
 
 ////check our knowledge
 
@@ -533,23 +608,28 @@ if (poshao==0 && neghao==0) {
 
 console.log('my new brain',zhishiku)
 //brotha
-
+var checkneutralonot = neuhao-neghao;
+var checkneutralonot2 = neuhao-poshao;
+if (checkneutralonot>=15 ||checkneutralonot2>=15) {
+  itsneutral=1;
+}
 
 var negate=0;
 // if(neghao>=1 && (doublenegative==2||doublenegative==3)) {
 // poshao+=3;
 // }
-if (budebu==1) {
+if (budebu==1||inputs.length>10) {
   doublenegative=doublenegative-1;
 }
 if (doublenegative==1||doublenegative==3) {
   neghao++;
+  poshao=poshao-1;
 }
 
 if (poshao>=neuhao ||neghao>=neuhao) {
   negate==1; 
 }
-console.log('output', poshao,neghao,neuhao,makepositive)
+console.log('output', poshao,neghao,neuhao,makepositive,doublenegative)
 
 if (poshao>neghao ||doublenegative==2 || makepositive==2) {
 
@@ -584,7 +664,7 @@ visualalgo.style.left = 410+'px';
 
 
 
-if (negate==0) {
+if (negate==0 || itsneutral==1) {
 
 if (((neuhao>poshao&&neuhao>neghao)) || itsneutral==1) {
  
@@ -699,20 +779,23 @@ newinformation=1;
       }
 
 }
-// if (enterwaspressed==1&&text.length>=1) {
-// sendneg=text;
-// }
+if (enterwaspressed==1&&text.length>=1) {
+sendneg=text;
+}
 document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
 console.log(zhishikunegative)
- 
+   var ref=database.ref('negative');
 negadj=negadj.concat(sendneg);
 zhishikunegative=negadj;
 sendneg=[];
-
+var data = negadj;
 if (negadj.length<5) {
   alert('problem with database', negadj)
+}
+if (negadj.length>5) {
+ref.set(data)
 }
 
 enterwaspressed=0;
@@ -768,19 +851,21 @@ newinformation=1;
 document.getElementById('b3').style.visibility ='hidden';
 document.getElementById('b4').style.visibility ='hidden';
 document.getElementById('b5').style.visibility ='hidden';
-// if (enterwaspressed==1&&text.length>=1) {
-// sendpos=text;
-// }
+if (enterwaspressed==1&&text.length>=1) {
+sendpos=text;
+}
 console.log(zhishikupositive)
-   
+    var ref=database.ref('positive');
 posadj=posadj.concat(sendpos);
 zhishikupositive=posadj;
 sendpos=[];
-
+var data = posadj;
 if (posadj.length<5) {
   alert('problem with database', posadj)
 }
-
+if (posadj.length>5) {
+ref.set(data)
+}
   enterwaspressed=0;
 }
 
