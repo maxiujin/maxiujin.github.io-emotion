@@ -1,397 +1,93 @@
-<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="utf-8">
-<title>Title of the document</title>
+<script src="https://cdn.rawgit.com/naptha/tesseract.js/0.2.0/dist/tesseract.js">
+</script>
 </head>
+<body>
 
+<input type='file' />
+<img id="myImg" src="#" alt="your image" />
 
+<body>
+  <span id="result"></span>
+</body>
 <style type="text/css">
-.page-wrap {
-width: 960px;
-margin: 0 auto;
-position: relative;
+    body {
+  font-family: 'Inconsolata', 'Monaco', monospace;
+  overflow: hidden;
+  margin: 0;
+  color: #a0a2ae;
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
-	body {
- 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', Tahoma, Arial, sans-serif;
-  line-height: 1.5;
-  font-size: 13px;
-}
-
-form {
-  outline: 0;
-  float: left;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-}
-
-form > .textbox {
-  outline: 0;
-  height: 42px;
-  width: 244px;
-  line-height: 42px;
-  padding: 0 16px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #212121;
-  border: 0;
-  float: left;
-  -webkit-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px;
-}
-
-form > .textbox:focus {
-  outline: 0;
-  background-color: #FFF;
-}
-
-form > .button {
-  outline: 0;
-  background: none;
-  background-color: rgba(38, 50, 56, 0.8);
-  float: left;
-  height: 42px;
-  width: 42px;
-  text-align: center;
-  line-height: 42px;
-  border: 0;
-  color: #FFF;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: 16px;
-  text-rendering: auto;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  -webkit-transition: background-color .4s ease;
-  transition: background-color .4s ease;
-  -webkit-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0;
-}
-
-form > .button:hover {
-  background-color: rgba(0, 150, 136, 0.8);
-}
-
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 </style>
 
-<form id="searchbox" onsubmit="return false">
-  <input type="text" class="textbox" placeholder="Search" id="searchvalue">
-  <input title="Search" value="查" type="submit" class="button" onclick="getvalue()">
-</form>
-
-<div class="loader" id="theloader"></div>
-
+<!-- Post Info -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-	var icontitle5=document.body.appendChild(document.createElement('div'));
-	var icontitle55=document.body.appendChild(document.createElement('div'));
-	var icontitle4=document.body.appendChild(document.createElement('div'));
-	var icontitle44=document.body.appendChild(document.createElement('div'));
-	var icontitle3=document.body.appendChild(document.createElement('div'));
-	var icontitle33=document.body.appendChild(document.createElement('div'));
-	var icontitle2=document.body.appendChild(document.createElement('div'));
-	var icontitle22=document.body.appendChild(document.createElement('div'));
-	var icontitle1=document.body.appendChild(document.createElement('div'));
-	var icontitle11=document.body.appendChild(document.createElement('div'));
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+
+ var title=document.body.appendChild(document.createElement('div'));
+$(function () {
+    $(":file").change(function () {
+         title.innerHTML = '';
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+var string;
+
+function imageIsLoaded(e) {
+    $('#myImg').attr('src', e.target.result);
+    $('#myImg').width(320); // Units are assumed to be pixels
+$('#myImg').height(500);
+    string=e.target.result;
+  Tesseract.recognize(e.target.result)
+    .then(function(result) {
+   
+title.style.position="absolute";
+ title.style.left = 730+'px';//50
+ title.style.top = 150+'px';//20
+ title.style.fontSize='20px';
+ title.style.color = 'red';
+ title.innerHTML = result.text;
+      // document.getElementById("result")
+      //   .innerText = result.text;
+        console.log(result.text)
+    });
+  //  start();
+};
+
+ 
+
+//  function start () {
+//    var img = new Image;
+
+// var canvas = document.createElement("canvas");
+// var ctx = canvas.getContext("2d");
+// var src =  $('#myImg').attr('src', string);//"stoneforge-mystic.jpg";
+
+// img.crossOrigin = "Anonymous";
+//   canvas.width = img.width;
+//   canvas.height = img.height;
+//   ctx.drawImage(img, 0, 0);
+
+//   Tesseract.recognize(ctx)
+//     .then(function(result) {
+//       document.getElementById("result")
+//         .innerText = result.text;
+//     });
+
+//     img.src = src;
+// }
 
-var icontitle=document.body.appendChild(document.createElement('div'));
-
-document.getElementById('theloader').style.visibility='hidden';
-	var peopleicon=document.getElementById('searchbox'); 
-peopleicon.style.position="absolute";
-peopleicon.style.left = 500+'px';//20
-peopleicon.style.top = 10+'px';//20
-
-
-
-
-
-    
- function getvalue () {
-    	console.log(document.getElementById('searchvalue').value);
-
-    	var thevalue = document.getElementById('searchvalue').value;
-
-
-
-
- icontitle.style.position="absolute";
- icontitle.style.left = 510+'px';//50
- icontitle.style.top = 340+'px';//20
- icontitle.style.fontSize='20px';
- icontitle.style.color = 'black';
- icontitle.innerHTML = 'Analyzing information about the Stock';
-
-	var peopleicon=document.getElementById('theloader'); 
-peopleicon.style.visibility = 'visible';
-peopleicon.style.position="absolute";
-peopleicon.style.left = 590+'px';//20
-peopleicon.style.top = 380+'px';//20
-
-
-setTimeout(sendresults, 2000);
-
-function sendresults () {
-	 icontitle.innerHTML = '';
-	  icontitle5.innerHTML = '';
-	   icontitle55.innerHTML = '';
-	   icontitle1.innerHTML = '';
-	   icontitle11.innerHTML = '';
-	    icontitle2.innerHTML = '';
-	   icontitle22.innerHTML = '';
-	    icontitle3.innerHTML = '';
-	   icontitle33.innerHTML = '';
-	    icontitle4.innerHTML = '';
-	   icontitle44.innerHTML = '';
-	    icontitle5.innerHTML = '';
-	   icontitle55.innerHTML = '';
-	document.getElementById('theloader').style.visibility='hidden';
-
-
-//var icontitle5=document.body.appendChild(document.createElement('div'));
- icontitle5.style.position="absolute";
- icontitle5.style.left = 580+'px';//50
- icontitle5.style.top = 110+'px';//20
- icontitle5.style.fontSize='20px';
- icontitle5.style.color = 'blue';
- icontitle5.innerHTML = '5  stock';
-
-// var icontitle55=document.body.appendChild(document.createElement('div'));
- icontitle55.style.position="absolute";
- icontitle55.style.left = 580+'px';//50
- icontitle55.style.top = 140+'px';//20
- icontitle55.style.fontSize='20px';
- icontitle55.style.color = 'black';
- icontitle55.innerHTML = '5  stock';
-
-
-//var icontitle1=document.body.appendChild(document.createElement('div'));
- icontitle1.style.position="absolute";
- icontitle1.style.left = 10+'px';//50
- icontitle1.style.top = 210+'px';//20
- icontitle1.style.fontSize='20px';
- icontitle1.style.color = 'blue';
- icontitle1.innerHTML = '1 stock';
-
- //var icontitle11=document.body.appendChild(document.createElement('div'));
- icontitle11.style.position="absolute";
- icontitle11.style.left = 10+'px';//50
- icontitle11.style.top = 240+'px';//20
- icontitle11.style.fontSize='20px';
- icontitle11.style.color = 'black';
- icontitle11.innerHTML = '1 stock';
-
-
- //var icontitle2=document.body.appendChild(document.createElement('div'));
- icontitle2.style.position="absolute";
- icontitle2.style.left = 10+'px';//50
- icontitle2.style.top = 710+'px';//20
- icontitle2.style.fontSize='20px';
- icontitle2.style.color = 'blue';
- icontitle2.innerHTML = '2 stock';
-
- //var icontitle22=document.body.appendChild(document.createElement('div'));
- icontitle22.style.position="absolute";
- icontitle22.style.left = 10+'px';//50
- icontitle22.style.top = 740+'px';//20
- icontitle22.style.fontSize='20px';
- icontitle22.style.color = 'black';
- icontitle22.innerHTML = '2 stock';
-
-
-//var icontitle3=document.body.appendChild(document.createElement('div'));
- icontitle3.style.position="absolute";
- icontitle3.style.left = 1010+'px';//50
- icontitle3.style.top = 310+'px';//20
- icontitle3.style.fontSize='20px';
- icontitle3.style.color = 'blue';
- icontitle3.innerHTML = '3 stock';
-
-
- //var icontitle33=document.body.appendChild(document.createElement('div'));
- icontitle33.style.position="absolute";
- icontitle33.style.left = 1010+'px';//50
- icontitle33.style.top = 380+'px';//20
- icontitle33.style.fontSize='20px';
- icontitle33.style.color = 'black';
- icontitle33.innerHTML = '3 stock';
-
-  //var icontitle4=document.body.appendChild(document.createElement('div'));
- icontitle4.style.position="absolute";
- icontitle4.style.left = 1010+'px';//50
- icontitle4.style.top = 610+'px';//20
- icontitle4.style.fontSize='20px';
- icontitle4.style.color = 'blue';
- icontitle4.innerHTML = '4 stock';
-
-  // var icontitle44=document.body.appendChild(document.createElement('div'));
- icontitle44.style.position="absolute";
- icontitle44.style.left = 1010+'px';//50
- icontitle44.style.top = 680+'px';//20
- icontitle44.style.fontSize='20px';
- icontitle44.style.color = 'black';
- icontitle44.innerHTML = '4 stock';
-
-
-	if (thevalue=='apple stock') {
-		
-		 icontitle1.innerHTML = 'https://finance.yahoo.com/quote/AAPL/ ';
-		  icontitle11.innerHTML = '190.24+3.37 (+1.80%)';
-		  icontitle11.style.color='green';
-
-		  icontitle2.innerHTML = 'https://www.cnbc.com/2018/05/04/if-you-put-1000-in-apple-10-years-ago-heres-how-much-youd-have-now.html';
-		  icontitle22.innerHTML = '"Investing in Apple has proven to be a good move, and expert investors are taking notice"';
-		  icontitle22.style.color='green';
-
-
-		   icontitle3.innerHTML = 'https://www.marketwatch.com/story/apple-stock-rises-after-ubs-hikes-price-target-due-to-rising-mix-2018-06-01';
-
-		    icontitle33.innerHTML = '"Apple Inc. AAPL, +0.04% shares are up 0.8% in Friday trading after UBS analyst Steven Milunovich raised his price."';
-		  icontitle33.style.color='green';
-
-		    icontitle4.innerHTML = 'https://www.fool.com/investing/2018/05/30/apple-inc-vs-texas-instruments-which-dividend-stoc.aspx';
-		     icontitle44.innerHTML = '"Texas Instruments is probably a better stock for investors looking for meaningful income today"';
-		  icontitle44.style.color='red';
-
-		     icontitle5.innerHTML = 'https://www.nasdaq.com/symbol/aapl/historical';
-
-		       icontitle55.innerHTML = '"$190.25*  3.381.81%"';
-		  icontitle55.style.color='green';
-
-		  icontitle.innerHTML = 'Apple Stock looks good, you could keep or sell.';
-
-	}
-
-	if (thevalue=='bitcoin') {
-		 icontitle1.innerHTML = 'https://cointelegraph.com/news/bitcoin-ethereum-ripple-bitcoin-cash-eos-litecoin-cardano-stellar-iota-price-analysis-june-01';
-		  icontitle11.innerHTML = 'We believe that Bitcoin is trading in a large range of $6,075.04 to $12,172.43';
-		  icontitle11.style.color='orange';
-
-		  icontitle2.innerHTML = 'https://www.ccn.com/bitcoin-price-has-bottomed-and-will-rally-soon-fundstrat-analyst/';
-		  icontitle22.innerHTML = '"Bitcoin’s price has hit rock-bottom"';
-		  icontitle22.style.color='red';
-
-
-		   icontitle3.innerHTML = 'https://www.express.co.uk/finance/city/968262/Bitcoin-price-usd-news-share-cryptocurrency-ethereum-Ripple-buy-bitcoin-value';
-
-		    icontitle33.innerHTML = '"The finance expert studied bitcoin, ethereum and Ripple and found that a bullish mid-term event could be in store as the cryptocurrencies continue to attract buyers."';
-		  icontitle33.style.color='green';
-
-		    icontitle4.innerHTML = 'https://www.cnbc.com/2018/05/31/buy-bitcoin-now-while-its-still-cheap-says-cryptocurrency-investor.html';
-		     icontitle44.innerHTML = '"So now is a good time to buy."';
-		  icontitle44.style.color='green';
-
-		     icontitle5.innerHTML = 'https://cointelegraph.com/news/visa-card-payments-failing-in-uk-europe-highlighting-need-for-decentralized-options';
-
-		       icontitle55.innerHTML = '"Visa has said that their card payments are experiencing disruptions "';
-		  icontitle55.style.color='green';
-
-		  icontitle.innerHTML = 'news about Bitcoin seems moderate.';
-	}
-
-
-	if (thevalue=='baidu stock') {
-		 icontitle1.innerHTML = 'https://finance.yahoo.com/quote/BIDU/';
-		  icontitle11.innerHTML = '248.46+5.90 (+2.43%)';
-		  icontitle11.style.color='green';
-
-		  icontitle2.innerHTML = 'https://finance.yahoo.com/news/baidu-inc-adr-225-looks-170908209.html';
-		  icontitle22.innerHTML = '"BIDU stock is firing on all cylinders these days and worth investors"';
-		  icontitle22.style.color='green';
-
-
-		   icontitle3.innerHTML = 'https://investorplace.com/2018/05/baidu-inc-adr-bidu-stock-how-looks-reasonable/';
-
-		    icontitle33.innerHTML = '"BIDU stock cooperates and new highs are narrowly made over the next couple months, reaching above $280"';
-		  icontitle33.style.color='green';
-
-		    icontitle4.innerHTML = 'https://seekingalpha.com/article/4170891-baidu-lot-like';
-		     icontitle44.innerHTML = '"Baidu (BIDU) shares are still rallying since the company announced its most recent quarterly earnings on the 26th of April"';
-		  icontitle44.style.color='green';
-
-		     icontitle5.innerHTML = 'https://www.fool.com/investing/2018/05/22/when-will-baidu-stock-hit-a-new-all-time-high.aspx';
-
-		       icontitle55.innerHTML = '"Investors have been applauding Baidu\'s move to get back to basics, even as it continues to throw money at artificial intelligence initiative"';
-		  icontitle55.style.color='green';
-
-		  icontitle.innerHTML = 'Baidu Stock looks good, you could keep or sell.';
-	}
-}
-
-
-
-
- //  'https://finance.yahoo.com/quote/BIDU/',
- //  'https://finance.yahoo.com/news/baidu-inc-adr-225-looks-170908209.html',
- //  'https://investorplace.com/2018/05/baidu-inc-adr-bidu-stock-how-looks-reasonable/',
- //  'https://investorplace.com/2018/05/bidu-stock-good-reasons/',
- //  'https://www.marketwatch.com/investing/stock/bidu',
- //  'https://www.fool.com/investing/2018/05/22/when-will-baidu-stock-hit-a-new-all-time-high.aspx',
- //  'https://www.fool.com/quote/nasdaq/baidu/bidu',
- //  'https://www.fool.com/investing/2018/05/18/why-baidu-inc-stock-dropped-today.aspx',
- //  'https://seekingalpha.com/article/4170891-baidu-lot-like'
-
-
-
-
-
-
- //    	 'https://finance.yahoo.com/quote/AAPL/',
- //  'https://www.cnbc.com/2018/05/04/if-you-put-1000-in-apple-10-years-ago-heres-how-much-youd-have-now.html',
- //  'https://www.marketwatch.com/story/apple-stock-rises-after-ubs-hikes-price-target-due-to-rising-mix-2018-06-01',
- //  'https://www.marketwatch.com/story/if-apple-makes-big-news-at-its-developers-conference-next-week-it-would-be-big-news-2018-06-01',
- //  'https://stocktwits.com/symbol/AAPL',
- //  'https://www.investors.com/news/technology/click/apple-stock-aapl-price-target-increase-wwdc/',
- //  'https://www.nasdaq.com/symbol/aapl/historical',
- //  'https://www.fool.com/investing/2018/05/30/apple-inc-vs-texas-instruments-which-dividend-stoc.aspx'
-
-
-
-// 'https://news.bitcoin.com/',
-//   'https://cointelegraph.com/news/bitcoin-ethereum-ripple-bitcoin-cash-eos-litecoin-cardano-stellar-iota-price-analysis-june-01',
-//   'https://www.ccn.com/bitcoin-price-has-bottomed-and-will-rally-soon-fundstrat-analyst/',
-//   'https://www.ccn.com/no-bull-run-in-sight-investors-target-long-term-bitcoin-price-rally/',
-//   'https://www.express.co.uk/finance/city/968262/Bitcoin-price-usd-news-share-cryptocurrency-ethereum-Ripple-buy-bitcoin-value',
-//   'https://www.cnbc.com/2018/05/31/buy-bitcoin-now-while-its-still-cheap-says-cryptocurrency-investor.html',
-//   'https://twitter.com/btctn%3Flang%3Den',
-//   'https://www.youtube.com/watch%3Fv%3DHrd1eHecpRA',
-//   'https://cryptonews.com/news/bitcoin-news/'
-
-
-
-
-    }
-
-
-	
 </script>
-
+</body>
 </html>
