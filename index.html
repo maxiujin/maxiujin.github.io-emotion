@@ -84,12 +84,14 @@ $('#myImg').height(500);
   Tesseract.recognize(e.target.result)
     .then(function(result) {
    
-title.style.position="absolute";
- title.style.left = 730+'px';//50
- title.style.top = 650+'px';//20
- title.style.fontSize='20px';
- title.style.color = 'red';
- title.innerHTML = result.text;
+// title.style.position="absolute";
+//  title.style.left = 730+'px';//50
+//  title.style.top = 650+'px';//20
+//  title.style.fontSize='20px';
+//  title.style.color = 'red';
+//  title.innerHTML = result.text;
+
+alert(result.text)
 
     loadicon.style.visibility='hidden';
       // document.getElementById("result")
