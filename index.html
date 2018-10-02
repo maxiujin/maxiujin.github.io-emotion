@@ -1,356 +1,276 @@
-<html>
-<head>
-<!-- <script src="https://cdn.rawgit.com/naptha/tesseract.js/0.2.0/dist/tesseract.js"> -->
-  <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+
+
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="ISO-8859-1"> 
+    <title>Alke</title> 
+</head> 
+<body> 
+    <form action="">
+         <input type="button" value="Warriors" onclick="window.location.href='warriorfrorians.html';"/>
+         <input type="button" value="Farmers" onclick="window.location.href='farmerfrorians.html';"/>
+         <input type="button" value="Merchants" onclick="window.location.href='merchantfrorians.html';"/>
+          <input type="button" value="Hazards" onclick="window.location.href='hazards.html';"/>
+          <input type="button" value="Shaman Spells" onclick="window.location.href='shamanspells.html';"/>
+           <input type="button" value="Tribe Spells" onclick="window.location.href='tribespells.html';"/>
+              <input type="button" value="Element Spells" onclick="window.location.href='elementspells.html';"/>
+              <input type="button" value="Herbal Spells" onclick="window.location.href='herbalspells.html';"/>
+
+               <input type="button" value="PLAY GAME" onclick="window.location.href='test.html';"/>
+    </form> 
+
+    <img src="cover.jpg" height="340", width="240" id="cover">
+</body> 
+</html>
+
+<script type="text/javascript">
+  var getDeck = document.getElementById('cover'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 310+'px';
+getDeck.style.top = 200+'px';
+getDeck.style.zIndex = "0";
+
+
+var creaters=document.body.appendChild(document.createElement('div'));
+creaters.style.position="absolute";
+creaters.style.left = 615+'px';
+creaters.style.top = 340+'px';
+creaters.style.color = 'Black';
+creaters.innerHTML = "Creators: Matthew Quaine Thompkins, Ejea Fields: Copyright 2018";
+
+
+var creaters2=document.body.appendChild(document.createElement('div'));
+creaters2.style.position="absolute";
+creaters2.style.left = 405+'px';
+creaters2.style.top = 140+'px';
+creaters2.style.color = 'Black';
+creaters2.innerHTML = "Alke";
 </script>
- <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
 
-<input type='file' />
-<img id="myImg" src="#" alt="your image" />
 
-<body>
-  <span id="result"></span>
-</body>
-<style type="text/css">
 
-body  {
-   
-    background-color: #cccccc;
- 
+<!-- <!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="ISO-8859-1"> 
+    <title>Home</title> 
+</head> 
+<body> 
+	<input  id ="username" type="text" placeholder="username" size ="30">
+
+<input  id ="password" type="text" placeholder="password" size ="30">
+    <form action="">
+         <input type="button" id="1" value="Enter"   onclick="window.location.href='selectionpage.html';"/>
+      
+
+    </form> 
+    <button id ="signup"  onclick="signup()">Sign-Up</button>
+
+<button id ="login"  onclick="login()">Login</button>
+
+    <img src="cover.jpg" height="340", width="240" id="cover">
+</body> 
+</html>
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+localStorage.clear();
+
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+
+
+//enter app 
+	var enterapp = document.getElementById('1'); 
+
+enterapp.style.position="absolute";
+enterapp.style.left = 610+'px';
+enterapp.style.top = 100+'px';
+enterapp.style.visibility='hidden';
+//
+
+var getusername = document.getElementById('username'); 
+getusername.style.position="absolute";
+getusername.style.left = 610+'px';
+getusername.style.top = 100+'px';
+
+var getpassword = document.getElementById('password'); 
+getpassword.style.position="absolute";
+getpassword.style.left = 610+'px';
+getpassword.style.top = 130+'px';
+
+
+var signupbutton = document.getElementById('signup'); 
+signupbutton.style.position="absolute";
+signupbutton.style.left = 610+'px';
+signupbutton.style.top = 160+'px';
+
+var loginbutton = document.getElementById('login'); 
+loginbutton.style.position="absolute";
+loginbutton.style.left = 690+'px';
+loginbutton.style.top = 160+'px';
+
+
+
+
+
+	var getDeck = document.getElementById('cover'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 310+'px';
+getDeck.style.top = 200+'px';
+getDeck.style.zIndex = "0";
+
+
+var creaters=document.body.appendChild(document.createElement('div'));
+creaters.style.position="absolute";
+creaters.style.left = 615+'px';
+creaters.style.top = 340+'px';
+creaters.style.color = 'Black';
+creaters.innerHTML = "Creators: Matthew Quaine Thompkins, Ejea Fields: Copyright 2018";
+
+
+var creaters2=document.body.appendChild(document.createElement('div'));
+creaters2.style.position="absolute";
+creaters2.style.left = 405+'px';
+creaters2.style.top = 140+'px';
+creaters2.style.color = 'Black';
+creaters2.innerHTML = "Froz";
+
+var u = document.getElementById('username').value; 
+var p = document.getElementById('password').value; 
+
+function signup () {
+	u = document.getElementById('username').value; 
+	 p = document.getElementById('password').value; 
+if (u.length==0||p.length==0) {
+alert("Please create a username and password")
+console.log(u,p)
 }
-/*    body {
-  font-family: 'Inconsolata', 'Monaco', monospace;
-  overflow: hidden;
-  margin: 0;
-  color: #a0a2ae;
-  background: #2ECC71;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}*/
-
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.flip {
-  transform: rotate(360deg);
-}
-.flip2 {
-  transform: rotate(65deg);
-}
-.flip3 {
-  transform: rotate(85deg);
-}
-.flip4 {
-  transform: rotate(105deg);
-}
-.flip5 {
-  transform: rotate(125deg);
-}
-.flip6 {
-  transform: rotate(135deg);
-}
-.flip7 {
-  transform: rotate(155deg);
-}
-
-.flip8 {
-  transform: rotate(180deg);
-}
-
-.flip9 {
-  transform: rotate(220deg);
-}
-
-.flip10 {
-  transform: rotate(360deg);
-}
-.desaturate {
-  -webkit-filter: grayscale(1);
-  -webkit-filter: grayscale(100%);
-  filter: gray;
-  filter: grayscale(100%);
-}
-</style>
-
-<!-- Post Info -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-      <div class="loader" id="load"></div>
-
-<script>
-
-var string = "aAzZ123dsfsdfעחלעלחי";
-
-var flipcounter =0;
-function englishString(s){
-    var i, charCode;
-    for (i = s.length; i--;) {
-        charCode = s.charCodeAt(i);
-        if (charCode < 65 || charCode > 122) 
-            return false;
-    }
-    return true;
-}
-
-englishString(string); // false
-englishString('abxSDSzfgr'); // true
 
 
-var loopImage=0;
-var x;
-    var loadicon = document.getElementById('load')
-    loadicon.style.visibility='hidden'
-loadicon.style.position="absolute";
-loadicon.style.left = 730+'px';//50
-loadicon.style.top = 150+'px';//20
+if (u.length>1 && p.length>1) {
+var array =["test"]
+var array2 =["test"];
 
- var title=document.body.appendChild(document.createElement('div'));
-$(function () {
-    $(":file").change(function () {
-      x=null;
-      newstr=null;
-      loopImage=0;
-      loadicon.style.visibility='visible'
-         title.innerHTML = '';
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = imageIsLoaded;
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+var databaseRef = firebase.database().ref('Users');
+//deck, card gallery
+
+ localStorage.setItem("username",document.getElementById('username').value);
+databaseRef.child(u).update({
+    Password:p,
+    Deck: array,
+    Cards: array2
 });
 
-var string;
- var newstr;
-function imageIsLoaded(e) {
-   $("#myImg").addClass('desaturate');
-    $('#myImg').attr('src', e.target.result);
-//     $('#myImg').width(320); // Units are assumed to be pixels
-// $('#myImg').height(500);
-    string=e.target.result;
-  Tesseract.recognize(e.target.result)
-    .then(function(result) {
-   console.log('yoooo', englishString(result.text))
+// databaseRef.set({
 
- var yu = result.text.replace(/[^0-9a-z]/gi, ' ')
-var arr = yu.split(" ")
-  for(var i=0; i<arr.length;i++) {
 
-    var str = arr[i];
-    console.log(str, str.length)
-    if (str.length>=3) {
-      newstr= newstr + " " + str;
-    }
-  }
-var int=0; 
-console.log('null',newstr)
+//     Password:p,
+//     Deck: array,
+//     Cards: array2
 
-if (newstr==undefined|| newstr.includes('null') || newstr.indexOf('null')>-1) {
-  int=1; //no input
 
-}
-if (int==0) { //there is text
-    console.log(newstr)
-console.log(newstr.length)
-}
-var carryresultforbad;
-console.log($("#myImg"))
-if (int==1) {
-  $("#myImg").addClass('flip');
- 
-  // imageIsLoaded($('#myImg'));
- x = document.getElementById("myImg");
-console.log('after', x)
-Tesseract.recognize(x)
-.then(function(result){
-    console.log(result.text)
-
-    carryresultforbad=result.text;
-    loopImage=1;
-
-     var yu = result.text.replace(/[^0-9a-z]/gi, ' ')
-var arr = yu.split(" ")
-var newstr2;
-  for(var i=0; i<arr.length;i++) {
-
-    var str = arr[i];
-    console.log(str, str.length)
-    if (str.length>=3) {
-     newstr2= newstr2 + " " + str;
-    }
-  }
-
-  var int2=0; 
-
-if (newstr2==undefined) {
-  int2=1; 
+// });
 
 }
 
+}
 
-    if (int2==1) {
+function login () {
 
-      startloop(x);
-
-    }
-
-    if (int2==0) {
-      console.log('amds')
-          alert(result.text)
-    }
-})
+	u = document.getElementById('username').value; 
+	 p = document.getElementById('password').value; 
+if (u.length==0||p.length==0) {
+alert("Please create a username and password")
+console.log(u,p)
 }
 
 
 
+if (u.length>1 && p.length>1) {//
+	///query
+  var database = firebase.database();
+var querydata;
+var ref =database.ref('Users')//document.getElementById('username').value
+var allusernames=[];
+ref.on('value',gotData, errData);
 
-if (int==0) {
+function gotData(data) {
 
+ querydata=data.val();
 
-
-alert(newstr)
-
-
-console.log('mumble',newstr)
-}
-    loadicon.style.visibility='hidden';
-      // document.getElementById("result")
-      //   .innerText = result.text;
-        console.log(result.text.length)
-    });
-  //  start();
+var keys = Object.keys(querydata)
+ console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
 
 
+//deck, card gallery
+if (keys.indexOf(document.getElementById('username').value) >-1) {
+	// alert('WELCOME')
+	var users = ref.child(document.getElementById('username').value)
+users.on('value', function(snapshot) {
+    var val = snapshot.val();
+    //console.log(val.Cards, val.Deck, val.Password)
+ localStorage.setItem("username",document.getElementById('username').value);
+  localStorage.setItem("deck",val.Deck);
+    localStorage.setItem("gallery",val.Cards);
+
+    if (document.getElementById('password').value==val.Password) {
+    	//alert('password is correct');
+
+    	//begin applicaion 
+
+
+
+enterapp.style.position="absolute";
+enterapp.style.left = 610+'px';
+enterapp.style.top = 100+'px';
+enterapp.style.visibility='visible';
+
+
+
+
+getusername.style.visibility = 'hidden';
+getpassword.style.visibility = 'hidden';
+signupbutton.style.visibility = 'hidden';
+loginbutton.style.visibility = 'hidden';
 
 
 
 
 
-};
-
- 
-
- function startloop (e) {
-  console.log('bruhh',e)
-
-flipcounter++;
- x = document.getElementById("myImg");
-Tesseract.recognize(e)
-.then(function(result){
-    console.log(result.text)
-
-         var yu = result.text.replace(/[^0-9a-z]/gi, ' ')
-var arr = yu.split(" ")
-var newstr3;
-  for(var i=0; i<arr.length;i++) {
-
-    var str = arr[i];
-    console.log(str, str.length)
-    if (str.length>=3) {
-     newstr3= newstr3 + " " + str;
-    }
-  }
-
-  var int3=0; 
-
-if (newstr3==undefined) {
-  int3=1; 
-
-}
 
 
-    if (int3==1) {
-    
-      console.log('just flipped bro')
-      var x= document.getElementById("myImg")
-      if (flipcounter<=10) {
-      startloop(x)
-    }
+
     }
     else
-      alert(result.text)
+    	alert('Please re-enter your password')
+  
+});
 
-})
-
-
-  //$("myImg").toggleClass('anything');
-
-if (flipcounter==1) {
-  console.log('batman 1')
-  $("#myImg").removeClass("flip").addClass("flip2");
 
 }
-
-if (flipcounter==2) {
-     console.log(' batman 2')
-  $("#myImg").removeClass("flip2").addClass("flip3");
-
-}
-
-if (flipcounter==3) {
-      console.log('batman 3')
-  $("#myImg").removeClass("flip3").addClass("flip4");
-
-}
-
-if (flipcounter==4) {
-      console.log(' batman 4')
-  $("#myImg").removeClass("flip4").addClass("flip5");
-
-}
-
-if (flipcounter==5) {
-    console.log(' batman 5')
-  $("#myImg" ).removeClass("flip5").addClass("flip6");
-
-}
-
-if (flipcounter==6) {
-      console.log(' batman 6')
-  $("#myImg" ).removeClass("flip6").addClass("flip7");
-
-}
-
-if (flipcounter==7) {
-      console.log(' batman 7')
-  $("#myImg" ).removeClass("flip7").addClass("flip8");
-
-}
-
-if (flipcounter==8) {
-      console.log(' batman 7')
-  $("#myImg" ).removeClass("flip8").addClass("flip9");
-
-}
-
-
-if (flipcounter==9) {
-      console.log(' batman 8')
-  $("#myImg" ).removeClass("flip9").addClass("flip10");
-
-}
+else
+alert('Please re-enter your username')
 
 
 
 }
 
-</script>
-</body>
-</html>
+}
+function errData(err) {
+   console.log('not right')
+}
+
+}
+</script> -->
