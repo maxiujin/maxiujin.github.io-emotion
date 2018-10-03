@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test</title>
+</head>
+
+<body>
+
+</body>
+
+<img src="cover.jpg" height="100" width="80" id="deck1">
+
+
+<img src="cover.jpg" height="100" width="80" id="deck2">
+<hr class="line">
+<hr class="line2">
+<style type="text/css">
+
+body {
+background: #606c88;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+
+}
+
+#myGlower {
+    background-color: #ccc;
+    border: 1px solid transparent;    
+    -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
+       -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
+            transition: border 0.1s linear, box-shadow 0.1s linear;
+}
+
+#myGlower.active {
+    border-color: blue;
+    -webkit-box-shadow: 0 0 5px red;
+       -moz-box-shadow: 0 0 5px red;
+            box-shadow: 0 0 5px red;
+}
+.line {
+   position:absolute;
+   width:100%;
+   top: 50%;
+}
+
+.line2 {
+   position:absolute;
+   width:100%;
+   top: 70%;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+	
+</style>
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+
+<script src="sscd.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-overlaps/1.2.3/jquery.overlaps.js"></script>
+    <script src="overplug.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+setInterval(function(){
+            //First step would be to get the offset of item 1 and item 2
+            //Second would be to get the width of each
+            //Third would be to check if the offset+width ever overlaps
+                //the offset+width of the 2nd
+            //Fourth would be, if so, do X or set a class...
+        },10);
+
+
+
+
+
+
+
+// $(window).focus(function(){
+//   //your code
+//     alert('mone')
+// });
+	document.body.style.zoom="80%"
+
+var turncounter =0; //count number of turns
+
+var cardsinhand = 5; 
+
+var modal = document.getElementById('myModal');
+
+var humandeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
+
+var cpudeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
+///icons on the field
+
+
+   var icon1 = document.createElement("IMG");
+  icon1.setAttribute("src", "spell_field.png");
+   icon1.setAttribute("width", "60");
+    icon1.setAttribute("height", "60");
+ icon1.style.position="absolute";
+  icon1.style.left = 130+'px';
+  icon1.style.top = 470+'px';
+   document.body.appendChild(icon1);
+
+  var icon3 = document.createElement("IMG");
+  icon3.setAttribute("src", "attack_icon.png");
+   icon3.setAttribute("width", "60");
+    icon3.setAttribute("height", "60");
+ icon3.style.position="absolute";
+  icon3.style.left = 670+'px';
+  icon3.style.top = 370+'px';
+  icon3.id ='attack_icon'
+   document.body.appendChild(icon3);
+
+
+
+    var icon2 = document.createElement("IMG");
+  icon2.setAttribute("src", "hazard_field.png");
+   icon2.setAttribute("width", "60");
+    icon2.setAttribute("height", "60");
+ icon2.style.position="absolute";
+  icon2.style.left = 1330+'px';
+  icon2.style.top = 470+'px';
+  icon2.id ='hazard_icon'
+   document.body.appendChild(icon2);
+
+///
+
+
+function isOverlap(idOne,idTwo){
+        var objOne=$(idOne),
+            objTwo=$(idTwo),
+            offsetOne = objOne.offset(),
+            offsetTwo = objTwo.offset(),
+            topOne=offsetOne.top,
+            topTwo=offsetTwo.top,
+            leftOne=offsetOne.left,
+            leftTwo=offsetTwo.left,
+            widthOne = objOne.width(),
+            widthTwo = objTwo.width(),
+            heightOne = objOne.height(),
+            heightTwo = objTwo.height();
+        var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,             rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
+        return leftTop || rightTop || leftBottom || rightBottom;
+}
+///the decks
+var getDeck = document.getElementById('deck1'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 1180+'px';
+getDeck.style.top = 60+'px';
+getDeck.style.zIndex = "0";
+
+var getDeck = document.getElementById('deck2'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 110+'px';
+getDeck.style.top = 670+'px';
+getDeck.style.zIndex = "0";
+
+var x = document.createElement("IMG");
+   x.setAttribute("src", "quincy.jpg");
+    x.setAttribute("width", "80");
+    x.setAttribute("height", "110");
+  x.style.position="absolute";
+  x.style.left = 350+'px';
+  x.style.top = 670+'px';
+  x.id="card1"
+   document.body.appendChild(x);
+
+
+   var x2 = document.createElement("IMG");
+   x2.setAttribute("src", "agent_tamika.jpg");
+    x2.setAttribute("width", "80");
+    x2.setAttribute("height", "110");
+  x2.style.position="absolute";
+  x2.style.left = 450+'px';
+  x2.style.top = 670+'px';
+   document.body.appendChild(x2);
+
+
+
+   var x3 = document.createElement("IMG");
+   x3.setAttribute("src", "sista_jones.jpg");
+    x3.setAttribute("width", "80");
+    x3.setAttribute("height", "110");
+  x3.style.position="absolute";
+  x3.style.left = 550+'px';
+  x3.style.top = 670+'px';
+  x3.style.draggable =true
+   document.body.appendChild(x3);
+
+
+
+      var x4 = document.createElement("IMG");
+   x4.setAttribute("src", "electronica.jpg");
+    x4.setAttribute("width", "80");
+    x4.setAttribute("height", "110");
+  x4.style.position="absolute";
+  x4.style.left = 650+'px';
+  x4.style.top = 670+'px';
+  x4.style.draggable =true
+   document.body.appendChild(x4);
+
+
+
+
+      var x5 = document.createElement("IMG");
+   x5.setAttribute("src", "jeff_tones.jpg");
+    x5.setAttribute("width", "80");
+    x5.setAttribute("height", "110");
+  x5.style.position="absolute";
+  x5.style.left = 750+'px';
+  x5.style.top = 670+'px';
+  x5.style.draggable =true
+   document.body.appendChild(x5);
+
+
+
+ $(x).draggable();
+    $(x2).draggable();
+ $(x3).draggable();
+ $(x4).draggable();
+ $(x5).draggable();
+x.onclick = displayCard;
+x2.onclick = displayCard;
+x3.onclick = displayCard;
+x4.onclick = displayCard;
+x5.onclick = displayCard;
+
+
+
+
+
+////CPU A.I. 
+
+var y = document.createElement("IMG");
+   y.setAttribute("src", "cover.jpg");
+    y.setAttribute("width", "80");
+    y.setAttribute("height", "110");
+  y.style.position="absolute";
+  y.style.left = 350+'px';
+  y.style.top = 20+'px';
+   document.body.appendChild(y);
+
+
+   var y2 = document.createElement("IMG");
+   y2.setAttribute("src", "cover.jpg");
+    y2.setAttribute("width", "80");
+    y2.setAttribute("height", "110");
+  y2.style.position="absolute";
+  y2.style.left = 450+'px';
+  y2.style.top = 20+'px';
+   document.body.appendChild(y2);
+
+
+
+   var y3 = document.createElement("IMG");
+   y3.setAttribute("src", "cover.jpg");
+    y3.setAttribute("width", "80");
+    y3.setAttribute("height", "110");
+  y3.style.position="absolute";
+  y3.style.left = 550+'px';
+  y3.style.top = 20+'px';
+  y3.style.draggable =true
+   document.body.appendChild(y3);
+
+
+
+      var y4 = document.createElement("IMG");
+   y4.setAttribute("src", "cover.jpg");
+    y4.setAttribute("width", "80");
+    y4.setAttribute("height", "110");
+  y4.style.position="absolute";
+  y4.style.left = 650+'px';
+  y4.style.top = 20+'px';
+  y4.style.draggable =true
+   document.body.appendChild(y4);
+
+
+      var y5 = document.createElement("IMG");
+   y5.setAttribute("src", "cover.jpg");
+    y5.setAttribute("width", "80");
+    y5.setAttribute("height", "110");
+  y5.style.position="absolute";
+  y5.style.left = 750+'px';
+  y5.style.top = 20+'px';
+  y5.style.draggable =true
+  document.body.appendChild(y5);
+
+   ///cpu A.I. over
+
+var modalImg = document.getElementById("img01");
+
+
+function displayCard() {
+   modal.style.display = "block";
+    modalImg.src = this.src;
+}
+
+
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+
+//glow effect
+ $(x).css("box-shadow", "0px 0px 15px #FFD700");
+  $(x2).css("box-shadow", "0px 0px 15px #FFD700");
+   $(x3).css("box-shadow", "0px 0px 15px #FFD700");
+    $(x4).css("box-shadow", "0px 0px 15px #FFD700");
+     $(x5).css("box-shadow", "0px 0px 15px #FFD700");
+
+
+//erase glow effect
+     // $(x5).css("box-shadow", "0px 0px 0px #ddd");
+
+var myVar = setInterval(myTimer, 1000);
+var overlap = isOverlap("#card1","#hazard_icon");
+
+function myTimer() {
+   var hit_list = $(x).overlaps(icon1);
+	if (hit_list==true) {
+		alert('yahhhhh')
+	}
+}
+$(function() {  
+
+	// var check = isCollide(x, icon1);
+
+    var glower = $(x2);
+    window.setInterval(function() {  
+     isElementClicked();
+    }, 1000);
+});
+
+
+
+
+////when we draw
+
+var elementIsClicked = false; // declare the variable that tracks the state
+function clickHandler(){ // declare a function that updates the state
+  elementIsClicked = true;
+}
+
+
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var element = document.getElementById('deck2'); // grab a reference to your element
+element.addEventListener('click', clickHandler);
+
+function isElementClicked (){
+
+  // console.log(elementIsClicked ? 'CLICKED' : 'NOT');
+  if (elementIsClicked == true && cardsinhand<=7) {
+cardsinhand+=1; 
+var st = humandeck[turncounter];
+      var newcard = document.createElement("IMG");
+   newcard.setAttribute("src", st);
+    newcard.setAttribute("width", "80");
+   newcard.setAttribute("height", "110");
+ newcard.style.position="absolute";
+  newcard.style.left = 300+'px';
+  newcard.style.top = 670+'px';
+  $(newcard).draggable();
+newcard.onclick = displayCard;
+  document.body.appendChild(newcard);
+  
+
+
+
+ x.style.left = 360+'px';
+   x2.style.left = 400+'px';
+   x3.style.left = 440+'px';
+   x4.style.left = 520+'px';
+  	elementIsClicked=false;
+  	turncounter+=1;
+  }
+}
+
+
+
+
+
+
+// $(document).keypress(function (e) {
+//     if (e.which == 68) {
+//         alert('enter key is pressed');
+//     }
+// });
+   
+
+	
+
+</script>
+</html>

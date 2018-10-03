@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+.page-wrap {
+width: 960px;
+margin: 0 auto;
+position: relative;
+}
+
+
+.WebContainer{
+    width:100%;
+    min-width:1000px;
+    height:auto;
+} 
+
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+}
+</style>
+
+<div class="btn-group" id="cardmenu">
+  <button onclick="seeEffect()">Card Effect</button>
+ <button onclick="AddtoDeck()">Add to Deck</button>
+</div>
+<img src="deckstack.png" width="100" height="100" id="thedeck" hidden="yes" >
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+var cardmenu = document.getElementById('cardmenu'); 
+cardmenu.style.visibility='hidden'
+
+
+//addingcards to the deck variables
+var newDeckArray=[];
+var cardabilitystring;
+var cardnametobeadded;
+
+var realnameofCard;
+////
+var cardGalleryfronames=[];
+var cardGalleryfroattack=[];
+var cardGalleryfroshield=[];
+var cardGalleryfrortype =[];
+var cardGalleryfroability=[];
+
+var theusername = localStorage.getItem("username")
+var userdeck;
+var usercards;
+ var database = firebase.database();
+var querydata;
+var ref =database.ref('Users')//document.getElementById('username').value
+var allusernames=[];
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+
+ querydata=data.val();
+
+var keys = Object.keys(querydata)
+ console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
+
+
+if (keys.indexOf(theusername) >-1) {
+  // alert('WELCOME')
+  var users = ref.child(theusername)
+users.on('value', function(snapshot) {
+    var val = snapshot.val();
+    userdeck =val.Deck;
+    usercards=val.cards;
+    localStorage.setItem("deck",val.Deck);
+    localStorage.setItem("gallery",val.Cards);
+
+
+  
+});
+
+
+}
+
+
+
+
+}
+
+function errData(err) {
+   console.log('not right')
+}
+
+
+
+setTimeout(warriorCards, 2500);
+
+function warriorCards () {
+
+ cardGalleryfronames =["Gamba", "Rawi of the second command", "Rawi of the first command","Ashanti of the Brave","Stealth Goddess","12 Bantu", "Cameroon Defense","Mnyama summoner","Zulu Brigade","Malo the deceptive warrior","Clabu","Insane Soldier","Warrior of Anubis", "Warrior of Horus","Warrior of Ra",
+"Soldier of the Nile","Hidden tribe of Uganda","Sphinx warrior","Zulu Princess","Mali Emperor","Sprinter from the plains","Oakland Revolutionary","Harlem Revolutionary","LA Revolutionary", "South African Revolutionary","Sacred Nubian Warrior","Warrior from the future","Mecha warrior from the future","Herbal warrior","Island warrior","Protector of the crops","Breakdance attacker","Capoeria Warrior","American Boxer 1","American Boxer 2","American Boxer 3","Yanga Inspired","Moga Grappler","Shanice dojo soldier 1","Janice dojo soldier 2","Jamal dojo soldier 3","Persuasive Lawyer","Human Rights Lawyer","The Prosecutor", "Tanzanian Hunter","Bush Warrior","Ushabti","Craze Zebraman","Cape Town Poacher hunter","Spirit Warrior"];
+ cardGalleryfroattack =["5","4","4","7","3","12","0","3","5","3","7","10","5","7","6","9","13","4","7","15","2","5","5","5","5","7","5","5","3","1","7","11","5","4","7","3","12","1","4","5","7","1","1","9","5","5","1","6","8","8"];
+cardGalleryfroshield=["5","2","2","1","12","0","11","7","0","3","0","0","2","0","4","2","0","5","12","0","7","0","0","0","0","7","9","9","8","7","0","0","2","0","5","10","0","5","2","1","7","10","8","6","0","6","7","6","3","2"];
+ cardGalleryfrortype =["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"];
+cardGalleryfroability=["Stealth.","When this card enters the battlefield <br> you can place an additional warrior frorian to the field", "When this card enters the battlefield <br> you can place up to 2 additional warrior frorians to the field","Stealth","Stealth","This card can only attack once per turn","This card gains +1 attack energy at <br>  the beginning of your next turn and every turn after. ","When this card enters the field you and your opponent <br> draw 1 card. Then search your deck for an animal frorian","Stealth","If this card is attacked <br> you can have another frorian you control take the attack instead. ","destroy this card at the end of your turn","destroy this card at the end of your turn","When this card enters the field you can place <br> another 'Warrior of' card on the field","When this card enters the field you can place <br> another 'Warrior of' card on the field","When this card enters the field you can place <br> another 'Warrior of' card on the field","If this card attacks your opponent directly <br> it loses 2 attack energy","This card cannot attack <br> your opponent directly","Stealth","At the end of your turn this card <br> loses 1 attack energy and 1 shield","This card can only attack once. <br> Destroy this card if it is attacked or after it attacks <br> 1 frorian your opponent controls","Stealth","When this card is placed in the battlefied both <br> you and your opponent draw 1 card <br> and discard 1 card.","When this card is placed in the <br> battlefied both you and your opponent <br> lose 5 life energy","When this card is placed in the <br> battlefied both you and your <br> opponent gain 3 life energy","When this card is placed in the battlefied <br> this card loses 2 attack energy and <br> select 1 frorian your opponent <br> controls, that card loses <br> 5 attack energy","When this card enters the field <br> select 1 hazard your opponent <br> controls. Destroy it.","If you control at least 1 <br> scientist frorian this card gains <br> +2 attack energy until the <br> end of your turn.","If you control at least 1 <br> scientist frorian this card gains <br> the ability 'stealth'","If you control at least 1 healer, <br> this card will not lose any <br> attack or shield energy when it attacks <br> any of your opponents' frorians","Stealth","If you control at least <br> 1 farmer frorian, when this card enters the field <br> select 1 frorian your opponent controls, <br> it's shield is reduce by 3","At the end of your turn <br> this card loses 2 attack energy. <br> This happens at the end <br> of all of your turns","This card can attack <br> 3 times in per turn","When this card enters the field <br> you can place another 'American boxer' <br> from your hand to the field. <br> That card cannot attack this turn","When this card enters the field <br> you can place another 'American boxer' <br> from your hand to the <br> field. That card cannot <br> attack this turn","When this card enters the field <br> you can place another 'American boxer' <br> from your hand to the field. <br> That card cannot attack this turn.","This card can only attack <br> if your life energy is lower <br> than your opponents.","If this card's shield is lower <br> than 18, this card gains +1 <br> shield at the end of every one <br> of your turns.","When this card attacks, your <br> opponent has to pay life energy <br> equal to this cards attack energy in <br> order to activate a hazard.","When this card attacks, your opponent <br> has to pay life energy equal <br> to this cards attack energy in <br> order to activate any spell <br> from their hand. ","When this card enters the field <br> you can search your deck <br> for another 'dojo soldier' card and <br> add it to your hand","When this card enters the field <br> your opponent cannot activate any <br> cards from their hand this turn.","When this card enters the field <br> all 'lawyer' frorians gain <br> +5 attack energy until the end <br> of your turn.", "Send 1 'lawyer' card you <br> control from the field or your hand <br> to suspension. After place this card on <br> the battlefield. If this card <br> attacks a frorian with higher attack, increase <br> this card's attack energy by <br> half of the attacked card's attack energy","When this card enters the battlefield <br>, your opponent must discard 1 card from <br> his or her hand.","Stealth","If you control at least <br> 1 deity card, if that card would be destroyed <br> in combat or by spell or hazard effect, <br> have this card be destroyed instead.","If you control 1 animal frorian <br>, you can place this card on the <br> battlefied in addition to your normal <br> once per turn placement.","If you control another animal <br> frorian, this card cannot be <br> destroyed once per turn. ","If you control 1 healer or deity <br> you can place this card from you hand <br> to the battlefield in addition to your <br> normal once per turn placement."];
+var cardx=5;
+var cardy=5;
+
+var cardxrow=0;
+
+var cardyrow=0;
+var cardyrow2=0;
+var cardyrow3=0;
+var cardyrow4=0;
+var cardyrow5=0;
+
+var cardnamex;
+var cardnamey;
+var theimage;
+
+var hitfive =0; 
+var cancel=0;
+hitfive=0;
+var byhundred= 300;
+
+for(var i=0; i<cardGalleryfronames.length;i++) { //begin for
+
+
+
+
+
+var x = document.createElement("IMG");
+
+if (i==0) {
+  cardyrow=20;
+   cardyrow2=45;
+    cardyrow3=70;
+     cardyrow4=95;
+      cardyrow5=220;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+}
+if (i>=1 && i % 5!==0) {
+
+
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+if (hitfive==1) {
+  // cardyrow=cardyrow+byhundred;
+}
+}
+
+if (i % 5==0 && i>1) {
+  hitfive=1;
+  console.log(cardx,cardy);
+  cardx=5;
+  cardy=cardy+300;
+     cardyrow=cardyrow+300;
+   cardyrow2=cardyrow2+300;
+    cardyrow3=cardyrow3+300;
+     cardyrow4=cardyrow4+300;
+      cardyrow5=cardyrow5+300;
+  //cardyrow=cardyrow+byhundred;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+
+}
+// x.style.top = 5+'px';
+
+
+
+    document.body.appendChild(x);
+
+
+
+
+
+///"Send 1 'lawyer' card you control from the field or your hand <br> to  suspension.  After place this card on the battlefield.<br>  If this card attacks a frorian with higher  attack, <br> increase this card's attack energy by half <br> of the attacked card's attack energy."
+
+
+
+//5 created text. 
+
+//card name
+
+var hypecardname=document.body.appendChild(document.createElement('div'));
+hypecardname.style.position="absolute";
+var ch=cardx+15;
+
+var zh=cardyrow;
+hypecardname.style.left = ch+'px';//20
+hypecardname.style.top = zh+'px';//20
+hypecardname.style.fontSize='10px';
+hypecardname.style.color = 'white';
+hypecardname.innerHTML = cardGalleryfronames[i];
+
+
+//card attack
+
+var hypecardattack=document.body.appendChild(document.createElement('div2'));
+hypecardattack.style.position="absolute";
+var ch2=cardx+135
+var zh2=cardyrow+25;
+hypecardattack.style.left = ch2+'px';//140
+hypecardattack.style.top = zh2+'px';//45
+hypecardattack.style.fontSize='10px';
+hypecardattack.style.color = 'white';
+hypecardattack.innerHTML = cardGalleryfroattack[i];
+
+
+//card shield
+var hypecardshield=document.body.appendChild(document.createElement('div3'));
+hypecardshield.style.position="absolute";
+hypecardshield.style.left = ch2+'px';//140
+var zh3=cardyrow+50;
+hypecardshield.style.top = zh3+'px';//70
+hypecardshield.style.fontSize='10px';
+hypecardshield.style.color = 'white';
+hypecardshield.innerHTML = cardGalleryfroshield[i];
+
+
+//card type
+var hypecardtype=document.body.appendChild(document.createElement('div3'));
+hypecardtype.style.position="absolute";
+var ch3=cardx+130;
+var zh4=cardyrow+75;
+hypecardtype.style.left = ch3+'px';//135
+hypecardtype.style.top = zh4+'px';//95
+hypecardtype.style.fontSize='10px';
+hypecardtype.style.color = 'white';
+hypecardtype.innerHTML = cardGalleryfrortype[i];
+
+//card ability
+var hypecardability=document.body.appendChild(document.createElement('div4'));
+hypecardability.style.position="absolute";
+hypecardability.style.left = ch+'px';//20
+var zh5=cardyrow+200;
+hypecardability.style.top = zh5+'px';//220
+hypecardability.style.fontSize='5px';
+hypecardability.style.color = 'red';
+
+hypecardability.innerHTML = cardGalleryfroability[i];
+
+
+
+// $(document).ready(function(){
+
+//     $(".imah").mouseover(function(){
+//     	console.log('me')
+//         $(".imah").css("background-color", "yellow");
+//     });
+//     $(".imah").mouseout(function(){
+//         $(".imah").css("background-color", "lightgray");
+//     });
+// });
+
+
+
+cardx=cardx+200;
+//cardy=cardy+200
+}//end for
+
+
+}//end warrior
+
+
+
+
+var cardGalleryspells =[];
+
+var cardGalleryHazards =[];
+
+
+
+
+
+var type=document.body.appendChild(document.createElement('div4'));
+$(document).mousemove(function(){
+$('div').mouseover(function() {
+
+  console.log('weee',  this.innerText)
+  var trust = this.innerText;
+
+      console.log('meee',this.innerText);
+    cardnametobeadded= cardGalleryfronames.indexOf(this.innerText)
+    if (cardnametobeadded>-1) {
+      console.log(cardnametobeadded)
+      realnameofCard=cardGalleryfronames[cardnametobeadded];
+cardabilitystring = cardGalleryfroability[cardnametobeadded];
+//console.log('data',cardnametobeadded,cardabilitystring)
+}
+
+      var x = $(this).offset().left;
+var y = $(this).offset().top;
+
+console.log(x,y)
+       cardmenu.style.visibility='visible'
+  cardmenu.style.position="absolute";
+cardmenu.style.left = x+'px';//20
+cardmenu.style.top =y+'px';//220
+cardmenu.style.zIndex = "1";
+  
+  
+});
+  
+   
+});
+
+function seeEffect () {
+
+  alert(cardabilitystring)
+}
+
+function AddtoDeck () {
+   
+   console.log(realnameofCard)
+
+
+ newDeckArray = userdeck;
+if (newDeckArray.length<40) {
+newDeckArray.push(realnameofCard);
+//save to the database
+
+var databaseRef = firebase.database().ref('Users');
+
+databaseRef.child(theusername).update({
+    Deck: newDeckArray
+});
+
+alert('Your card has been added')
+}
+else
+  alert('Your Deck already has 40 cards')
+
+}
+
+
+
+
+</script>
+
+</html>

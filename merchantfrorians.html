@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+.page-wrap {
+width: 960px;
+margin: 0 auto;
+position: relative;
+}
+
+
+.WebContainer{
+    width:100%;
+    min-width:1000px;
+    height:auto;
+} 
+
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
+}
+</style>
+<div class="btn-group" id="cardmenu">
+  <button onclick="seeEffect()">Card Effect</button>
+ <button onclick="AddtoDeck()">Add to Deck</button>
+</div>
+
+<img src="deckstack.png" width="100" height="100" id="thedeck" hidden="yes" >
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+var cardmenu = document.getElementById('cardmenu'); 
+cardmenu.style.visibility='hidden'
+
+
+//addingcards to the deck variables
+var newDeckArray=[];
+var cardabilitystring;
+var cardnametobeadded;
+
+var realnameofCard;
+////
+var cardGalleryfronames=[];
+var cardGalleryfroattack=[];
+var cardGalleryfroshield=[];
+var cardGalleryfrortype =[];
+var cardGalleryfroability=[];
+
+var theusername = localStorage.getItem("username")
+var userdeck;
+var usercards;
+ var database = firebase.database();
+var querydata;
+var ref =database.ref('Users')//document.getElementById('username').value
+var allusernames=[];
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+
+ querydata=data.val();
+
+var keys = Object.keys(querydata)
+ console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
+
+
+if (keys.indexOf(theusername) >-1) {
+  // alert('WELCOME')
+  var users = ref.child(theusername)
+users.on('value', function(snapshot) {
+    var val = snapshot.val();
+    userdeck =val.Deck;
+    usercards=val.cards;
+    localStorage.setItem("deck",val.Deck);
+    localStorage.setItem("gallery",val.Cards);
+
+
+  
+});
+
+
+}
+
+
+
+
+}
+
+function errData(err) {
+   console.log('not right')
+}
+
+
+
+
+
+
+setTimeout(merchantCards, 2500);
+function merchantCards () {
+
+ cardGalleryfronames =["Mansa Musa","Mali Gold Merchant","Mali Silver Merchant","Mali Platinum Merchant","Ghanian Fish trader","Ghanian peppers seller","Zam the miner","Harlem owner","Sweet seller","Masterful craftsman","Village merchant","Poison supplier","Five salesmen","Sharp buyer","Mamoi Sufa","Risky man" ,"Queen Zoya","Zior","Gabon Spice trader","Cairo Collector" ,"Moni","bibi","bibi2","Mystery Salesman","Merchant Priest","Tough Pitcher","Kufi","Wiseman","Jmoi","jmoi 2","Prime Seller","Yuni","Merchant Attacker","Merchant believer","Papa Currency","Mama Currency","Lulu","Lulu's sister","Sako future","Sako ancestor" ,"Sako king of the coffee beans","Sako the kenyan dweller","Hero of trade","Movique","Jake","Confident business","Record Producer","Great Fisherman","Master Chef","Imani"];
+ cardGalleryfroattack =["2","1","3","3","3","5","7","2","3","2","0","0","7","0","0","5","13","0","5","0","3","3","0","6","3","6","10","5","6","11","3","5","8","2","0","3","3","7","0","5","2","21","0","1","10","0","3","2","0"];
+
+cardGalleryfroshield=["0","0","0","0","0","0","0","0","0","0","7","8","1","10","0","0","0","0","2","9","1","1","0","2","0","0","10","1","1","3","2","2","3","0","0","1","1","7","1","5","1","0","0","1","0","0","0","0","0"];
+
+console.log(cardGalleryfroattack.length,cardGalleryfroshield.length)
+ cardGalleryfrortype =["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"];
+cardGalleryfroability=["When this card enters the field.<br> You can pay life energy. This card's attack and shield <br> equals the amount of life energy you paid","When this card enters the battlefield <br> you can add up to 2 shaman spells from your deck <br> to your hand. <br> Pay 20 life energy . You cannot <br> attack your opponent for <br> 2 turns","When this card enters the battlefield, <br> you can add 1 shaman spell from your <br>  deck to your hand. Pay <br>  10 life energy. You cannot attack your opponent this turn","When this card enters the battlefield you <br>  can add 3 shaman spells from your deck <br>  to your hand. Pay 30 life energy. <br> You cannot attack your opponent for 3 turns","When this card enters the battlefield. Search your <br>  deck for an animal frorian and add that card to your hand. <br>  Your opponent draws 2 cards.","When this card enters the battlefield, <br> you can add 1 farmer frorian from <br>  your deck to your hand. Your opponent draws 1 card. ","While this card is in on your <br>  side of the field, if you have at least 2 merchant <br>  frorians in your hand. You could place both of <br>  those frorians on the field." ,"If your opponent wants to attack this card, they <br> must first discard 1 card  from their hand.","When this card enters the <br>  field both you and your opponent draw 1 card <br>  and gain 5 life energy","If your opponents control more frorians <br> than you do, your opponent must <br> pay 2 life energy for each card in your hand","If this card destroys your opponents frorian, draw 1 card." ,"When this card enters the field, target 1 <br> frorian your opponent controls, that frorian now is poisoned." ,"When this card attacks, increase its <br> attack energy by the attacked frorian","if you have less cards in your <br> hand than your opponent, pay 1 life energy, your opponent <br> has to discards cards from their hand until the <br> number of cards in their hand equal yours","This card's attack energy increases by 3 for <br> every merchant you control. This effect <br> only occurs when this card attacks","When this card enters the <br> field, you can destroy this card and <br> another merchant you control. Draw 2 cards. <br> You lose 3 life energy","If this card is powered up by <br> an element spell card, you can increase this cards <br> attack energy by an additional 3." ,"If your opponent activates <br> a hazard or spell card, destroy this card." ,"If you control a farmer frorian, <br> this card's attack energy becomes 11. If you control <br> another merchant frorian, <br> this card's attack become 8.","If you activate a hazard card, this card's attack energy is <br> increased by the number of frorians destroyed by your hazard. <br> Each card destroyed increases this card's attack by 1","If you have more cards in your hand <br> than your opponent, you can increase this <br> card's attack energy by 1.","You can only activate this effect <br> once per turn. <br> *Your opponent cannot attack you directly this turn.","You can only activate this effect <br> once per turn. *Your opponent <br> cannot activate any spells this turn.","When this card enters the battlefield, <br> you can pay 30 life energy. <br> Search your opponent's deck. Take 1 card from <br> your opponents deck and add it to your deck. <br> After both you and your opponent shuffle each others deck.","When this card enters the battlefield, <br> search your deck for a merchant card and add <br> it to your hand. Pay 5 life energy","When this card enters the battlefield, <br> your opponent must pay 5 life energy. <br> You cannot attack your opponent <br> this turn.","Your opponent must pay 1 life to destroy this card." ,"If your opponent activates 2 spells <br> this turn, destroy this card. You can negate this effect <br> by paying 10 life energy","Gain","Gain","Your opponent spells, hazards, and <br> frorians can only destroy 1 merchant <br> frorian you control.","When this card enters the battlefield, <br> add 1 (water) element spell card to your hand","Gain","Gain","Pay 10 life energy, add 2 merchants from <br> your deck that have the 'gain' ability","When this card enters the battlefield <br> add 1 fire element spell from your deck to your hand","When this card enters the battlefield. <br> Select 1 frorian your opponent controls, decrease <br> that targets attack energy equal to this card's attack energy.","When this card enters the battlefield. Select 1 frorian your <br> opponent controls, decrease that targets attack <br> energy equal to the number of frorians you control","Once per turn, target 1 other 'Sako' card <br> you control and increase that card's <br> attack energy by 9.","When this card enters the field. Search your deck <br> for a 'Sako' card and add it to your hand." ,"When this card enters the field, <br> you can search your deck for a hazard card <br> and add it to your hand." ,"Once per turn, you can <br> discard 1 spell card from your hand <br> and if you do, this card can attack twice.","This card can only attack once. <br> After this card attacks destroy this card." ,"If you have at least 1 merchant frorian on the <br> battlefield this card is treated as an <br> element spell card. Declare a type <br> (fire, water, wind, metal, lightning).","When this card enters the field, select 1 frorian your <br> opponent controls, return that card to your opponent's hand. ","Once per turn, during your turn, <br> if you control another merchant frorian, you can increase <br> this card's shield energy by 1.","If you activate a spell card this card gains +12 attack <br> energy and +5 shield energy.","If you power this card up with a water type <br> element spell card, it gains +10 shield energy.","If this card is powered up by a herbal spell card, increase <br> this card's attack by the attack energy of 1 merchant frorian <br> you control","When this card enters the field, if you control at least <br> 3 merchant frorians, draw 1 card."];
+var cardx=5;
+var cardy=5;
+
+var cardxrow=0;
+
+var cardyrow=0;
+var cardyrow2=0;
+var cardyrow3=0;
+var cardyrow4=0;
+var cardyrow5=0;
+
+var cardnamex;
+var cardnamey;
+var theimage;
+
+var hitfive =0; 
+var cancel=0;
+hitfive=0;
+var byhundred= 300;
+
+for(var i=0; i<cardGalleryfronames.length;i++) { //begin for
+
+
+
+
+
+var x = document.createElement("IMG");
+
+if (i==0) {
+  cardyrow=20;
+   cardyrow2=45;
+    cardyrow3=70;
+     cardyrow4=95;
+      cardyrow5=220;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+}
+if (i>=1 && i % 5!==0) {
+
+
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+if (hitfive==1) {
+  // cardyrow=cardyrow+byhundred;
+}
+}
+
+if (i % 5==0 && i>1) {
+  hitfive=1;
+  console.log(cardx,cardy);
+  cardx=5;
+  cardy=cardy+300;
+     cardyrow=cardyrow+300;
+   cardyrow2=cardyrow2+300;
+    cardyrow3=cardyrow3+300;
+     cardyrow4=cardyrow4+300;
+      cardyrow5=cardyrow5+300;
+  //cardyrow=cardyrow+byhundred;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+
+}
+// x.style.top = 5+'px';
+
+
+
+    document.body.appendChild(x);
+
+
+
+//5 created text. 
+
+//card name
+
+var hypecardname=document.body.appendChild(document.createElement('div'));
+hypecardname.style.position="absolute";
+var ch=cardx+15;
+
+var zh=cardyrow;
+hypecardname.style.left = ch+'px';//20
+hypecardname.style.top = zh+'px';//20
+hypecardname.style.fontSize='10px';
+hypecardname.style.color = 'white';
+hypecardname.innerHTML = cardGalleryfronames[i];
+
+
+//card attack
+
+var hypecardattack=document.body.appendChild(document.createElement('div2'));
+hypecardattack.style.position="absolute";
+var ch2=cardx+135
+var zh2=cardyrow+25;
+hypecardattack.style.left = ch2+'px';//140
+hypecardattack.style.top = zh2+'px';//45
+hypecardattack.style.fontSize='10px';
+hypecardattack.style.color = 'white';
+hypecardattack.innerHTML = cardGalleryfroattack[i];
+
+
+//card shield
+var hypecardshield=document.body.appendChild(document.createElement('div3'));
+hypecardshield.style.position="absolute";
+hypecardshield.style.left = ch2+'px';//140
+var zh3=cardyrow+50;
+hypecardshield.style.top = zh3+'px';//70
+hypecardshield.style.fontSize='10px';
+hypecardshield.style.color = 'white';
+hypecardshield.innerHTML = cardGalleryfroshield[i];
+
+
+//card type
+var hypecardtype=document.body.appendChild(document.createElement('div3'));
+hypecardtype.style.position="absolute";
+var ch3=cardx+130;
+var zh4=cardyrow+75;
+hypecardtype.style.left = ch3+'px';//135
+hypecardtype.style.top = zh4+'px';//95
+hypecardtype.style.fontSize='10px';
+hypecardtype.style.color = 'white';
+hypecardtype.innerHTML = cardGalleryfrortype[i];
+
+//card ability
+var hypecardability=document.body.appendChild(document.createElement('div4'));
+hypecardability.style.position="absolute";
+hypecardability.style.left = ch+'px';//20
+var zh5=cardyrow+200;
+hypecardability.style.top = zh5+'px';//220
+hypecardability.style.fontSize='5px';
+hypecardability.style.color = 'red';
+
+hypecardability.innerHTML = cardGalleryfroability[i];
+
+
+
+
+
+cardx=cardx+200;
+//cardy=cardy+200
+}//end for
+
+
+}//end merchant
+
+
+
+
+
+
+
+var cardGalleryspells =[];
+
+var cardGalleryHazards =[];
+
+
+
+
+
+var type=document.body.appendChild(document.createElement('div4'));
+$(document).mousemove(function(){
+$('div').mouseover(function() {
+
+  console.log('weee',  this.innerText)
+  var trust = this.innerText;
+
+      console.log('meee',this.innerText);
+    cardnametobeadded= cardGalleryfronames.indexOf(this.innerText)
+    if (cardnametobeadded>-1) {
+      realnameofCard=cardGalleryfronames[cardnametobeadded];
+cardabilitystring = cardGalleryfroability[cardnametobeadded];
+//console.log('data',cardnametobeadded,cardabilitystring)
+}
+
+      var x = $(this).offset().left;
+var y = $(this).offset().top;
+console.log(x,y)
+       cardmenu.style.visibility='visible'
+  cardmenu.style.position="absolute";
+cardmenu.style.left = x+'px';//20
+cardmenu.style.top =y+'px';//220
+cardmenu.style.zIndex = "1";
+  
+  
+});
+  
+   
+});
+
+
+function seeEffect () {
+
+  alert(cardabilitystring)
+}
+
+function AddtoDeck () {
+   
+   console.log(realnameofCard)
+
+
+ newDeckArray = userdeck;
+if (newDeckArray.length<40) {
+newDeckArray.push(realnameofCard);
+//save to the database
+
+var databaseRef = firebase.database().ref('Users');
+
+databaseRef.child(theusername).update({
+    Deck: newDeckArray
+});
+
+alert('Your card has been added')
+}
+else
+  alert('Your Deck already has 40 cards')
+
+}
+
+      
+      
+
+
+
+
+</script>
+
+</html>

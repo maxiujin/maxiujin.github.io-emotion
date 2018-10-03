@@ -1,0 +1,76 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="ISO-8859-1"> 
+    <title>Welcome</title> 
+</head> 
+<body> 
+
+    <form action="">
+         <input type="button" id="1" value="Warriors" onclick="window.location.href='warriorfrorians.html';"/>
+         <input type="button" id="2" value="Farmers" onclick="window.location.href='farmerfrorians.html';"/>
+         <input type="button" id="3" value="Merchants" onclick="window.location.href='merchantfrorians.html';"/>
+          <input type="button" id="4" value="Hazards" onclick="window.location.href='hazards.html';"/>
+          <input type="button" id="5" value="Shaman Spells" onclick="window.location.href='shamanspells.html';"/>
+           <input type="button" id="6" value="Tribe Spells" onclick="window.location.href='tribespells.html';"/>
+              <input type="button" id="7" value="Element Spells" onclick="window.location.href='elementspells.html';"/>
+              <input type="button" id="8" value="Herbal Spells" onclick="window.location.href='herbalspells.html';"/>
+
+                 <input type="button" id="9" value="My Deck" onclick="window.location.href='mydeck.html';"/>
+
+                 <input type="button" id="10" value="My Cards" onclick="window.location.href='mygallery.html';"/>
+                 <input type="button" id="11" value="Play" onclick="window.location.href='play.html';"/>
+
+    </form> 
+
+
+    <img src="cover.jpg" height="340", width="240" id="cover">
+</body> 
+</html>
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+
+console.log(localStorage.getItem("username"),localStorage.getItem("deck"),localStorage.getItem("gallery"));
+
+var theusername = localStorage.getItem("username");
+
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+
+
+	var getDeck = document.getElementById('cover'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 310+'px';
+getDeck.style.top = 200+'px';
+getDeck.style.zIndex = "0";
+
+
+var creaters=document.body.appendChild(document.createElement('div'));
+creaters.style.position="absolute";
+creaters.style.left = 615+'px';
+creaters.style.top = 340+'px';
+creaters.style.color = 'Black';
+creaters.innerHTML = "Creators: Matthew Quaine Thompkins, Ejea Fields: Copyright 2018";
+
+
+var creaters2=document.body.appendChild(document.createElement('div'));
+creaters2.style.position="absolute";
+creaters2.style.left = 405+'px';
+creaters2.style.top = 140+'px';
+creaters2.style.color = 'Black';
+creaters2.innerHTML = "Froz";
+
+
+
+</script>

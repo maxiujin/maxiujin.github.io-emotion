@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+
+.page-wrap {
+width: 960px;
+margin: 0 auto;
+position: relative;
+}
+ 
+
+.WebContainer{
+    width:100%;
+    min-width:1000px;
+    height:auto;
+} 
+
+body {
+    /*background-color:   #339AFF;*/
+}
+
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+}
+</style>
+<div class="btn-group" id="cardmenu">
+  <button onclick="seeEffect()">Card Effect</button>
+ <button onclick="AddtoDeck()">Add to Deck</button>
+</div>
+
+<img src="deckstack.png" width="100" height="100" id="thedeck" hidden="yes" >
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+var cardmenu = document.getElementById('cardmenu'); 
+cardmenu.style.visibility='hidden'
+
+
+//addingcards to the deck variables
+var newDeckArray=[];
+var cardabilitystring;
+var cardnametobeadded;
+
+var realnameofCard;
+////
+var cardGalleryfronames=[];
+var cardGalleryfroattack=[];
+var cardGalleryfroshield=[];
+var cardGalleryfrortype =[];
+var cardGalleryfroability=[];
+
+var theusername = localStorage.getItem("username")
+var userdeck;
+var usercards;
+ var database = firebase.database();
+var querydata;
+var ref =database.ref('Users')//document.getElementById('username').value
+var allusernames=[];
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+
+ querydata=data.val();
+
+var keys = Object.keys(querydata)
+ console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
+
+
+if (keys.indexOf(theusername) >-1) {
+  // alert('WELCOME')
+  var users = ref.child(theusername)
+users.on('value', function(snapshot) {
+    var val = snapshot.val();
+    userdeck =val.Deck;
+    usercards=val.cards;
+    localStorage.setItem("deck",val.Deck);
+    localStorage.setItem("gallery",val.Cards);
+
+
+  
+});
+
+
+}
+
+
+
+
+}
+
+function errData(err) {
+   console.log('not right')
+}
+
+
+
+
+
+setTimeout(tribeCards, 2500);
+function tribeCards () {
+
+ cardGalleryfronames =["Kinship" ,"Fon Creed","Miwi cast","Three down","Two down","Wildpack"];
+
+
+cardGalleryfroability=["Declare 1 card type. <br> (warrior, farmer, merchant, healer,animal, scientist,deity).<br> All frorians that your opponent <br> currently controls become that selected <br> type until that card(s) leaves the field." ,"If you control 2 or more frorians <br> of the same type, your opponent cannot <br> activate a Hazard this turn." ,"If your life energy is lower <br> than your opponents, you can add <br> 1 frorian from your deck to <br> your hand. Your opponent can <br> also add 1 frorian card from their deck to their hand." ,"If your opponent controls <br> 3 frorians of the same type <br> on the battlefield. Destroy all 3 frorians." ,"If your opponent controls <br> 2 frorians of the same type <br> on the battlefield. Destroy those 2 frorians.","If you have 2 or more animal <br> frorians you can add 1 element spell card <br> from your deck to your hand."];
+var cardx=5;
+var cardy=5;
+
+var cardxrow=0;
+
+var cardyrow=0;
+var cardyrow2=0;
+var cardyrow3=0;
+var cardyrow4=0;
+var cardyrow5=0;
+
+var cardnamex;
+var cardnamey;
+var theimage;
+
+var hitfive =0; 
+var cancel=0;
+hitfive=0;
+var byhundred= 300;
+
+for(var i=0; i<cardGalleryfronames.length;i++) { //begin for
+
+
+
+
+
+var x = document.createElement("IMG");
+
+if (i==0) {
+  cardyrow=20;
+   cardyrow2=45;
+    cardyrow3=70;
+     cardyrow4=95;
+      cardyrow5=220;
+    x.setAttribute("src", "spelltemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+}
+if (i>=1 && i % 5!==0) {
+
+
+    x.setAttribute("src", "spelltemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+if (hitfive==1) {
+  // cardyrow=cardyrow+byhundred;
+}
+}
+
+if (i % 5==0 && i>1) {
+  hitfive=1;
+  console.log(cardx,cardy);
+  cardx=5;
+  cardy=cardy+300;
+     cardyrow=cardyrow+300;
+   cardyrow2=cardyrow2+300;
+    cardyrow3=cardyrow3+300;
+     cardyrow4=cardyrow4+300;
+      cardyrow5=cardyrow5+300;
+  //cardyrow=cardyrow+byhundred;
+    x.setAttribute("src", "spelltemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+
+}
+// x.style.top = 5+'px';
+
+
+
+    document.body.appendChild(x);
+
+
+
+//5 created text. 
+
+//card name
+
+var hypecardname=document.body.appendChild(document.createElement('div'));
+hypecardname.style.position="absolute";
+var ch=cardx+15;
+
+var zh=cardyrow;
+hypecardname.style.left = ch+'px';//20
+hypecardname.style.top = zh+'px';//20
+hypecardname.style.fontSize='10px';
+hypecardname.style.color = 'white';
+hypecardname.innerHTML = cardGalleryfronames[i];
+
+
+
+
+
+
+
+
+
+//card ability
+var hypecardability=document.body.appendChild(document.createElement('div4'));
+hypecardability.style.position="absolute";
+hypecardability.style.left = ch+'px';//20
+var zh5=cardyrow+200;
+hypecardability.style.top = zh5+'px';//220
+hypecardability.style.fontSize='5px';
+hypecardability.style.color = 'white';
+
+hypecardability.innerHTML = cardGalleryfroability[i];
+
+
+
+
+
+cardx=cardx+200;
+//cardy=cardy+200
+}//end for
+
+
+}//end merchant
+
+
+
+
+
+
+
+
+
+
+
+var type=document.body.appendChild(document.createElement('div4'));
+$(document).mousemove(function(){
+$('div').mouseover(function() {
+
+  console.log('weee',  this.innerText)
+  var trust = this.innerText;
+
+      console.log('meee',this.innerText);
+    cardnametobeadded= cardGalleryfronames.indexOf(this.innerText)
+    if (cardnametobeadded>-1) {
+      realnameofCard=cardGalleryfronames[cardnametobeadded];
+cardabilitystring = cardGalleryfroability[cardnametobeadded];
+//console.log('data',cardnametobeadded,cardabilitystring)
+}
+
+      var x = $(this).offset().left;
+var y = $(this).offset().top;
+console.log(x,y)
+       cardmenu.style.visibility='visible'
+  cardmenu.style.position="absolute";
+cardmenu.style.left = x+'px';//20
+cardmenu.style.top =y+'px';//220
+cardmenu.style.zIndex = "1";
+  
+  
+});
+  
+   
+});
+
+
+
+function seeEffect () {
+
+  alert(cardabilitystring)
+}
+
+function AddtoDeck () {
+   
+   console.log(realnameofCard)
+
+
+ newDeckArray = userdeck;
+if (newDeckArray.length<40) {
+newDeckArray.push(realnameofCard);
+//save to the database
+
+var databaseRef = firebase.database().ref('Users');
+
+databaseRef.child(theusername).update({
+    Deck: newDeckArray
+});
+
+alert('Your card has been added')
+}
+else
+  alert('Your Deck already has 40 cards')
+
+}
+
+      
+
+
+
+
+</script>
+
+</html>

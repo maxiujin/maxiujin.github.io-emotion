@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+.page-wrap {
+width: 960px;
+margin: 0 auto;
+position: relative;
+}
+
+
+.WebContainer{
+    width:100%;
+    min-width:1000px;
+    height:auto;
+} 
+
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+}
+</style>
+
+<div class="btn-group" id="cardmenu">
+  <button onclick="seeEffect()">Card Effect</button>
+ <button onclick="AddtoDeck()">Add to Deck</button>
+</div>
+<img src="deckstack.png" width="100" height="100" id="thedeck" hidden="yes" >
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
+    authDomain: "kora-d8e4d.firebaseapp.com",
+    databaseURL: "https://kora-d8e4d.firebaseio.com",
+    projectId: "kora-d8e4d",
+    storageBucket: "",
+    messagingSenderId: "703169856987"
+  };
+  firebase.initializeApp(config);
+   var database = firebase.database();
+
+var cardmenu = document.getElementById('cardmenu'); 
+cardmenu.style.visibility='hidden'
+
+
+//addingcards to the deck variables
+var newDeckArray=[];
+var cardabilitystring;
+var cardnametobeadded;
+
+var realnameofCard;
+////
+var cardGalleryfronames=[];
+var cardGalleryfroattack=[];
+var cardGalleryfroshield=[];
+var cardGalleryfrortype =[];
+var cardGalleryfroability=[];
+
+var theusername = localStorage.getItem("username")
+var userdeck;
+var usercards;
+ var database = firebase.database();
+var querydata;
+var ref =database.ref('Users')//document.getElementById('username').value
+var allusernames=[];
+ref.on('value',gotData, errData);
+
+function gotData(data) {
+
+ querydata=data.val();
+
+var keys = Object.keys(querydata)
+ console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
+
+
+if (keys.indexOf(theusername) >-1) {
+  // alert('WELCOME')
+  var users = ref.child(theusername)
+users.on('value', function(snapshot) {
+    var val = snapshot.val();
+    userdeck =val.Deck;
+    usercards=val.cards;
+    localStorage.setItem("deck",val.Deck);
+    localStorage.setItem("gallery",val.Cards);
+
+
+  
+});
+
+
+}
+
+
+
+
+}
+
+function errData(err) {
+   console.log('not right')
+}
+
+
+
+
+setTimeout(farmersCards, 2500);
+function farmersCards () {
+
+ cardGalleryfronames =["Yam grower","The gardener","Obsessed farmer","Queen of the garden","Leader of Nitrogen","Nitrogen Commander","Nitrogen healer","Soil expert","Master deforiant","Anti raider","Matrial farm","Nyanya man","The Masterful Farmer","Queen of the Crops","Zebra Domesticator","Pet Breeder","Bantu Farmer","Organic Seed Planter","Logos Farm","Ng'ombe handler","Zamba Producer","Super Vegan","Vegan Village","Anti Flood","Anti Theft","Banned Farmer","Silly Farmer","Natural Farmer","Secret Grower" ,"Secret Grower of the Abyss","Secret Grower of the Islands","Yoruba Dweller","Battle Farmer of Botswana","Battle Farmer of Botswana Nina","Battle Farmer of Botswana Mapi","Battle Farmer Caller","Clever Grower","Drunk farmer 1","Drunk Farmer 2","Drunk Farmer 3","Quick Farmer","Calm Worker","Fish Farmer","Seasonal Planter" ,"Mkulima 1","Mkulima 2","Mkulima 3","Agroscientist","Argiculturalist","Jack the Texan rancher"];
+ cardGalleryfroattack =["2","3","7","0","5","7","3","2","5","5","3","7","1","0","2","5","5","2","5","3","0","3","2","1","1","0","0","1","5","5","5","0","2","2","3","5","3","2","4","3","0","3","3","0","7","3","5","4","7","12"];
+
+cardGalleryfroshield=["10","7","5","13","0","7","5","5","3","5","11","9","1","0","1","4","8","12","9","9","20","8","12","9","9","5","12","7","9","8","10","18","8","8","7","8","9","5","7","8","0","7","7","15","7","5","7","3","9","3"];
+
+console.log(cardGalleryfroattack.length,cardGalleryfroshield.length)
+ cardGalleryfrortype =["F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F"];
+cardGalleryfroability=["When this card is placed into <br> the battlefield choose one of the following <br> effects *Increase your life energy by 10 <br>  * If you control another farmer frorian <br> draw 1 card","When this card is placed into the battlefied <br>, search your deck for 1  spell card with 'farmer' in its <br> cardname and add it to your hand","If this card attacks destroys your opponents frorian, place <br> that destroyed card to your battlefield" ,"When this card is placed on the field a 'GMO clone' <br> with the same attack and shield as this card is also <br> placed in the field." ,"When this card is placed in the field you can place an <br> additional 'Nitrogen' frorian from your hand to the battlefield.","If you control at least 1 other 'Nitrogen' card , count <br> the number of farmer frorians you control, this card can <br> attack as many times as the number of farmers you control.","If you control a healer frorian activate the following effect <br> *Heal all poisoned Nitrogen cards you control <br> and restore their attack <br> and shield energy to their original energy","When this card enters the battlefield look at <br> your opponents hand, your opponent must discard <br> 1 shaman card from his/her hand. If your opponent does <br> not have a shaman card, he/she losses 10 life energy","When this card enters the field, if your opponent controls at <br> least 1  healer  frorian, select 1 frorian and destroy that card. ","Your opponent cannot activate effects from <br> warrior frorians as long as this card is in your battlefield","Gain","Gain","If you control another farmer card, when this card enters <br> the field, draw 1 card","When this card enters the field you <br> and your  opponent draw 2 cards, <br> if 1 of the cards your opponent controls is a hazard, <br> that card returns to <br> your opponent deck. Your opponent then shuffles his deck." ,"If you control an animal frorian, you can <br> place this card in the battlefield in addition to your normal <br> once per turn placement cost." ,"If you control an animal frorian, if this card would be <br> destroyed in combat, destroy 1 other animal card you <br> control instead","When this card enters the field, if <br> your opponent controls more florians than you do, this card <br> gains +7 attack energy until the end of your turn","At the end of your turn you can increase <br> this cards attack energy by 1. You can do this every time.","Gain","When this card is placed in the field <br> search your deck for an animal <br> frorian and add that to your hand.","This card loses 1 shield energy at the end of <br> your opponents turn." ,"When this card enters the battlefield, <br> select up to 2 animal frorians your <br> opponent controls, destroy them.","As long as this card exist in your battlefield, animal <br> frorians that your opponent controls cannot <br> activate their abilities." ,"Once per turn, if your opponent activates a hazard <br> card, you can negate it.","Once per turn, if your opponent activates a shaman spell, <br> you can negate it.","When this card enters the battlefield,<br> both you and your opponent discard 1 card.<br> Your opponent can negate this effect by paying 30 life energy." ,"After 3 turns destroy this card." ,"This card can only be destroyed by a <br> spell or by animal or deity frorian","Gain","Gain","Gain","Destroy this card after 3 turns","Gain","Gain","Gain","When this card enters the field, you can search <br> your deck for up to two 'Battle farmer' cards and <br> add them to your hand","When this card enters the field increase <br> your life energy by the number of cards in your hand each +1","Gain","Gain","Gain","At the end of your turn, increase <br> this card's attack and shield energy by 1." ,"Gain","When his card is placed in the battlefield. Search your <br> deck for an element card with 'aqua' in its card name.<br> Add that card to your hand","If your life energy is lower than your opponents <br> this card's attack energy increases by <br> 5 until the end of the turn","Gain","Gain","Gain","If you control a scientist frorian, you can place <br> this card to the battlefield in addition to your 1 per turn <br> placement cost. When this card enters the field, all farmers and <br> scientist you control have the ability gain and have their <br> attack energy increase by 3","If you have less life energy than <br> your opponent. When this card enters the field <br> activate 1 of these effects <br> * destroy 1 hazard your opponent controls <br> *draw 1 card <br>  *your opponent discards a random card from their hand","This card can only be placed in the <br> battlefield if you have 2 farmer frorians in <br> your hand. When this card enters the <br> field destroy 2 cards your opponent controls. <br> You lose 10 life energy. <br> Destroy this card at <br> the end of your turn."];
+var cardx=5;
+var cardy=5;
+
+var cardxrow=0;
+
+var cardyrow=0;
+var cardyrow2=0;
+var cardyrow3=0;
+var cardyrow4=0;
+var cardyrow5=0;
+
+var cardnamex;
+var cardnamey;
+var theimage;
+
+var hitfive =0; 
+var cancel=0;
+hitfive=0;
+var byhundred= 300;
+
+for(var i=0; i<cardGalleryfronames.length;i++) { //begin for
+
+
+
+
+
+var x = document.createElement("IMG");
+
+if (i==0) {
+  cardyrow=20;
+   cardyrow2=45;
+    cardyrow3=70;
+     cardyrow4=95;
+      cardyrow5=220;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+}
+if (i>=1 && i % 5!==0) {
+
+
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+if (hitfive==1) {
+  // cardyrow=cardyrow+byhundred;
+}
+}
+
+if (i % 5==0 && i>1) {
+  hitfive=1;
+  console.log(cardx,cardy);
+  cardx=5;
+  cardy=cardy+300;
+     cardyrow=cardyrow+300;
+   cardyrow2=cardyrow2+300;
+    cardyrow3=cardyrow3+300;
+     cardyrow4=cardyrow4+300;
+      cardyrow5=cardyrow5+300;
+  //cardyrow=cardyrow+byhundred;
+    x.setAttribute("src", "froriantemp.jpg");
+    x.setAttribute("width", "150");
+    x.setAttribute("height", "280");
+    x.style.position="absolute";
+  x.style.left = cardx+'px';
+  x.id=i;
+theimage=x.id;
+  x.style.top = cardy+'px';
+
+}
+// x.style.top = 5+'px';
+
+
+
+    document.body.appendChild(x);
+
+
+
+
+
+///"Send 1 'lawyer' card you control from the field or your hand <br> to  suspension.  After place this card on the battlefield.<br>  If this card attacks a frorian with higher  attack, <br> increase this card's attack energy by half <br> of the attacked card's attack energy."
+
+
+
+//5 created text. 
+
+//card name
+
+var hypecardname=document.body.appendChild(document.createElement('div'));
+hypecardname.style.position="absolute";
+var ch=cardx+15;
+
+var zh=cardyrow;
+hypecardname.style.left = ch+'px';//20
+hypecardname.style.top = zh+'px';//20
+hypecardname.style.fontSize='10px';
+hypecardname.style.color = 'white';
+hypecardname.innerHTML = cardGalleryfronames[i];
+
+
+//card attack
+
+var hypecardattack=document.body.appendChild(document.createElement('div2'));
+hypecardattack.style.position="absolute";
+var ch2=cardx+135
+var zh2=cardyrow+25;
+hypecardattack.style.left = ch2+'px';//140
+hypecardattack.style.top = zh2+'px';//45
+hypecardattack.style.fontSize='10px';
+hypecardattack.style.color = 'white';
+hypecardattack.innerHTML = cardGalleryfroattack[i];
+
+
+//card shield
+var hypecardshield=document.body.appendChild(document.createElement('div3'));
+hypecardshield.style.position="absolute";
+hypecardshield.style.left = ch2+'px';//140
+var zh3=cardyrow+50;
+hypecardshield.style.top = zh3+'px';//70
+hypecardshield.style.fontSize='10px';
+hypecardshield.style.color = 'white';
+hypecardshield.innerHTML = cardGalleryfroshield[i];
+
+
+//card type
+var hypecardtype=document.body.appendChild(document.createElement('div3'));
+hypecardtype.style.position="absolute";
+var ch3=cardx+130;
+var zh4=cardyrow+75;
+hypecardtype.style.left = ch3+'px';//135
+hypecardtype.style.top = zh4+'px';//95
+hypecardtype.style.fontSize='10px';
+hypecardtype.style.color = 'white';
+hypecardtype.innerHTML = cardGalleryfrortype[i];
+
+//card ability
+var hypecardability=document.body.appendChild(document.createElement('div4'));
+hypecardability.style.position="absolute";
+hypecardability.style.left = ch+'px';//20
+var zh5=cardyrow+200;
+hypecardability.style.top = zh5+'px';//220
+hypecardability.style.fontSize='5px';
+hypecardability.style.color = 'red';
+
+hypecardability.innerHTML = cardGalleryfroability[i];
+
+
+
+// $(document).ready(function(){
+
+//     $(".imah").mouseover(function(){
+//      console.log('me')
+//         $(".imah").css("background-color", "yellow");
+//     });
+//     $(".imah").mouseout(function(){
+//         $(".imah").css("background-color", "lightgray");
+//     });
+// });
+
+
+
+cardx=cardx+200;
+//cardy=cardy+200
+}//end for
+
+
+}//end farmer
+
+
+
+
+var cardGalleryspells =[];
+
+var cardGalleryHazards =[];
+
+
+
+
+
+
+var type=document.body.appendChild(document.createElement('div4'));
+$(document).mousemove(function(){
+$('div').mouseover(function() {
+
+  console.log('weee',  this.innerText)
+  var trust = this.innerText;
+
+      console.log('meee',this.innerText);
+    cardnametobeadded= cardGalleryfronames.indexOf(this.innerText)
+    if (cardnametobeadded>-1) {
+      realnameofCard=cardGalleryfronames[cardnametobeadded];
+cardabilitystring = cardGalleryfroability[cardnametobeadded];
+//console.log('data',cardnametobeadded,cardabilitystring)
+}
+
+      var x = $(this).offset().left;
+var y = $(this).offset().top;
+console.log(x,y)
+       cardmenu.style.visibility='visible'
+  cardmenu.style.position="absolute";
+cardmenu.style.left = x+'px';//20
+cardmenu.style.top =y+'px';//220
+cardmenu.style.zIndex = "1";
+  
+  
+});
+  
+   
+});
+
+
+
+function seeEffect () {
+
+  alert(cardabilitystring)
+}
+
+function AddtoDeck () {
+   
+   console.log(realnameofCard)
+
+
+ newDeckArray = userdeck;
+if (newDeckArray.length<40) {
+newDeckArray.push(realnameofCard);
+//save to the database
+
+var databaseRef = firebase.database().ref('Users');
+
+databaseRef.child(theusername).update({
+    Deck: newDeckArray
+});
+
+alert('Your card has been added')
+}
+else
+  alert('Your Deck already has 40 cards')
+
+}
+ 
+      
+
+
+
+
+</script>
+
+</html>
