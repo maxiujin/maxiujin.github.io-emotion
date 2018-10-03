@@ -1,276 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test</title>
+</head>
+
+<body>
+
+</body>
+
+<img src="cover.jpg" height="100" width="80" id="deck1">
 
 
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <meta charset="ISO-8859-1"> 
-    <title>Alke</title> 
-</head> 
-<body> 
-    <form action="">
-         <input type="button" value="Warriors" onclick="window.location.href='warriorfrorians.html';"/>
-         <input type="button" value="Farmers" onclick="window.location.href='farmerfrorians.html';"/>
-         <input type="button" value="Merchants" onclick="window.location.href='merchantfrorians.html';"/>
-          <input type="button" value="Hazards" onclick="window.location.href='hazards.html';"/>
-          <input type="button" value="Shaman Spells" onclick="window.location.href='shamanspells.html';"/>
-           <input type="button" value="Tribe Spells" onclick="window.location.href='tribespells.html';"/>
-              <input type="button" value="Element Spells" onclick="window.location.href='elementspells.html';"/>
-              <input type="button" value="Herbal Spells" onclick="window.location.href='herbalspells.html';"/>
+<img src="cover.jpg" height="100" width="80" id="deck2">
+<hr class="line">
+<hr class="line2">
+<style type="text/css">
 
-               <input type="button" value="PLAY GAME" onclick="window.location.href='test.html';"/>
-    </form> 
-
-    <img src="cover.jpg" height="340", width="240" id="cover">
-</body> 
-</html>
-
-<script type="text/javascript">
-  var getDeck = document.getElementById('cover'); 
-getDeck.style.position="absolute";
-getDeck.style.left = 310+'px';
-getDeck.style.top = 200+'px';
-getDeck.style.zIndex = "0";
-
-
-var creaters=document.body.appendChild(document.createElement('div'));
-creaters.style.position="absolute";
-creaters.style.left = 615+'px';
-creaters.style.top = 340+'px';
-creaters.style.color = 'Black';
-creaters.innerHTML = "Creators: Matthew Quaine Thompkins, Ejea Fields: Copyright 2018";
-
-
-var creaters2=document.body.appendChild(document.createElement('div'));
-creaters2.style.position="absolute";
-creaters2.style.left = 405+'px';
-creaters2.style.top = 140+'px';
-creaters2.style.color = 'Black';
-creaters2.innerHTML = "Alke";
-</script>
+body {
+background: #606c88;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 
 
-<!-- <!DOCTYPE html> 
-<html> 
-<head> 
-    <meta charset="ISO-8859-1"> 
-    <title>Home</title> 
-</head> 
-<body> 
-	<input  id ="username" type="text" placeholder="username" size ="30">
-
-<input  id ="password" type="text" placeholder="password" size ="30">
-    <form action="">
-         <input type="button" id="1" value="Enter"   onclick="window.location.href='selectionpage.html';"/>
-      
-
-    </form> 
-    <button id ="signup"  onclick="signup()">Sign-Up</button>
-
-<button id ="login"  onclick="login()">Login</button>
-
-    <img src="cover.jpg" height="340", width="240" id="cover">
-</body> 
-</html>
-
-  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
-
-<script type="text/javascript">
-localStorage.clear();
-
-  var config = {
-    apiKey: "AIzaSyA7Zgc_qr9vmoi2Zil7NtY8ho2w6n2LwVs",
-    authDomain: "kora-d8e4d.firebaseapp.com",
-    databaseURL: "https://kora-d8e4d.firebaseio.com",
-    projectId: "kora-d8e4d",
-    storageBucket: "",
-    messagingSenderId: "703169856987"
-  };
-  firebase.initializeApp(config);
-   var database = firebase.database();
-
-
-
-//enter app 
-	var enterapp = document.getElementById('1'); 
-
-enterapp.style.position="absolute";
-enterapp.style.left = 610+'px';
-enterapp.style.top = 100+'px';
-enterapp.style.visibility='hidden';
-//
-
-var getusername = document.getElementById('username'); 
-getusername.style.position="absolute";
-getusername.style.left = 610+'px';
-getusername.style.top = 100+'px';
-
-var getpassword = document.getElementById('password'); 
-getpassword.style.position="absolute";
-getpassword.style.left = 610+'px';
-getpassword.style.top = 130+'px';
-
-
-var signupbutton = document.getElementById('signup'); 
-signupbutton.style.position="absolute";
-signupbutton.style.left = 610+'px';
-signupbutton.style.top = 160+'px';
-
-var loginbutton = document.getElementById('login'); 
-loginbutton.style.position="absolute";
-loginbutton.style.left = 690+'px';
-loginbutton.style.top = 160+'px';
-
-
-
-
-
-	var getDeck = document.getElementById('cover'); 
-getDeck.style.position="absolute";
-getDeck.style.left = 310+'px';
-getDeck.style.top = 200+'px';
-getDeck.style.zIndex = "0";
-
-
-var creaters=document.body.appendChild(document.createElement('div'));
-creaters.style.position="absolute";
-creaters.style.left = 615+'px';
-creaters.style.top = 340+'px';
-creaters.style.color = 'Black';
-creaters.innerHTML = "Creators: Matthew Quaine Thompkins, Ejea Fields: Copyright 2018";
-
-
-var creaters2=document.body.appendChild(document.createElement('div'));
-creaters2.style.position="absolute";
-creaters2.style.left = 405+'px';
-creaters2.style.top = 140+'px';
-creaters2.style.color = 'Black';
-creaters2.innerHTML = "Froz";
-
-var u = document.getElementById('username').value; 
-var p = document.getElementById('password').value; 
-
-function signup () {
-	u = document.getElementById('username').value; 
-	 p = document.getElementById('password').value; 
-if (u.length==0||p.length==0) {
-alert("Please create a username and password")
-console.log(u,p)
-}
-
-
-if (u.length>1 && p.length>1) {
-var array =["test"]
-var array2 =["test"];
-
-var databaseRef = firebase.database().ref('Users');
-//deck, card gallery
-
- localStorage.setItem("username",document.getElementById('username').value);
-databaseRef.child(u).update({
-    Password:p,
-    Deck: array,
-    Cards: array2
-});
-
-// databaseRef.set({
-
-
-//     Password:p,
-//     Deck: array,
-//     Cards: array2
-
-
-// });
 
 }
 
+#myGlower {
+    background-color: #ccc;
+    border: 1px solid transparent;    
+    -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
+       -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
+            transition: border 0.1s linear, box-shadow 0.1s linear;
 }
 
-function login () {
-
-	u = document.getElementById('username').value; 
-	 p = document.getElementById('password').value; 
-if (u.length==0||p.length==0) {
-alert("Please create a username and password")
-console.log(u,p)
+#myGlower.active {
+    border-color: blue;
+    -webkit-box-shadow: 0 0 5px red;
+       -moz-box-shadow: 0 0 5px red;
+            box-shadow: 0 0 5px red;
+}
+.line {
+   position:absolute;
+   width:100%;
+   top: 50%;
 }
 
+.line2 {
+   position:absolute;
+   width:100%;
+   top: 70%;
+}
 
+body {font-family: Arial, Helvetica, sans-serif;}
 
-if (u.length>1 && p.length>1) {//
-	///query
-  var database = firebase.database();
-var querydata;
-var ref =database.ref('Users')//document.getElementById('username').value
-var allusernames=[];
-ref.on('value',gotData, errData);
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-function gotData(data) {
+#myImg:hover {opacity: 0.7;}
 
- querydata=data.val();
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
 
-var keys = Object.keys(querydata)
- console.log(querydata.Cards, querydata.Deck, querydata.Password,keys)
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
 
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
 
-//deck, card gallery
-if (keys.indexOf(document.getElementById('username').value) >-1) {
-	// alert('WELCOME')
-	var users = ref.child(document.getElementById('username').value)
-users.on('value', function(snapshot) {
-    var val = snapshot.val();
-    //console.log(val.Cards, val.Deck, val.Password)
- localStorage.setItem("username",document.getElementById('username').value);
-  localStorage.setItem("deck",val.Deck);
-    localStorage.setItem("gallery",val.Cards);
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
 
-    if (document.getElementById('password').value==val.Password) {
-    	//alert('password is correct');
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
 
-    	//begin applicaion 
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
 
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
 
-enterapp.style.position="absolute";
-enterapp.style.left = 610+'px';
-enterapp.style.top = 100+'px';
-enterapp.style.visibility='visible';
-
-
-
-
-getusername.style.visibility = 'hidden';
-getpassword.style.visibility = 'hidden';
-signupbutton.style.visibility = 'hidden';
-loginbutton.style.visibility = 'hidden';
-
-
-
-
-
-
-
-
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
     }
-    else
-    	alert('Please re-enter your password')
-  
+}
+
+	
+</style>
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-overlaps/1.2.3/jquery.overlaps.js"></script>
+    <script src="overplug.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
+
+// $(window).focus(function(){
+//   //your code
+//     alert('mone')
+// });
+	document.body.style.zoom="80%"
+
+var turncounter =0; //count number of turns
+
+var cardsinhand = 5; 
+
+var modal = document.getElementById('myModal');
+
+var humandeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
+
+var cpudeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
+///icons on the field
+
+
+   var icon1 = document.createElement("IMG");
+  icon1.setAttribute("src", "spell_field.png");
+   icon1.setAttribute("width", "60");
+    icon1.setAttribute("height", "60");
+ icon1.style.position="absolute";
+  icon1.style.left = 130+'px';
+  icon1.style.top = 470+'px';
+   document.body.appendChild(icon1);
+
+  var icon3 = document.createElement("IMG");
+  icon3.setAttribute("src", "attack_icon.png");
+   icon3.setAttribute("width", "60");
+    icon3.setAttribute("height", "60");
+ icon3.style.position="absolute";
+  icon3.style.left = 670+'px';
+  icon3.style.top = 370+'px';
+  icon3.id ='attack_icon'
+   document.body.appendChild(icon3);
+
+
+
+    var icon2 = document.createElement("IMG");
+  icon2.setAttribute("src", "hazard_field.png");
+   icon2.setAttribute("width", "60");
+    icon2.setAttribute("height", "60");
+ icon2.style.position="absolute";
+  icon2.style.left = 1330+'px';
+  icon2.style.top = 470+'px';
+  icon2.id ='hazard_icon'
+   document.body.appendChild(icon2);
+
+///
+
+
+function isOverlap(idOne,idTwo){
+        var objOne=$(idOne),
+            objTwo=$(idTwo),
+            offsetOne = objOne.offset(),
+            offsetTwo = objTwo.offset(),
+            topOne=offsetOne.top,
+            topTwo=offsetTwo.top,
+            leftOne=offsetOne.left,
+            leftTwo=offsetTwo.left,
+            widthOne = objOne.width(),
+            widthTwo = objTwo.width(),
+            heightOne = objOne.height(),
+            heightTwo = objTwo.height();
+        var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,             rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
+        return leftTop || rightTop || leftBottom || rightBottom;
+}
+///the decks
+var getDeck = document.getElementById('deck1'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 1180+'px';
+getDeck.style.top = 60+'px';
+getDeck.style.zIndex = "0";
+
+var getDeck = document.getElementById('deck2'); 
+getDeck.style.position="absolute";
+getDeck.style.left = 110+'px';
+getDeck.style.top = 670+'px';
+getDeck.style.zIndex = "0";
+
+var x = document.createElement("IMG");
+   x.setAttribute("src", "quincy.jpg");
+    x.setAttribute("width", "80");
+    x.setAttribute("height", "110");
+  x.style.position="absolute";
+  x.style.left = 350+'px';
+  x.style.top = 670+'px';
+  x.id="card1"
+   document.body.appendChild(x);
+
+
+   var x2 = document.createElement("IMG");
+   x2.setAttribute("src", "agent_tamika.jpg");
+    x2.setAttribute("width", "80");
+    x2.setAttribute("height", "110");
+  x2.style.position="absolute";
+  x2.style.left = 450+'px';
+  x2.style.top = 670+'px';
+   document.body.appendChild(x2);
+
+
+
+   var x3 = document.createElement("IMG");
+   x3.setAttribute("src", "sista_jones.jpg");
+    x3.setAttribute("width", "80");
+    x3.setAttribute("height", "110");
+  x3.style.position="absolute";
+  x3.style.left = 550+'px';
+  x3.style.top = 670+'px';
+  x3.style.draggable =true
+   document.body.appendChild(x3);
+
+
+
+      var x4 = document.createElement("IMG");
+   x4.setAttribute("src", "electronica.jpg");
+    x4.setAttribute("width", "80");
+    x4.setAttribute("height", "110");
+  x4.style.position="absolute";
+  x4.style.left = 650+'px';
+  x4.style.top = 670+'px';
+  x4.style.draggable =true
+   document.body.appendChild(x4);
+
+
+
+
+      var x5 = document.createElement("IMG");
+   x5.setAttribute("src", "jeff_tones.jpg");
+    x5.setAttribute("width", "80");
+    x5.setAttribute("height", "110");
+  x5.style.position="absolute";
+  x5.style.left = 750+'px';
+  x5.style.top = 670+'px';
+  x5.style.draggable =true
+   document.body.appendChild(x5);
+
+
+
+ $(x).draggable();
+    $(x2).draggable();
+ $(x3).draggable();
+ $(x4).draggable();
+ $(x5).draggable();
+x.onclick = displayCard;
+x2.onclick = displayCard;
+x3.onclick = displayCard;
+x4.onclick = displayCard;
+x5.onclick = displayCard;
+
+
+
+
+
+////CPU A.I. 
+
+var y = document.createElement("IMG");
+   y.setAttribute("src", "cover.jpg");
+    y.setAttribute("width", "80");
+    y.setAttribute("height", "110");
+  y.style.position="absolute";
+  y.style.left = 350+'px';
+  y.style.top = 20+'px';
+   document.body.appendChild(y);
+
+
+   var y2 = document.createElement("IMG");
+   y2.setAttribute("src", "cover.jpg");
+    y2.setAttribute("width", "80");
+    y2.setAttribute("height", "110");
+  y2.style.position="absolute";
+  y2.style.left = 450+'px';
+  y2.style.top = 20+'px';
+   document.body.appendChild(y2);
+
+
+
+   var y3 = document.createElement("IMG");
+   y3.setAttribute("src", "cover.jpg");
+    y3.setAttribute("width", "80");
+    y3.setAttribute("height", "110");
+  y3.style.position="absolute";
+  y3.style.left = 550+'px';
+  y3.style.top = 20+'px';
+  y3.style.draggable =true
+   document.body.appendChild(y3);
+
+
+
+      var y4 = document.createElement("IMG");
+   y4.setAttribute("src", "cover.jpg");
+    y4.setAttribute("width", "80");
+    y4.setAttribute("height", "110");
+  y4.style.position="absolute";
+  y4.style.left = 650+'px';
+  y4.style.top = 20+'px';
+  y4.style.draggable =true
+   document.body.appendChild(y4);
+
+
+      var y5 = document.createElement("IMG");
+   y5.setAttribute("src", "cover.jpg");
+    y5.setAttribute("width", "80");
+    y5.setAttribute("height", "110");
+  y5.style.position="absolute";
+  y5.style.left = 750+'px';
+  y5.style.top = 20+'px';
+  y5.style.draggable =true
+  document.body.appendChild(y5);
+
+   ///cpu A.I. over
+
+var modalImg = document.getElementById("img01");
+
+
+function displayCard() {
+   modal.style.display = "block";
+    modalImg.src = this.src;
+}
+
+
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+
+//glow effect
+ $(x).css("box-shadow", "0px 0px 15px #FFD700");
+  $(x2).css("box-shadow", "0px 0px 15px #FFD700");
+   $(x3).css("box-shadow", "0px 0px 15px #FFD700");
+    $(x4).css("box-shadow", "0px 0px 15px #FFD700");
+     $(x5).css("box-shadow", "0px 0px 15px #FFD700");
+
+
+//erase glow effect
+     // $(x5).css("box-shadow", "0px 0px 0px #ddd");
+
+var myVar = setInterval(myTimer, 1000);
+var overlap = isOverlap("#card1","#hazard_icon");
+
+function myTimer() {
+   var hit_list = $(x).overlaps(icon1);
+	if (hit_list==true) {
+		alert('yahhhhh')
+	}
+}
+$(function() {  
+
+	// var check = isCollide(x, icon1);
+
+    var glower = $(x2);
+    window.setInterval(function() {  
+     isElementClicked();
+    }, 1000);
 });
 
 
+setInterval(function(){
+            //First step would be to get the offset of item 1 and item 2
+            //Second would be to get the width of each
+            //Third would be to check if the offset+width ever overlaps
+                //the offset+width of the 2nd
+            //Fourth would be, if so, do X or set a class...
+
+            var check = collidesWith(x, icon1);
+        },10);
+
+
+function collidesWith (element1, element2) {
+var p=0; 
+    var Element1 = {};
+    var Element2 = {};
+
+    Element1.top = $(element1).offset().top;
+    Element1.left = $(element1).offset().left;
+    Element1.right = Number($(element1).offset().left) + Number($(element1).width());
+    Element1.bottom = Number($(element1).offset().top) + Number($(element1).height());
+
+    Element2.top = $(element2).offset().top;
+    Element2.left = $(element2).offset().left;
+    Element2.right = Number($(element2).offset().left) + Number($(element2).width());
+    Element2.bottom = Number($(element2).offset().top) + Number($(element2).height());
+
+    if (Element1.right > Element2.left && Element1.left < Element2.right && Element1.top < Element2.bottom && Element1.bottom > Element2.top) {
+        // Do your stuff here
+        console.log('fuck yah')
+
+        if (element2==icon1) {
+        	alert('spell_baby')
+        }
+    }
 }
-else
-alert('Please re-enter your username')
+
+////when we draw
+
+var elementIsClicked = false; // declare the variable that tracks the state
+function clickHandler(){ // declare a function that updates the state
+  elementIsClicked = true;
+}
+
+
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var cardx1=30;
+var element = document.getElementById('deck2'); // grab a reference to your element
+element.addEventListener('click', clickHandler);
+
+function isElementClicked (){
+
+  // console.log(elementIsClicked ? 'CLICKED' : 'NOT');
+  if (elementIsClicked == true && cardsinhand<=7) {
+cardsinhand+=1; 
+var st = humandeck[turncounter];
+      var newcard = document.createElement("IMG");
+   newcard.setAttribute("src", st);
+    newcard.setAttribute("width", "80");
+   newcard.setAttribute("height", "110");
+ newcard.style.position="absolute";
+  newcard.style.left = 300+'px';
+  newcard.style.top = 670+'px';
+  $(newcard).draggable();
+newcard.onclick = displayCard;
+  document.body.appendChild(newcard);
+  
 
 
 
+ x.style.left = 360+'px';
+   x2.style.left = 400+'px';
+   x3.style.left = 440+'px';
+   x4.style.left = 520+'px';
+  	elementIsClicked=false;
+  	turncounter+=1;
+  }
 }
 
-}
-function errData(err) {
-   console.log('not right')
-}
 
-}
-</script> -->
+
+
+
+
+// $(document).keypress(function (e) {
+//     if (e.which == 68) {
+//         alert('enter key is pressed');
+//     }
+// });
+   
+
+	
+
+</script>
+</html>
