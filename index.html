@@ -1,530 +1,699 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Test</title>
-</head>
+<html> 
+<head> 
+    <meta charset="UTF-8">
+<div class="heart">&#x2665;</div>
 
-<body>
-
-</body>
-
-<img src="cover.jpg" height="100" width="80" id="deck1">
-
-
-<img src="cover.jpg" height="100" width="80" id="deck2">
-<hr class="line">
-<hr class="line2">
+<button type="button" id="submitbutton" onclick="sendpos()">Speak First then click this button to hear Rena's anaylsis of you</button><!-- 
+<button type="button" id="submitbutton" onclick="sendneg()">负面</button> -->
 <style type="text/css">
-
 body {
-background: #606c88;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
-
-
-}
-
-#myGlower {
-    background-color: #ccc;
-    border: 1px solid transparent;    
-    -webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
-       -moz-transition: border 0.1s linear, box-shadow 0.1s linear;
-            transition: border 0.1s linear, box-shadow 0.1s linear;
-}
-
-#myGlower.active {
-    border-color: blue;
-    -webkit-box-shadow: 0 0 5px red;
-       -moz-box-shadow: 0 0 5px red;
-            box-shadow: 0 0 5px red;
-}
-.line {
-   position:absolute;
-   width:100%;
-   top: 50%;
-}
-
-.line2 {
-   position:absolute;
-   width:100%;
-   top: 70%;
-}
-
-body {font-family: Arial, Helvetica, sans-serif;}
-
-#myImg {
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#myImg:hover {opacity: 0.7;}
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-}
-
-/* Modal Content (image) */
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-}
-
-/* Caption of Modal Image */
-#caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-}
-
-/* Add Animation */
-.modal-content, #caption {    
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
-}
-
-@-webkit-keyframes zoom {
-    from {-webkit-transform:scale(0)} 
-    to {-webkit-transform:scale(1)}
-}
-
-@keyframes zoom {
-    from {transform:scale(0)} 
-    to {transform:scale(1)}
-}
-
-/* The Close Button */
-.close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
-    .modal-content {
-        width: 100%;
+    background-color: rgb(232, 251, 249);
+} 
+  canvas { border: 1px solid #ccc }
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
+  .my_animation1{
+    animation: blink 3s 0.2s;
+    animation-iteration-count: infinite;
+}
+  .my_animation2{
+    animation: blink 3s 1s;
+    animation-iteration-count: infinite;
+}
+  .my_animation3{
+    animation: blink 3s 1.8s;
+    animation-iteration-count: infinite;
+}
 
-	
+  .ribbon {
+  position:absolute;
+  top:0;
+  right:0;
+}
+  .ribbon1 {
+  position:absolute;
+  top:100;
+  right:12;
+}
+
+
+
+
+/* just some  styling*/
+body { 
+  text-align: center; 
+
+}
+
+/* heart div class - in html i used just a simple html simbol entity for heart sign, you can use text or whatever u want*/
+
+.heart {
+  font-size: 550px;
+  color: #e00;
+  animation: beat 5s infinite alternate;
+  transform-origin: center;
+}
+
+/* Heart beat animation */
+@keyframes beat{
+  to { transform: scale(1.4); }
+}
+
+
 </style>
-<div id="myModal" class="modal">
-  <span class="close">&times;</span>
-  <img class="modal-content" id="img01">
-  <div id="caption"></div>
-</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.4/d3.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script> 
+
+<script type="text/javascript"> 
+  var bio = document.getElementById('submitbutton');
+ bio.style.position="absolute";
+bio.style.left = 610+'px';
+ bio.style.top = 580+'px'; 
+
+var finaldata=[];
+var querydata;
+var supercount=0;
+var record=0;
+var newint=0;
+var dontcontinue=0;
+
+ var config = {
+    apiKey: "AIzaSyAuTkRETje_FakM9CgsB4SiJCv2TvweuPs",
+    authDomain: "voice-25bda.firebaseapp.com",
+    databaseURL: "https://voice-25bda.firebaseio.com",
+    projectId: "voice-25bda",
+    storageBucket: "",
+    messagingSenderId: "900867071151"
+  };
+  firebase.initializeApp(config);
+
+   var database = firebase.database();
 
 
+///““大” 算法”
+var samplearray = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"];
+var stroke1 = samplearray[Math.floor(Math.random()*samplearray.length)];
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-overlaps/1.2.3/jquery.overlaps.js"></script>
-    <script src="overplug.js"></script>
+var indexofStroke1 = samplearray.indexOf(stroke1);
 
+var stroke2 = samplearray[indexofStroke1+5];
 
-<script type="text/javascript">
-
-
-
+var indexofStroke2 = samplearray.indexOf(stroke2)
 
 
+var stroke3 = samplearray[indexofStroke2-1];
+var stroke4 = samplearray[indexofStroke2+1];
 
 
+var indexofStroke3 = samplearray.indexOf(stroke3);
+var indexofStroke4 = samplearray.indexOf(stroke4);
+
+var stroke5 = samplearray[indexofStroke3+5];
+var stroke6 = samplearray[indexofStroke4+5];
 
 
+console.log(stroke1, stroke2, stroke3,stroke4,stroke5,stroke6);
 
+// setTimeout(series,5000);
+ var myTimer; 
+ var thereisaword=0; 
+ var beginanalysis=0;
+ var sumofperson=[];
+ var sumofperson2=[];
 
-// $(window).focus(function(){
-//   //your code
-//     alert('mone')
-// });
-	document.body.style.zoom="80%"
+ var sumemotion=0;
 
-var turncounter =0; //count number of turns
-
-var cardsinhand = 5; 
-
-var modal = document.getElementById('myModal');
-
-var humandeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
-
-var cpudeck= ['spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg','spelltemp.jpg', 'hazardtemp.jpg', 'froriantemp.jpg']
-///icons on the field
-
-
-   var icon1 = document.createElement("IMG");
-  icon1.setAttribute("src", "spell_field.png");
-   icon1.setAttribute("width", "60");
-    icon1.setAttribute("height", "60");
- icon1.style.position="absolute";
-  icon1.style.left = 130+'px';
-  icon1.style.top = 470+'px';
-   document.body.appendChild(icon1);
-
-  var icon3 = document.createElement("IMG");
-  icon3.setAttribute("src", "attack_icon.png");
-   icon3.setAttribute("width", "60");
-    icon3.setAttribute("height", "60");
- icon3.style.position="absolute";
-  icon3.style.left = 670+'px';
-  icon3.style.top = 370+'px';
-  icon3.id ='attack_icon'
-   document.body.appendChild(icon3);
-
-
-
-    var icon2 = document.createElement("IMG");
-  icon2.setAttribute("src", "hazard_field.png");
-   icon2.setAttribute("width", "60");
-    icon2.setAttribute("height", "60");
- icon2.style.position="absolute";
-  icon2.style.left = 1330+'px';
-  icon2.style.top = 470+'px';
-  icon2.id ='hazard_icon'
-   document.body.appendChild(icon2);
-
-///
-
-
-function isOverlap(idOne,idTwo){
-        var objOne=$(idOne),
-            objTwo=$(idTwo),
-            offsetOne = objOne.offset(),
-            offsetTwo = objTwo.offset(),
-            topOne=offsetOne.top,
-            topTwo=offsetTwo.top,
-            leftOne=offsetOne.left,
-            leftTwo=offsetTwo.left,
-            widthOne = objOne.width(),
-            widthTwo = objTwo.width(),
-            heightOne = objOne.height(),
-            heightTwo = objTwo.height();
-        var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo > topOne && topTwo < topOne+heightOne,             leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,             rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne                  && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
-        return leftTop || rightTop || leftBottom || rightBottom;
+var inputs=[];
+var trainingoutputs=[1,-1];
+ var countperson=0;
+ var specialcase=0;
+ var sumnewtest=[];
+ var superArrayHigh=[];
+ var superArrayLow=[];
+// var bell = new Wad({source : 'PlayStation.mp3'})
+// bell.play()
+// bell.stop()
+///Sound visualization
+var inputQ;
+function done () {
+clearTimeout(myTimer);
+console.log('i am done', sumofperson)
+var one=0;
+var two=0;
+if (sumofperson.length>1) {
+for(var i=0; i<sumofperson.length;i++){
+  one+=sumofperson[i]/1.618;
+ 
 }
-///the decks
-var getDeck = document.getElementById('deck1'); 
-getDeck.style.position="absolute";
-getDeck.style.left = 1180+'px';
-getDeck.style.top = 60+'px';
-getDeck.style.zIndex = "0";
+}
 
-var getDeck = document.getElementById('deck2'); 
-getDeck.style.position="absolute";
-getDeck.style.left = 110+'px';
-getDeck.style.top = 670+'px';
-getDeck.style.zIndex = "0";
+if (sumofperson2.length>1) {
+for(var i=0; i<sumofperson2.length;i++){
+  two+=sumofperson2[i]/1.618;
 
-var x = document.createElement("IMG");
-   x.setAttribute("src", "quincy.jpg");
-    x.setAttribute("width", "80");
-    x.setAttribute("height", "110");
-  x.style.position="absolute";
-  x.style.left = 350+'px';
-  x.style.top = 670+'px';
-  x.id="card1"
-   document.body.appendChild(x);
+}
+}
+inputs[0]= one;
+inputs[1]= two;
+console.log('iamdone2',sumofperson2)
+console.log('inputs', inputs)
 
 
-   var x2 = document.createElement("IMG");
-   x2.setAttribute("src", "agent_tamika.jpg");
-    x2.setAttribute("width", "80");
-    x2.setAttribute("height", "110");
-  x2.style.position="absolute";
-  x2.style.left = 450+'px';
-  x2.style.top = 670+'px';
-   document.body.appendChild(x2);
+beginanalysis=0;
+if (sumofperson.length>1 && sumofperson2.length>1) {
+ // neuralnetwork();
+}
+var three=0;
+if (specialcase==1) {
+for(var i=0; i<sumnewtest.length;i++){
+  three+=sumnewtest[i]/1.618;
 
 
-
-   var x3 = document.createElement("IMG");
-   x3.setAttribute("src", "sista_jones.jpg");
-    x3.setAttribute("width", "80");
-    x3.setAttribute("height", "110");
-  x3.style.position="absolute";
-  x3.style.left = 550+'px';
-  x3.style.top = 670+'px';
-  x3.style.draggable =true
-   document.body.appendChild(x3);
-
-
-
-      var x4 = document.createElement("IMG");
-   x4.setAttribute("src", "electronica.jpg");
-    x4.setAttribute("width", "80");
-    x4.setAttribute("height", "110");
-  x4.style.position="absolute";
-  x4.style.left = 650+'px';
-  x4.style.top = 670+'px';
-  x4.style.draggable =true
-   document.body.appendChild(x4);
-
-
-
-
-      var x5 = document.createElement("IMG");
-   x5.setAttribute("src", "jeff_tones.jpg");
-    x5.setAttribute("width", "80");
-    x5.setAttribute("height", "110");
-  x5.style.position="absolute";
-  x5.style.left = 750+'px';
-  x5.style.top = 670+'px';
-  x5.style.draggable =true
-   document.body.appendChild(x5);
-
-
-
- $(x).draggable();
-    $(x2).draggable();
- $(x3).draggable();
- $(x4).draggable();
- $(x5).draggable();
-x.onclick = displayCard;
-x2.onclick = displayCard;
-x3.onclick = displayCard;
-x4.onclick = displayCard;
-x5.onclick = displayCard;
-
-
-
-
-
-////CPU A.I. 
-
-var y = document.createElement("IMG");
-   y.setAttribute("src", "cover.jpg");
-    y.setAttribute("width", "80");
-    y.setAttribute("height", "110");
-  y.style.position="absolute";
-  y.style.left = 350+'px';
-  y.style.top = 20+'px';
-   document.body.appendChild(y);
-
-
-   var y2 = document.createElement("IMG");
-   y2.setAttribute("src", "cover.jpg");
-    y2.setAttribute("width", "80");
-    y2.setAttribute("height", "110");
-  y2.style.position="absolute";
-  y2.style.left = 450+'px';
-  y2.style.top = 20+'px';
-   document.body.appendChild(y2);
-
-
-
-   var y3 = document.createElement("IMG");
-   y3.setAttribute("src", "cover.jpg");
-    y3.setAttribute("width", "80");
-    y3.setAttribute("height", "110");
-  y3.style.position="absolute";
-  y3.style.left = 550+'px';
-  y3.style.top = 20+'px';
-  y3.style.draggable =true
-   document.body.appendChild(y3);
-
-
-
-      var y4 = document.createElement("IMG");
-   y4.setAttribute("src", "cover.jpg");
-    y4.setAttribute("width", "80");
-    y4.setAttribute("height", "110");
-  y4.style.position="absolute";
-  y4.style.left = 650+'px';
-  y4.style.top = 20+'px';
-  y4.style.draggable =true
-   document.body.appendChild(y4);
-
-
-      var y5 = document.createElement("IMG");
-   y5.setAttribute("src", "cover.jpg");
-    y5.setAttribute("width", "80");
-    y5.setAttribute("height", "110");
-  y5.style.position="absolute";
-  y5.style.left = 750+'px';
-  y5.style.top = 20+'px';
-  y5.style.draggable =true
-  document.body.appendChild(y5);
-
-   ///cpu A.I. over
-
-var modalImg = document.getElementById("img01");
-
-
-function displayCard() {
-   modal.style.display = "block";
-    modalImg.src = this.src;
 }
 
 
-var span = document.getElementsByClassName("close")[0];
+inputQ=three;
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() { 
-    modal.style.display = "none";
 }
 
-//glow effect
- $(x).css("box-shadow", "0px 0px 15px #FFD700");
-  $(x2).css("box-shadow", "0px 0px 15px #FFD700");
-   $(x3).css("box-shadow", "0px 0px 15px #FFD700");
-    $(x4).css("box-shadow", "0px 0px 15px #FFD700");
-     $(x5).css("box-shadow", "0px 0px 15px #FFD700");
 
-
-//erase glow effect
-     // $(x5).css("box-shadow", "0px 0px 0px #ddd");
-
-var myVar = setInterval(myTimer, 1000);
-var overlap = isOverlap("#card1","#hazard_icon");
-
-function myTimer() {
-   var hit_list = $(x).overlaps(icon1);
-	if (hit_list==true) {
-		alert('yahhhhh')
-	}
 }
-$(function() {  
 
-	// var check = isCollide(x, icon1);
+function testbaby () {
 
-    var glower = $(x2);
-    window.setInterval(function() {  
-     isElementClicked();
-    }, 1000);
-});
+  beginanalysis=1; 
+  specialcase=1;
 
 
-setInterval(function(){
-            //First step would be to get the offset of item 1 and item 2
-            //Second would be to get the width of each
-            //Third would be to check if the offset+width ever overlaps
-                //the offset+width of the 2nd
-            //Fourth would be, if so, do X or set a class...
 
-            var check = collidesWith(x, icon1);
-        },10);
+}
 
 
-function collidesWith (element1, element2) {
-var p=0; 
-    var Element1 = {};
-    var Element2 = {};
 
-    Element1.top = $(element1).offset().top;
-    Element1.left = $(element1).offset().left;
-    Element1.right = Number($(element1).offset().left) + Number($(element1).width());
-    Element1.bottom = Number($(element1).offset().top) + Number($(element1).height());
+if (true) {}
+onSuccess();
+function getAverageVolume(array) { 
+    var values = 0;  
 
-    Element2.top = $(element2).offset().top;
-    Element2.left = $(element2).offset().left;
-    Element2.right = Number($(element2).offset().left) + Number($(element2).width());
-    Element2.bottom = Number($(element2).offset().top) + Number($(element2).height());
+    // get all the frequency amplitudes 
+    for (var i = 0; i < array.length; i++) { 
+        values += array[i]; 
+    } 
+    return values / (array.length); 
+} 
+var dataArray;
+    var barHeight;
+   var average;
+   var superArrayHigh = new Array;
+   var superArrayLow = new Array; 
+   var rateArray = new Array;
+    var finalrateArray = new Array;
+    
+function onSuccess(stream) { 
 
-    if (Element1.right > Element2.left && Element1.left < Element2.right && Element1.top < Element2.bottom && Element1.bottom > Element2.top) {
-        // Do your stuff here
-        console.log('fuck yah')
+  
 
-        if (element2==icon1) {
-        	alert('spell_baby')
-        }
+    var context = new (window.AudioContext || window.webkitAudioContext)();
+    var mediaStreamSource = context.createMediaStreamSource(stream); 
+     
+    var analyser = context.createAnalyser(); 
+    analyser.smoothingTimeConstant = 0.3; 
+    analyser.fftSize = 1024; 
+    analyser.frequency= 528; 
+     
+    var javascriptNode = context.createScriptProcessor(2048, 1, 1); 
+     
+    javascriptNode.onaudioprocess = function(e) { 
+        //var sample = e.inputBuffer.getChannelData(0); 
+
+if (beginanalysis==1) {
+  console.log('ron',beginanalysis)
+//myTimer=setTimeout(Palpha, 2000);
+
+}
+        // get the average, bincount is fftsize / 2 
+        dataArray =  new Uint8Array(analyser.frequencyBinCount); 
+        analyser.getByteFrequencyData(dataArray); 
+         //console.log(dataArray);
+        // calculate average 
+         average = getAverageVolume(dataArray) 
+        // setTimeout(Palpha, 3000);//timer
+        // print value out 
+        //log(average); 
+ //console.log(average)
+   var IQ =average;//-2
+
+var PQ = Math.abs(IQ)* 1;
+
+var MQTfirst = ((IQ*(PQ) + ((IQ+1)*(PQ-1)) + 1)); 
+
+var MQTsecond = (((Math.abs(IQ)+ 1) * -1) + ((Math.abs(IQ)+2) * -2)) + ((Math.abs(IQ)+3) * -3) + ((Math.abs(IQ)+4) * -3) + ((Math.abs(IQ)+4) * -2) + ((Math.abs(IQ)+4) * -1) +(Math.abs(IQ)+5) + ((Math.abs(IQ)+5) * 2)  + ((Math.abs(IQ)+5) * 3);
+
+// var MQTthird =
+ 
+
+ var FinalMQT = MQTfirst-MQTsecond;
+ FinalMQT=Math.sin(FinalMQT);
+  superArrayHigh.push(FinalMQT);
+  finaldata.push(FinalMQT);
+        // if (average >= 85) {
+        //   //console.log('rude', average);
+        //   superArrayHigh.push(average);
+          
+        // }
+
+        // if (average <= 10) {
+
+        //   //console.log('soft', average);
+        // superArrayLow.push(average); 
+        // }
+         
+
+    }; 
+     
+    // stream -> mediaSource -> analyser -> javascriptNode -> destination 
+    mediaStreamSource.connect(analyser); 
+    analyser.connect(javascriptNode); 
+    javascriptNode.connect(context.destination); 
+
+
+}
+function onError() { 
+    alert('Error'); 
+} 
+
+function log(logVal) { 
+    getLog().innerHTML = logVal + '\n<br>'; 
+} 
+
+function getCanvas() { 
+    return document.getElementById('mycanvas'); 
+}     
+  
+function getLog() { 
+    return document.getElementById('mylog'); 
+} 
+   
+function documentReady() { 
+    if(navigator.getUserMedia) { 
+        navigator.getUserMedia({video: false, audio: true}, onSuccess, onError); 
+    } else if(navigator.webkitGetUserMedia) { 
+        navigator.webkitGetUserMedia({video: false, audio: true}, onSuccess, onError); 
+    } 
+} 
+
+//Sound
+
+var recognizing;
+
+var recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+//recognition.lang = 'zh-cn';
+reset();
+recognition.onend = reset();
+
+
+recognition.onresult = function (event) {
+  //startaudio();
+  for (var i = event.resultIndex; i < event.results.length; ++i) {
+    if (event.results[i].isFinal) {
+      textarea.value += event.results[i][0].transcript;
     }
+  }
 }
 
-////when we draw
+function reset() {
+  recognizing = false;
+  //button.innerHTML = "Click to Speak";
 
-var elementIsClicked = false; // declare the variable that tracks the state
-function clickHandler(){ // declare a function that updates the state
-  elementIsClicked = true;
+}
+
+function toggleStartStop() {
+  console.log('wood');
+
+console.log('clm')
+
+  if (recognizing) {
+    recognition.stop();
+     if (superArrayHigh.length > superArrayLow.length) {
+      //document.getElementById("textarea").value ="YOU ARE TOO ANXIOUS OR EXCITED.";
+     }
+
+       if (superArrayLow.length > superArrayHigh.length) {
+      //document.getElementById("textarea").value ="YOU ARE CALM AND NOT WORRIED.";
+     }
+
+    reset();
+  } else {
+    recognition.start();
+    document.getElementById("textarea").value ="";
+     document.getElementById("fg").value ="";
+     //console.log(finalrateArray);
+    //superArrayLow =[];
+    //superArrayHigh=[];
+    console.log('speaking');
+    
+    recognizing = true;
+     button.innerHTML = "Click to Stop";
+  }
+
+
+
 }
 
 
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var cardx1=30;
-var element = document.getElementById('deck2'); // grab a reference to your element
-element.addEventListener('click', clickHandler);
 
-function isElementClicked (){
 
-  // console.log(elementIsClicked ? 'CLICKED' : 'NOT');
-  if (elementIsClicked == true && cardsinhand<=7) {
-cardsinhand+=1; 
-var st = humandeck[turncounter];
-      var newcard = document.createElement("IMG");
-   newcard.setAttribute("src", st);
-    newcard.setAttribute("width", "80");
-   newcard.setAttribute("height", "110");
- newcard.style.position="absolute";
-  newcard.style.left = 300+'px';
-  newcard.style.top = 670+'px';
-  $(newcard).draggable();
-newcard.onclick = displayCard;
-  document.body.appendChild(newcard);
+function series () {
+
+
+
+
+
+
+
+var samplearray = superArrayHigh; 
+
+//console.log(samplearray)
+var evaulate =[];
+for (var i=0; i<samplearray.length; i++) {
+
+var stroke1 = samplearray[Math.floor(Math.random()*samplearray.length)];
+
+var indexofStroke1 = samplearray.indexOf(stroke1);
+
+var stroke2 = samplearray[indexofStroke1+5];
+
+var indexofStroke2 = samplearray.indexOf(stroke2)
+
+
+var stroke3 = samplearray[indexofStroke2-1];
+var stroke4 = samplearray[indexofStroke2+1];
+
+
+var indexofStroke3 = samplearray.indexOf(stroke3);
+var indexofStroke4 = samplearray.indexOf(stroke4);
+
+var stroke5 = samplearray[indexofStroke3+5];
+var stroke6 = samplearray[indexofStroke4+5];
+var indexofStroke5 = samplearray.indexOf(stroke5);
+var indexofStroke6 = samplearray.indexOf(stroke6);
+
+//console.log('大',stroke1, stroke2, stroke3,stroke4,stroke5,stroke6);
+
+if (stroke1>0) {
+evaulate.push(stroke1)
+}
+if (stroke2>0) {
+evaulate.push(stroke2)
+}
+if (stroke3>0) {
+evaulate.push(stroke3)
+}
+if (stroke4>0) {
+evaulate.push(stroke4)
+}
+if (stroke5>0) {
+evaulate.push(stroke5)
+}
+if (stroke6>0) {
+evaulate.push(stroke6)
+}
+
+
+
+
+samplearray.splice(indexofStroke1, 1);
+
+samplearray.splice(indexofStroke2, 1);
+samplearray.splice(indexofStroke3, 1);
+ samplearray.splice(indexofStroke4, 1);
+samplearray.splice(indexofStroke5, 1);
+samplearray.splice(indexofStroke6, 1);
+  
+
+
+if (samplearray.length<=6) {
+  break;
+}
+
+}
+
+
+
+//console.log('22 cars garage', evaulate.length, superArrayHigh.length)
+
+var convert = superArrayHigh;
+//convert=convert.toString();
+//finaldata = convert;
+ //console.log('data',convert)
+var sum=0;
+var output=0;;
+for(var i =0; i<superArrayHigh.length;i++) {
+  var IQ =superArrayHigh[i]; ;//-2
+
+var PQ = Math.abs(IQ)+ 1;
+
+var MQTfirst = ((IQ*(PQ) + ((IQ+1)*(PQ-1)) + 1)); 
+
+var MQTsecond = (((Math.abs(IQ)+ 1) * -1) + ((Math.abs(IQ)+2) * -2)) + ((Math.abs(IQ)+3) * -3) + ((Math.abs(IQ)+4) * -3) + ((Math.abs(IQ)+4) * -2) + ((Math.abs(IQ)+4) * -1) +(Math.abs(IQ)+5) + ((Math.abs(IQ)+5) * 2)  + ((Math.abs(IQ)+5) * 3);
+
+// var MQTthird =
+ 
+
+ var FinalMQT = MQTfirst-MQTsecond;
+sum = sum +FinalMQT;
+
+output = 1.618/sum
+//Math.sin(sum)
+
+
+
+
+
+
+}
+
+var getratio = 8-1.618;
+
+var square = getratio * getratio + convert.length;
+
+square = square/(square+convert[Math.floor(Math.random()*convert.length)]);
+
+var bottomhalf = sum + square;
+
+var almostthere = square/bottomhalf;
+var com = convert[Math.floor(Math.random()*convert.length)];
+var special = com * com
+
+var truefinal = Math.sqrt(almostthere * special);
+
+
+
+
+//6 variables 
+
+var  k = FinalMQT;
+var m = sum;
+
+var t = 5; 
+
+var componentA = Math.sqrt(k/m *(5));
+var superA = Math.sin(1.618) * componentA;
+
+
+var superB = Math.cos(3.14) * Math.sqrt(k/m *(superArrayHigh.length)); 
+
+
+
+var zhongyu = 1/(4*(superA+superB));
+
+
+
+
+console.log(superA, superB, superA+superB, zhongyu);
+
+
+console.log(truefinal);
+
+
+
+
+
+
+
+if (truefinal>=0.05 && truefinal <0.08) {
+responsiveVoice.speak("You seem fine.");
+
+}
+
+if (truefinal>=0.08) {
+responsiveVoice.speak("You are feeling really good.");
+
+}
+if (truefinal<0.05 && truefinal>0.02) {
+  responsiveVoice.speak("You sound a bit stressed, relax.");
+}
+
+if (truefinal<=0.02) {
+  responsiveVoice.speak("Are you angry?");
+}
   
 
 
 
- x.style.left = 360+'px';
-   x2.style.left = 400+'px';
-   x3.style.left = 440+'px';
-   x4.style.left = 520+'px';
-  	elementIsClicked=false;
-  	turncounter+=1;
+console.log('MQT',sum,output,truefinal, special)
+//setTimeout(startloop, 1000);
+//startloop();
+}
+
+function startloop () {
+
+newint++
+setTimeout(actuallearn, 1000);
+//actuallearn();
+function actuallearn () {
+  var mey = 'positive'+newint;
+var ref = database.ref(mey)
+ref.on('value',gotData, errData);
+//dontcontinue=0;
+function gotData(data) {
+
+//console.log(data.child())
+var coordinates =data.val();
+if (coordinates==null) {
+
+  dontcontinue=1;
+
+
+  fr();
+    console.log('STOP!!!!!');
+}
+
+if (dontcontinue==0) {
+querydata=coordinates;
+//console.log(coordinates)
+var keys = Object.keys(coordinates)
+console.log(coordinates, finaldata)
+
+console.log(coordinates.length, finaldata.length)
+var max=0;
+if (coordinates.length>finaldata.length) {
+max = coordinates.length;
+}
+if (coordinates.length<finaldata.length) {
+  max = finaldata.length;
+}
+//console.log('max', max)
+
+for(var i=0; i<max;i++) {
+
+var newP = finaldata[i];
+
+var oldP = coordinates[i];
+var mop = Math.abs(newP-oldP)
+//console.log(mop)
+if (newP==oldP || mop <0.1) {
+  supercount++
+}
+ 
+}
+
+  console.log('similarity', supercount, finaldata.length)
+  var finalanswer = supercount/finaldata.length; 
+
+
+  if (finalanswer>=0.5) {
+    console.log('black dynamite its positive')
+    sumemotion++;
   }
+ querydata=data.val();
+}
+
+}
+function errData(err) {
+   console.log(err)
+}
+
+if(dontcontinue==0) {
+startloop();
+}
+
+
+}
+
+
+}
+
+
+
+function fr () {
+  var jol  = sumemotion/finaldata.length;
+
+console.log('jol',jol, sumemotion, finaldata.length)
+if (sumemotion>=5) {
+  responsiveVoice.speak("From learned data, I say your emotion is positive");
+}
+else
+  responsiveVoice.speak("From learned data, I say your emotion is negative");
+
 }
 
 
 
 
 
+function sendpos () {
+console.log('positive');
+record=10;
 
-// $(document).keypress(function (e) {
-//     if (e.which == 68) {
-//         alert('enter key is pressed');
-//     }
-// });
-   
+setTimeout(series,5000);
+    // var matchedinput =val;
+       var ref=database.ref('positive'+record);
+//finaldata.push(record)
+ref.set(finaldata);
 
-	
+}
 
-</script>
+
+// function sendneg() {
+
+//        var ref=database.ref('negative');
+
+// ref.set(finaldata);
+
+// console.log('negative');
+// }
+
+
+
+
+
+
+
+
+
+</script> 
+</head> 
+
+<body onload="documentReady();"> 
+  <!--  <canvas id="mycanvas"></canvas>  -->
+   <div id="mylog"></div> 
+</body> 
 </html>
